@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--背景色-->
+
+    <!--主背景色-->
+    <SolidColorBrush x:Key="Background.1" Color="#292E30"/>
+    <!--次背景色-->
+    <SolidColorBrush x:Key="Background.2" Color="#A0A5A7"/>
+    <!--虚线颜色-->
+    <SolidColorBrush x:Key="Background.3" Color="#3B4549"/>
+    <!--常用按钮背景色-->
+    <SolidColorBrush x:Key="Background.NormalButton" Color="#118AF7"/>
+
+
+    <!--前景色-->
+
+    <!--主前景色-->
+    <SolidColorBrush x:Key="Foreground.1" Color="#FFFFFF"/>
+    <!--次背景色-->
+    <SolidColorBrush x:Key="Foreground.2" Color="#E3E4E4"/>
+    <!--隐藏状态前景色-->
+    <SolidColorBrush x:Key="Foreground.3" Color="#A2A4A5"/>
+
+
+    <!--活动状态-->
+
+    <!--选中状态-->
+    <SolidColorBrush x:Key="StatusColor.1" Color="#118AF7"/>
+    <!--成功-->
+    <SolidColorBrush x:Key="SuccessColor" Color="#4FE6AF"/>
+    <!--失败-->
+    <SolidColorBrush x:Key="FailColor" Color="#ED1C24"/>
+</ResourceDictionary>

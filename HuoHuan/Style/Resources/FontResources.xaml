@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:font="http://schemas.microsoft.com/winfx/2006/xaml/composite-font">
+    <font:FontFamily x:Key="icon">/Resources/Fonts/#iconfont</font:FontFamily>
+    <font:FontFamily x:Key="zhuokai">/Resources/Fonts/#jiangxizhuokai</font:FontFamily>
+    <font:FontFamily x:Key="siyuansong">/Resources/Fonts/#siyuansong</font:FontFamily>
+    <font:FontFamily x:Key="logo">/Resources/Fonts/#xiaoweilogo</font:FontFamily>
+</ResourceDictionary>
