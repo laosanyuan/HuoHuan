@@ -1,10 +1,11 @@
 <p align="center">
-    <img src="/HuoHuan/Resources/HuoHuan.png" style="zoom:50%"/>
+    <img src="/HuoHuan/Resources/HuoHuan.png"/>
 </p>
 <h1 align="center">火浣 - 微信群耙子</h1>
 <div align="center">
-火浣是一款主动获取网络中已公开有效微信群群聊的工具。
+火浣是一款主动获取网络中已公开有效微信群聊二维码图片的工具。
 </div>
+
 <p align="center">
 	<a href="https://github.com/laosanyuan/HuoHuan/blob/master/LICENSE">
 		<img alt="GitHub license" src="https://img.shields.io/github/license/laosanyuan/HuoHuan">
@@ -16,7 +17,6 @@
         <img alt="GitHub forks" src="https://img.shields.io/github/forks/laosanyuan/HuoHuan">
     </a>
 </p>
-## 使用预览
 
 ![Home Page=](/Images/HomePage.jpg)
 
@@ -34,8 +34,10 @@
 
 配置文件：/Data/tieba_spider_key.yaml
 
->   Key: "王者荣耀微信群"
->   Page: 1
+```yaml
+- Key: "王者荣耀微信群"
+  Page: 1
+```
 
 依此格式添加爬取贴吧，Key为贴吧名称，Page为爬取深度。如Page设置为1，则仅爬取贴吧首页，可根据贴吧活跃程度及爬取价值自行调整深度。
 
