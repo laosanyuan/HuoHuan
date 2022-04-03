@@ -10,24 +10,15 @@ jobs:
       matrix:
         configuration: [Debug, Release]
     runs-on: windows-latest
-    env:
-      Solution_Name: your-solution-name                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: your-test-project-path                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      Wap_Project_Directory: your-wap-project-directory-name    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      Wap_Project_Path: your-wap-project-path                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: | 
-          4.6.x
-          4.8
-
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Setup
+      uses: actions/setup-dotnet@v1
+    - name: Build
+      run: dotnet build --configuration $env:Configuration
+      env: 
+        Configuration: ${{ matrix.configuration }}
