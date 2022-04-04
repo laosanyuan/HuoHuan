@@ -1,0 +1,82 @@
+﻿<Window x:Class="HuoHuan.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:info="clr-namespace:HuoHuan.Data"
+        xmlns:enum="clr-namespace:HuoHuan.Enums"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Source={StaticResource Locator},Path=Main}"
+        Title="火浣" 
+        Height="600" 
+        Width="1000">
+    <Border CornerRadius="15" Background="{DynamicResource Background.1}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="{DynamicResource Background.3}" BorderThickness="0,0,1,0">
+                <DockPanel LastChildFill="True" >
+                    <Border Height="50" Width="50" BorderBrush="{DynamicResource Background.3}" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
+                        <!--Logo-->
+                        <Image Source="/Resources/HuoHuan.png" Margin="10"/>
+                    </Border>
+                    <StackPanel Margin="0,20,0,0" DockPanel.Dock="Top">
+                        <RadioButton Content="&#xe65f;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.Home}" ToolTip="获取二维码" IsChecked="True"/>
+                        <RadioButton Content="&#xe6d1;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.View}" ToolTip="查看"/>
+                        <RadioButton Visibility="Hidden" Content="&#xe634;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.Download}" ToolTip="下载"/>
+                    </StackPanel>
+                    <StackPanel Visibility="Hidden" Orientation="Vertical" VerticalAlignment="Bottom">
+                        <Button Content="&#xe8b8;" 
+                                Name="settings_button" 
+                                ToolTip="设置"
+                                Cursor="Arrow"
+                                Style="{StaticResource SettingButton}"
+                                Click="Setting_Click"/>
+                        <Popup x:Name="pop" 
+                               StaysOpen="False" 
+                               Placement="Top"  
+                               HorizontalOffset="{Binding ElementName=settings_button,Path=ActualWidth}" 
+                               VerticalOffset="{Binding ElementName=settings_button,Path=ActualHeight}"
+                               PlacementTarget="{Binding ElementName=settings_button}">
+                            <!--设置菜单-->
+                        </Popup>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Source={x:Static info:SoftwareInfo.Name}}"
+                               FontFamily="{StaticResource zhuokai}" 
+                               VerticalAlignment="Center" 
+                               Margin="10,0" FontSize="24" 
+                               Foreground="{DynamicResource Foreground.1}"/>
+                    <TextBlock Text="{Binding Source={x:Static info:SoftwareInfo.Version},StringFormat={}v{0}}"
+                               FontFamily="{StaticResource logo}"
+                               VerticalAlignment="Bottom" 
+                               Margin="0,10" 
+                               FontSize="12" 
+                               FontWeight="Bold" 
+                               Foreground="{DynamicResource Foreground.3}"/>
+                </StackPanel>
+                <Border Margin="2,0" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Background.3}">
+                    <!--菜单栏按钮-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="&#xe600;" Click="Button_Click" Style="{DynamicResource CloseButtonStyle}"/>
+                    </StackPanel>
+                </Border>
+                <!--显示页面-->
+                <Frame NavigationUIVisibility="Hidden" Grid.Row="1" Content="{Binding Page}"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
