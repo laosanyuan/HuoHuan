@@ -1,0 +1,123 @@
+﻿<Page x:Class="HuoHuan.Views.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:control="clr-namespace:HuoHuan.Controls"
+      xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding MainPage, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <Style x:Key="CenterButton" TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="{DynamicResource icon}"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid x:Name="start_area">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="&#xe609;" 
+                        ToolTip="获取微信群" 
+                        Foreground="{StaticResource SuccessColor}"
+                        Width="100" 
+                        Height="100" 
+                        Style="{StaticResource CenterButton}"
+                        Click="First_Click"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="run_area" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xe65f;" Foreground="White" FontFamily="{DynamicResource icon}" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.55*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Status}" Foreground="{DynamicResource Foreground.1}" VerticalAlignment="Center" Margin="20,0" FontSize="25"/>
+                        <TextBlock Text="{Binding Crawl.Url}" Grid.Row="1" TextWrapping="WrapWithOverflow"  Foreground="{DynamicResource Foreground.3}" Margin="20,0"/>
+                    </Grid>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,40,0">
+                        <TextBlock VerticalAlignment="Center" FontSize="50" Opacity="0.3" Margin="0,0,60,0">
+                        <Run Text="{Binding Crawl.CrawledCount}" Foreground="{DynamicResource StatusColor.1}"/>
+                        <Run Text="/" Foreground="{DynamicResource Foreground.1}"/>
+                        <Run Text="{Binding Crawl.Process,StringFormat={}{0:F2}%}" Foreground="Red"/>
+                        </TextBlock>
+                        <control:SwitchButton Size="50" 
+                                          x:Name="pause_button"
+                                          Margin="10,0"
+                                          FontSize="25"
+                                          ToolTip="暂停/继续"
+                                          OpenIcon="&#xe619;" 
+                                          CloseIcon="&#xe609;"
+                                          Visibility="{c:Binding ElementName=start_button,Path=IsChecked,FalseToVisibility=Collapsed}"
+                                          Command="{Binding PauseCrawlCommand}"
+                                          CommandParameter="{Binding ElementName=pause_button,Path=IsChecked}"
+                                          OpenForeground="{DynamicResource SuccessColor}" 
+                                          CloseForeground="{StaticResource SuccessColor}" />
+                        <control:SwitchButton Size="50" 
+                                          x:Name="start_button"
+                                          Margin="10,0"
+                                          FontSize="25"
+                                          ToolTip="开始/停止"
+                                          OpenIcon="&#xe609;" 
+                                          CloseIcon="&#xe611;"
+                                          Command="{Binding StartCrawlCommand}"
+                                          CommandParameter="{Binding ElementName=start_button,Path=IsChecked}"
+                                          Checked="start_button_Checked"
+                                          OpenForeground="{StaticResource SuccessColor}" 
+                                          CloseForeground="{StaticResource FailColor}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!--图片列表-->
+            <Grid Grid.Row="1" Margin="7,0,7,7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[0]}"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[1]}" Grid.Column="1"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[2]}" Grid.Column="2"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[3]}" Grid.Column="3"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[4]}" Grid.Row="1"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[5]}" Grid.Row="1" Grid.Column="1"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[6]}" Grid.Row="1" Grid.Column="2"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[7]}" Grid.Row="1" Grid.Column="3"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[8]}" Grid.Row="2"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[9]}" Grid.Row="2" Grid.Column="1"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[10]}" Grid.Row="2" Grid.Column="2"/>
+                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[11]}" Grid.Row="2" Grid.Column="3"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,55 @@
+﻿<Page x:Class="HuoHuan.Views.Pages.ViewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+      mc:Ignorable="d" 
+      DataContext="{Binding ViewPage, Source={StaticResource Locator}}"
+      d:DesignHeight="450" d:DesignWidth="800">
+    <Page.Resources>
+        <Style x:Key="ChangeButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FontFamily" Value="{StaticResource icon}"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource Foreground.1}"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource StatusColor.1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="1" Source="{Binding DisplayUrl}"/>
+        <Button Style="{StaticResource ChangeButtonStyle}" Command="{Binding PreviousCommand}" Content="&#xe64c;" Grid.RowSpan="2"/>
+        <Button Style="{StaticResource ChangeButtonStyle}" Command="{Binding NextCommand}" Content="&#xe64e;" Grid.RowSpan="2" Grid.Column="2"/>
+        <TextBlock Grid.Column="1" Grid.Row="1" Foreground="{StaticResource Foreground.3}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Run Text="{c:Binding DisplayIndex+1}"/>
+            <Run Text="/"/>
+            <Run Text="{Binding Count}"/>
+        </TextBlock>
+    </Grid>
+</Page>
