@@ -1,10 +1,11 @@
-﻿using YamlDotNet.Serialization;
+﻿using System;
+using YamlDotNet.Serialization;
 
 namespace HuoHuan.Utils
 {
     class YamlUtil
     {
-        private static Deserializer deserializer;
+        private static Deserializer deserializer = null!;
 
         /// <summary>
         /// 反序列化Yaml

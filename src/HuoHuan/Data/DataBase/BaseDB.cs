@@ -12,14 +12,14 @@ namespace HuoHuan.Data.DataBase
         public string FileName { get; protected set; } = null!;
         public string TableName { get; protected set; } = null!;
 
-        #region [Functions]
+        #region [Methods]
         /// <summary>
         /// 初始化数据库
         /// </summary>
         /// <param name="command">创建表</param>
         /// <param name="tableName">表名</param>
         /// <returns></returns>
-        protected bool InitDataBase(string command, string tableName = null)
+        protected bool InitDataBase(string command, string tableName = null!)
         {
             if (String.IsNullOrEmpty(this.FileName))
             {
@@ -53,16 +53,14 @@ namespace HuoHuan.Data.DataBase
         /// <returns></returns>
         private bool QueryTableExist(string tableName)
         {
-            using (SQLiteConnection connection = DataBaseConnection())
+            using SQLiteConnection connection = DataBaseConnection();
+            //判断table是否已经存在
+            if (tableName == null)
             {
-                //判断table是否已经存在
-                if (tableName == null)
-                {
-                    tableName = this.TableName;
-                }
-                var count = connection.QueryFirst<int>($"SELECT COUNT(*) FROM sqlite_master WHERE TYPE = 'table' AND NAME = '{tableName}'");
-                return count != 0;
+                tableName = this.TableName;
             }
+            var count = connection.QueryFirst<int>($"SELECT COUNT(*) FROM sqlite_master WHERE TYPE = 'table' AND NAME = '{tableName}'");
+            return count != 0;
         }
 
         /// <summary>

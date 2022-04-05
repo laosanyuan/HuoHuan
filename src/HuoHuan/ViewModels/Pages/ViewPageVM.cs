@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
+#nullable disable
+
 namespace HuoHuan.ViewModels.Pages
 {
     public class ViewPageVM : ObservableObject

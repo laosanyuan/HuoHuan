@@ -8,7 +8,7 @@ using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,9 +61,10 @@ namespace HuoHuan.Core.Spider
                     int index = keys[i].Page * 50;
                     try
                     {
-                        WebClient client = new WebClient();
+                        HttpClient client = new();
                         HttpUtil.SetHeaders(client);
-                        string pageData = client.DownloadString($"https://tieba.baidu.com/f?kw={keys[i].Key}&ie=utf-8&pn={index}");
+
+                        string pageData = await client.GetStringAsync($"https://tieba.baidu.com/f?kw={keys[i].Key}&ie=utf-8&pn={index}");
                         IHtmlDocument doc = await this.parser.ParseDocumentAsync(pageData);
                         IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".t_con.cleafix");
                         foreach (IElement tag in tags)
@@ -90,7 +91,7 @@ namespace HuoHuan.Core.Spider
                                             return;
                                         }
                                     }
-                                    if (await filter.IsValidImage(url))
+                                    if (url != null && await filter.IsValidImage(url))
                                     {
                                         var data = filter.GetGroupData(url);
 
@@ -121,7 +122,7 @@ namespace HuoHuan.Core.Spider
                                                 IsValidImage = true
                                             });
                                         }
-                                        catch (Exception ex)
+                                        catch (Exception)
                                         {
                                         }
                                         break;
@@ -140,7 +141,7 @@ namespace HuoHuan.Core.Spider
                             }
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                     }
                 }
@@ -181,7 +182,7 @@ namespace HuoHuan.Core.Spider
                         callback?.Invoke(new DownloadEventArgs() { GroupData = data, LaveCount = this.GroupDatas.Count, DownloadedCount = this.downloadedCount });
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     this.IsDownloading = false;
                 }

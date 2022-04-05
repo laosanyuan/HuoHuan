@@ -1,6 +1,8 @@
 ﻿using HuoHuan.Enums;
 using System;
 
+#nullable disable
+
 namespace HuoHuan.Models
 {
     /// <summary>

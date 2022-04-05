@@ -6,7 +6,7 @@ using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -32,15 +32,16 @@ namespace HuoHuan.Core.Filter
         {
             if (!String.IsNullOrWhiteSpace(this.text))
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
-                request.Credentials = CredentialCache.DefaultCredentials;
-                request.UserAgent = "Microsoft Internet Explorer";
-                WebResponse response = request.GetResponse();
 
-                using Stream s = response.GetResponseStream();
+                HttpClient httpClient = new HttpClient();
+                HttpUtil.SetHeaders(httpClient);
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "Microsoft Internet Explorer");
+                httpClient.BaseAddress = new Uri(imageUrl);
+
+                using Stream s = httpClient.GetStreamAsync(imageUrl).Result;
                 byte[] data = new byte[1024];
                 int length = 0;
-                using MemoryStream ms = new MemoryStream();
+                using MemoryStream ms = new();
                 while ((length = s.Read(data, 0, data.Length)) > 0)
                 {
                     ms.Write(data, 0, length);

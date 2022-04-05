@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HuoHuan.Utils
 {
@@ -12,14 +14,13 @@ namespace HuoHuan.Utils
         /// </summary>
         /// <param name="Url"></param>
         /// <returns></returns>
-        internal static Bitmap GetBitmapFromUrl(string url)
+        internal async static Task<Bitmap> GetBitmapFromUrl(string url)
         {
             Bitmap result = null!;
             try
             {
-                WebRequest webreq = WebRequest.Create(url);
-                WebResponse webres = webreq.GetResponse();
-                using Stream stream = webres.GetResponseStream();
+                HttpClient httpClient = new();
+                using Stream stream = await httpClient.GetStreamAsync(url);
                 result = (Bitmap)Image.FromStream(stream);
             }
             catch (Exception)
@@ -35,10 +36,12 @@ namespace HuoHuan.Utils
         /// </summary>
         /// <param name="url"></param>
         /// <param name="fileName"></param>
-        internal static void SaveImageFile(string url, string fileName)
+        internal static async void SaveImageFile(string url, string fileName)
         {
-            WebClient client = new WebClient();
-            client.DownloadFileAsync(new Uri(url), fileName);
+            HttpClient client = new();   
+            byte[] bytes = await client.GetByteArrayAsync(url);
+            using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+            stream.Write(bytes, 0, bytes.Length);
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace HuoHuan.Utils
             text = null!;
             var reader = new ZXing.BarcodeReader();
             reader.Options.CharacterSet = "UTF-8";
-            var image = ImageUtil.GetBitmapFromUrl(url);
+            var image = ImageUtil.GetBitmapFromUrl(url).Result;
             if (image == null)
             {
                 return false;
