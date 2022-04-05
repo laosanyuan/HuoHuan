@@ -7,7 +7,7 @@ namespace HuoHuan.Core.Filter
     /// <summary>
     /// 群图片过滤器
     /// </summary>
-    interface IGroupFilter
+    internal interface IGroupFilter
     {
         /// <summary>
         /// 过滤器类型

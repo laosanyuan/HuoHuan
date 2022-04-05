@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HuoHuan.Data.DataBase
 {
-    class UrlDB : BaseDB
+    internal class UrlDB : BaseDB
     {
         public static UrlDB Instance { get; } = new UrlDB();
         private UrlDB()

@@ -5,7 +5,7 @@ namespace HuoHuan.ViewModels
 {
     public class ViewModelLocator
     {
-        Container _container;
+        private readonly Container _container;
         public ViewModelLocator()
         {
             this._container = new Container();

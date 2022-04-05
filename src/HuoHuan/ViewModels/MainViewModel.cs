@@ -29,7 +29,7 @@ namespace HuoHuan.ViewModels
         #endregion
 
         #region [Commands]
-        private Lazy<RelayCommand<PageType>> _changePageCommand;
+        private readonly Lazy<RelayCommand<PageType>> _changePageCommand;
         /// <summary>
         /// 切换页面
         /// </summary>

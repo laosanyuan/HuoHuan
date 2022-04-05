@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HuoHuan.Utils
 {
-    class ImageUtil
+    internal class ImageUtil
     {
         /// <summary>
         /// 根据URL获取图像
         /// </summary>
         /// <param name="Url"></param>
         /// <returns></returns>
-        internal async static Task<Bitmap> GetBitmapFromUrl(string url)
+        internal static async Task<Bitmap> GetBitmapFromUrl(string url)
         {
             Bitmap result = null!;
             try
@@ -38,7 +37,7 @@ namespace HuoHuan.Utils
         /// <param name="fileName"></param>
         internal static async void SaveImageFile(string url, string fileName)
         {
-            HttpClient client = new();   
+            HttpClient client = new();
             byte[] bytes = await client.GetByteArrayAsync(url);
             using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             stream.Write(bytes, 0, bytes.Length);

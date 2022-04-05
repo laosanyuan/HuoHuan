@@ -2,7 +2,7 @@
 
 namespace HuoHuan.Utils
 {
-    class DateTimeUtil
+    internal class DateTimeUtil
     {
         /// <summary>
         /// 比较日期是否在有效范围内

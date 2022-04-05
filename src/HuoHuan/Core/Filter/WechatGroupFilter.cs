@@ -15,7 +15,7 @@ namespace HuoHuan.Core.Filter
     /// <summary>
     /// 微信群筛选
     /// </summary>
-    class WechatGroupFilter : IGroupFilter
+    internal class WechatGroupFilter : IGroupFilter
     {
         private readonly string urlFlag = "https://weixin.qq.com/g/";  // 微信群链接标记
         private readonly GroupDB db;    // 微信群链接数据库

@@ -2,9 +2,9 @@
 {
     internal class SoftwareInfo
     {
-        public readonly static string Name = "火浣";
-        public readonly static string Description = "群聊耙子";
-        public readonly static string Version = "1.0.0";
-        public readonly static string LogoPath = "/Resources/HuoHuan.png";
+        public static readonly string Name = "火浣";
+        public static readonly string Description = "群聊耙子";
+        public static readonly string Version = "1.0.0";
+        public static readonly string LogoPath = "/Resources/HuoHuan.png";
     }
 }

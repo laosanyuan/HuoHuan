@@ -1,9 +1,8 @@
-﻿using System;
-using YamlDotNet.Serialization;
+﻿using YamlDotNet.Serialization;
 
 namespace HuoHuan.Utils
 {
-    class YamlUtil
+    internal class YamlUtil
     {
         private static Deserializer deserializer = null!;
 

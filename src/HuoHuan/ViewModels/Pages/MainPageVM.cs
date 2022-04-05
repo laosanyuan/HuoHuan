@@ -59,25 +59,25 @@ namespace HuoHuan.ViewModels.Pages
         #endregion
 
         #region [Commands]
-        private Lazy<RelayCommand<bool>> _startCrawlCommand;
+        private readonly Lazy<RelayCommand<bool>> _startCrawlCommand;
         /// <summary>
         /// 开始爬取
         /// </summary>
         public ICommand StartCrawlCommand => _startCrawlCommand.Value;
 
-        private Lazy<RelayCommand<bool>> _pauseCrawlCommand;
+        private readonly Lazy<RelayCommand<bool>> _pauseCrawlCommand;
         /// <summary>
         /// 暂停
         /// </summary>
         public ICommand PauseCrawlCommand => _pauseCrawlCommand.Value;
 
-        private Lazy<RelayCommand> _startDownloadCommand;
+        private readonly Lazy<RelayCommand> _startDownloadCommand;
         /// <summary>
         /// 开始下载
         /// </summary>
         public ICommand StartDownloadCommand => _startDownloadCommand.Value;
 
-        private Lazy<RelayCommand> _stopDownloadCommand;
+        private readonly Lazy<RelayCommand> _stopDownloadCommand;
         /// <summary>
         /// 停止下载
         /// </summary>

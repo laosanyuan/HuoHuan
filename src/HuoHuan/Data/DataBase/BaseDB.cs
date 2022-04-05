@@ -6,7 +6,7 @@ using System.IO;
 
 namespace HuoHuan.Data.DataBase
 {
-    abstract class BaseDB
+    internal abstract class BaseDB
     {
         public string FilePath { get; protected set; } = null!;
         public string FileName { get; protected set; } = null!;

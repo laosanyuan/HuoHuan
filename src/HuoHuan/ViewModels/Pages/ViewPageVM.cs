@@ -68,19 +68,19 @@ namespace HuoHuan.ViewModels.Pages
         #endregion
 
         #region [Commands]
-        private Lazy<RelayCommand> _refreshDataCommand;
+        private readonly Lazy<RelayCommand> _refreshDataCommand;
         /// <summary>
         /// 刷新数据
         /// </summary>
         public ICommand RefreshDataCommand => _refreshDataCommand.Value;
 
-        private Lazy<RelayCommand> _previousCommand;
+        private readonly Lazy<RelayCommand> _previousCommand;
         /// <summary>
         /// 前一张
         /// </summary>
         public ICommand PreviousCommand => _previousCommand.Value;
 
-        private Lazy<RelayCommand> _nextCommand;
+        private readonly Lazy<RelayCommand> _nextCommand;
         /// <summary>
         /// 后一张
         /// </summary>

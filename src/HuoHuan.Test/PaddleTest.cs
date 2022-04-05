@@ -1,10 +1,4 @@
-﻿using HuoHuan.Utils;
-using HuoHuan.Views;
-using NUnit.Framework;
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
-using System.IO;
-using System.Net;
+﻿using NUnit.Framework;
 
 namespace HuoHuan.Test
 {

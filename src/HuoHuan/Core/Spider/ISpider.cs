@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HuoHuan.Core.Spider
 {
-    interface ISpider
+    internal interface ISpider
     {
         /// <summary>
         /// 设置过滤器

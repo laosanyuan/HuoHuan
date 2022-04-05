@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HuoHuan.Data.DataBase
 {
-    class GroupDB : BaseDB
+    internal class GroupDB : BaseDB
     {
         public GroupDB(string fileName)
         {

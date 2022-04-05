@@ -2,17 +2,15 @@
 
 namespace HuoHuan.Core.Filter
 {
-    class GroupFilterFactory
+    internal class GroupFilterFactory
     {
         public static IGroupFilter CreatFilter(QRCodeType type)
         {
-            switch (type)
+            return type switch
             {
-                case QRCodeType.WechatGroup:
-                    return new WechatGroupFilter();
-                default:
-                    return null!;
-            }
+                QRCodeType.WechatGroup => new WechatGroupFilter(),
+                _ => null!,
+            };
         }
     }
 }
