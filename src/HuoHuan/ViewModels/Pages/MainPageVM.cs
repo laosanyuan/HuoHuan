@@ -8,6 +8,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 #nullable disable
 
 namespace HuoHuan.ViewModels.Pages
@@ -15,11 +16,6 @@ namespace HuoHuan.ViewModels.Pages
     public class MainPageVM : ObservableObject
     {
         private readonly ISpider spider;
-
-        public MainPageVM()
-        {
-            this.spider = MainController.Instance.Spider;
-        }
 
         #region [Properties]
         private CrawlInfo crawl;
@@ -38,7 +34,7 @@ namespace HuoHuan.ViewModels.Pages
         public DownloadInfo Download
         {
             get => download;
-            set => SetProperty<DownloadInfo>(ref download, value);
+            set => SetProperty(ref download, value);
         }
 
         private ObservableCollection<DisplayImageInfo> ursl;
@@ -48,36 +44,66 @@ namespace HuoHuan.ViewModels.Pages
         public ObservableCollection<DisplayImageInfo> Urls
         {
             get => ursl;
-            set => SetProperty<ObservableCollection<DisplayImageInfo>>(ref ursl, value);
+            set => SetProperty(ref ursl, value);
         }
 
-        private DisplayImageInfo test = new DisplayImageInfo() { Url = "https://common.cnblogs.com/images/logo/logo20170227.png" };
-
-        public DisplayImageInfo Test
-        {
-            get => test;
-            set => SetProperty<DisplayImageInfo>(ref test, value);
-        }
-
-        public string TestStr { get; set; } = "https://common.cnblogs.com/images/logo/logo20170227.png";
-
-
-        private string staus;
+        private string status;
         /// <summary>
         /// 运行状态
         /// </summary>
-        public string Staus
+        public string Status
         {
-            get => staus;
-            set => SetProperty<string>(ref staus, value);
+            get => status;
+            set => SetProperty(ref status, value);
         }
         #endregion
 
         #region [Commands]
+        private Lazy<RelayCommand<bool>> _startCrawlCommand;
         /// <summary>
         /// 开始爬取
         /// </summary>
-        public ICommand StartCrawlCommand => new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isStart =>
+        public ICommand StartCrawlCommand => _startCrawlCommand.Value;
+
+        private Lazy<RelayCommand<bool>> _pauseCrawlCommand;
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        public ICommand PauseCrawlCommand => _pauseCrawlCommand.Value;
+
+        private Lazy<RelayCommand> _startDownloadCommand;
+        /// <summary>
+        /// 开始下载
+        /// </summary>
+        public ICommand StartDownloadCommand => _startDownloadCommand.Value;
+
+        private Lazy<RelayCommand> _stopDownloadCommand;
+        /// <summary>
+        /// 停止下载
+        /// </summary>
+        public ICommand StopDownloadCommand => _stopDownloadCommand.Value;
+        #endregion
+
+        public MainPageVM()
+        {
+            this.spider = MainController.Instance.Spider;
+
+            this._startCrawlCommand = new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isStart => SwitchCrawl(isStart)));
+            this._pauseCrawlCommand = new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isPause => this.spider?.PasueCrawl(isPause)));
+            this._startDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() =>
+            {
+                Task.Run(() =>
+                {
+                    this.spider?.StartDownload(arg =>
+                    {
+                        this.Download = new DownloadInfo() { Url = arg.GroupData.SourceUrl, Count = arg.DownloadedCount, LaveCount = arg.LaveCount };
+                    });
+                });
+            }));
+            this._stopDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.spider?.StopDownload()));
+        }
+
+        private void SwitchCrawl(bool isStart)
         {
             if (isStart)
             {
@@ -115,31 +141,6 @@ namespace HuoHuan.ViewModels.Pages
             {
                 this.spider?.StopCrawl();
             }
-        })).Value;
-        /// <summary>
-        /// 暂停
-        /// </summary>
-        public ICommand PauseCrawlCommand => new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isPause =>
-        {
-            this.spider?.PasueCrawl(isPause);
-        })).Value;
-        /// <summary>
-        /// 开始下载
-        /// </summary>
-        public ICommand StartDownloadCommand => new Lazy<RelayCommand>(() => new RelayCommand(() =>
-        {
-            Task.Run(() =>
-            {
-                this.spider?.StartDownload(arg =>
-                {
-                    this.Download = new DownloadInfo() { Url = arg.GroupData.SourceUrl, Count = arg.DownloadedCount, LaveCount = arg.LaveCount };
-                });
-            });
-        })).Value;
-        /// <summary>
-        /// 停止下载
-        /// </summary>
-        public ICommand StopDownloadCommand => new Lazy<RelayCommand>(() => new RelayCommand(() => this.spider?.StopDownload())).Value;
-        #endregion
+        }
     }
 }

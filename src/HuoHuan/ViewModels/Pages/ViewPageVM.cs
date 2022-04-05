@@ -11,8 +11,10 @@ namespace HuoHuan.ViewModels.Pages
 {
     public class ViewPageVM : ObservableObject
     {
-        private List<string> urls;
+        #region [Fields]
+        private List<string> urls = null!;
         private readonly GroupDB db;    // 微信群链接数据库
+        #endregion
 
         #region [Properties]
         private string displayUrl = SoftwareInfo.LogoPath;
@@ -63,27 +65,34 @@ namespace HuoHuan.ViewModels.Pages
         }
         #endregion
 
-        public ViewPageVM()
-        {
-            this.db = new GroupDB("wechat_group");
-        }
-
         #region [Commands]
+        private Lazy<RelayCommand> _refreshDataCommand;
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public ICommand RefreshDataCommand => new Lazy<RelayCommand>(() => new RelayCommand(UpdateData)).Value;
+        public ICommand RefreshDataCommand => _refreshDataCommand.Value;
 
+        private Lazy<RelayCommand> _previousCommand;
         /// <summary>
         /// 前一张
         /// </summary>
-        public ICommand PreviousCommand => new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex--)).Value;
+        public ICommand PreviousCommand => _previousCommand.Value;
 
+        private Lazy<RelayCommand> _nextCommand;
         /// <summary>
         /// 后一张
         /// </summary>
-        public ICommand NextCommand => new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex++)).Value;
+        public ICommand NextCommand => _nextCommand.Value;
         #endregion
+
+        public ViewPageVM()
+        {
+            this.db = new GroupDB("wechat_group");
+
+            this._refreshDataCommand = new Lazy<RelayCommand>(() => new RelayCommand(UpdateData));
+            this._previousCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex--));
+            this._nextCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex++));
+        }
 
         private void UpdateData()
         {

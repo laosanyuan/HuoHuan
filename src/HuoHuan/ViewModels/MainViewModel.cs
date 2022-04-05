@@ -10,14 +10,11 @@ namespace HuoHuan.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
+        #region [Fields]
         private readonly Page home = new MainPage();
         private readonly Page view = new ViewPage();
         private readonly Page download = new DownloadPage();
-
-        public MainViewModel()
-        {
-            this.Page = home;
-        }
+        #endregion
 
         #region [Properties]
         private Page page = null!;
@@ -32,24 +29,31 @@ namespace HuoHuan.ViewModels
         #endregion
 
         #region [Commands]
+        private Lazy<RelayCommand<PageType>> _changePageCommand;
         /// <summary>
         /// 切换页面
         /// </summary>
-        public ICommand ChangePage => new Lazy<RelayCommand<PageType>>(() => new RelayCommand<PageType>(type =>
-        {
-            switch (type)
-            {
-                case PageType.Home:
-                    this.Page = home;
-                    break;
-                case PageType.View:
-                    this.Page = view;
-                    break;
-                case PageType.Download:
-                    this.Page = download;
-                    break;
-            }
-        })).Value;
+        public ICommand ChangePage => _changePageCommand.Value;
         #endregion
+
+        public MainViewModel()
+        {
+            this.Page = home;
+            this._changePageCommand = new Lazy<RelayCommand<PageType>>(() => new RelayCommand<PageType>(type =>
+            {
+                switch (type)
+                {
+                    case PageType.Home:
+                        this.Page = home;
+                        break;
+                    case PageType.View:
+                        this.Page = view;
+                        break;
+                    case PageType.Download:
+                        this.Page = download;
+                        break;
+                }
+            }));
+        }
     }
 }
