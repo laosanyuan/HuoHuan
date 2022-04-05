@@ -33,7 +33,7 @@ namespace HuoHuan.Core.Spider
             this.filters.Clear();
             foreach (var type in types)
             {
-                var result = GroupFilterFactory.CreatFilter(type);
+                var result = GroupFilterFactory.CreateFilter(type);
                 if (result != null)
                 {
                     filters.Add(result);

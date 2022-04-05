@@ -4,7 +4,7 @@ namespace HuoHuan.Core.Filter
 {
     internal class GroupFilterFactory
     {
-        public static IGroupFilter CreatFilter(QRCodeType type)
+        public static IGroupFilter CreateFilter(QRCodeType type)
         {
             return type switch
             {

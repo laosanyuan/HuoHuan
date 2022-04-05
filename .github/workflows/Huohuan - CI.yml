@@ -25,3 +25,7 @@ jobs:
     - run: nuget restore src\HuoHuan.sln
     - name: Build
       run: dotnet build src\HuoHuan.sln --no-restore -c ${{ matrix.configuration }}
+    - name: Test
+      run: dotnet test --configuration $env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}

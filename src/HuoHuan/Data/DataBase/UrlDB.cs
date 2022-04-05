@@ -52,17 +52,15 @@ namespace HuoHuan.Data.DataBase
         /// <returns></returns>
         public async Task<bool> IsUsedUrl(string url, string tag)
         {
-            using (var connection = base.DataBaseConnection())
+            using var connection = base.DataBaseConnection();
+            var sql = $"SELECT COUNT(*) FROM {base.TableName} WHERE url = '{url}'";
+            var count = await connection.QueryFirstAsync<int>(sql);
+            if (count > 0)
             {
-                var sql = $"SELECT COUNT(*) FROM {base.TableName} WHERE url = '{url}'";
-                var count = await connection.QueryFirstAsync<int>(sql);
-                if (count > 0)
-                {
-                    var result = (await connection.QueryAsync<string>($"SELECT tags FROM {base.TableName} WHERE url = '{url}'")).AsList().First();
-                    return result.Contains(tag);
-                }
-                return false;
+                var result = (await connection.QueryAsync<string>($"SELECT tags FROM {base.TableName} WHERE url = '{url}'")).AsList().First();
+                return result.Contains(tag);
             }
+            return false;
         }
         #endregion
     }
