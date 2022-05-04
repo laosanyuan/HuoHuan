@@ -1,4 +1,5 @@
 ﻿using PaddleOCRSharp;
+using System;
 using System.Drawing;
 
 namespace HuoHuan.Utils
@@ -14,9 +15,16 @@ namespace HuoHuan.Utils
         /// <returns></returns>
         public static string GetImageText(Bitmap bitmap)
         {
-            var ocrResult = _engine.DetectText(bitmap);
+            try
+            {
+                var ocrResult = _engine.DetectText(bitmap);
 
-            return ocrResult.Text;
+                return ocrResult.Text;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
     }
 }

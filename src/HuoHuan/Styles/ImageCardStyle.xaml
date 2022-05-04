@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:control="clr-namespace:HuoHuan.Controls">
+    <Style TargetType="{x:Type control:ImageCard}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:ImageCard}">
+                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource Foreground.3}">
+                        <Grid>
+                            <Image Name="image" Source="{TemplateBinding Url}"/>
+                            <StackPanel Name="result_stack" 
+                                        HorizontalAlignment="Left" 
+                                        Opacity="0.8" 
+                                        VerticalAlignment="Bottom" 
+                                        Orientation="Horizontal">
+                                <TextBlock Name="icon" 
+                                           Margin="5,0,0,5"
+                                           FontSize="20"
+                                           FontFamily="{StaticResource icon}" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                                <TextBlock x:Name="result_text"
+                                           Margin="5,0,0,5"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsValid" Value="True">
+                            <Setter TargetName="icon" Property="Text" Value="&#xe631;"/>
+                            <Setter TargetName="icon" Property="Foreground" Value="{DynamicResource SuccessColor}"/>
+                            <Setter TargetName="result_text" Property="Foreground" Value="{DynamicResource SuccessColor}"/>
+                            <Setter TargetName="result_text" Property="Text" Value="获取到有效群！"/>
+                        </Trigger>
+                        <Trigger Property="IsValid" Value="False">
+                            <Setter TargetName="icon" Property="Text" Value="&#xe62f;"/>
+                            <Setter TargetName="icon" Property="Foreground" Value="{DynamicResource FailColor}"/>
+                            <Setter TargetName="result_text" Property="Foreground" Value="{DynamicResource FailColor}"/>
+                            <Setter TargetName="result_text" Property="Text" Value="当前图片不是有效群！"/>
+                        </Trigger>
+                        <Trigger Property="Url" Value="{x:Null}">
+                            <Setter TargetName="image" Property="Source" Value="/Resources/HuoHuan.png"/>
+                            <Setter TargetName="image" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="image" Property="Width" Value="100"/>
+                            <Setter TargetName="result_stack" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+</ResourceDictionary>

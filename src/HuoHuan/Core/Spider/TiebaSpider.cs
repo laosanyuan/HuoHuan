@@ -141,7 +141,7 @@ namespace HuoHuan.Core.Spider
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                     }
                 }

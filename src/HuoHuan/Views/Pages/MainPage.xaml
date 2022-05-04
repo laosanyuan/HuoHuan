@@ -3,8 +3,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:control="clr-namespace:HuoHuan.Controls"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+      xmlns:control="clr-namespace:HuoHuan.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding MainPage, Source={StaticResource Locator}}">
@@ -74,7 +74,7 @@
                                           CloseIcon="&#xe609;"
                                           Visibility="{c:Binding ElementName=start_button,Path=IsChecked,FalseToVisibility=Collapsed}"
                                           Command="{Binding PauseCrawlCommand}"
-                                          CommandParameter="{Binding ElementName=pause_button,Path=IsChecked}"
+                                          CommandParameter="{Binding ElementName=pause_button,Path=IsChecked}"                                              
                                           OpenForeground="{DynamicResource SuccessColor}" 
                                           CloseForeground="{StaticResource SuccessColor}" />
                         <control:SwitchButton Size="50" 
@@ -105,18 +105,18 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[0]}"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[1]}" Grid.Column="1"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[2]}" Grid.Column="2"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[3]}" Grid.Column="3"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[4]}" Grid.Row="1"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[5]}" Grid.Row="1" Grid.Column="1"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[6]}" Grid.Row="1" Grid.Column="2"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[7]}" Grid.Row="1" Grid.Column="3"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[8]}" Grid.Row="2"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[9]}" Grid.Row="2" Grid.Column="1"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[10]}" Grid.Row="2" Grid.Column="2"/>
-                <control:ImageCard Margin="1" ImageInfo="{Binding Urls[11]}" Grid.Row="2" Grid.Column="3"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[0].IsValid}" Url="{Binding Urls[0].Url}"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[1].IsValid}" Url="{Binding Urls[1].Url}" Grid.Column="1"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[2].IsValid}" Url="{Binding Urls[2].Url}" Grid.Column="2"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[3].IsValid}" Url="{Binding Urls[3].Url}" Grid.Column="3"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[4].IsValid}" Url="{Binding Urls[4].Url}" Grid.Row="1"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[5].IsValid}" Url="{Binding Urls[5].Url}" Grid.Row="1" Grid.Column="1"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[6].IsValid}" Url="{Binding Urls[6].Url}" Grid.Row="1" Grid.Column="2"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[7].IsValid}" Url="{Binding Urls[7].Url}" Grid.Row="1" Grid.Column="3"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[8].IsValid}" Url="{Binding Urls[8].Url}" Grid.Row="2"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[9].IsValid}" Url="{Binding Urls[9].Url}" Grid.Row="2" Grid.Column="1"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[10].IsValid}" Url="{Binding Urls[10].Url}" Grid.Row="2" Grid.Column="2"/>
+                <control:ImageCard Margin="1" IsValid="{Binding Urls[11].IsValid}" Url="{Binding Urls[11].Url}" Grid.Row="2" Grid.Column="3"/>
             </Grid>
         </Grid>
     </Grid>

@@ -21,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="C:\Users\yhong\.nuget\packages\tesseract\4.1.1\build\\..\x64\leptonica-1.80.0.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="C:\Users\yhong\.nuget\packages\tesseract\4.1.1\build\\..\x64\tesseract41.dll" />
     <None Remove="Resources\Fonts\iconfont.ttf" />
     <None Remove="Resources\Fonts\jiangxizhuokai.ttf" />
     <None Remove="Resources\Fonts\siyuansong.ttf" />
@@ -49,16 +44,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\chi_sim.traineddata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Data\tieba_spider_key.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Styles\" />
   </ItemGroup>
 
   <ItemGroup>

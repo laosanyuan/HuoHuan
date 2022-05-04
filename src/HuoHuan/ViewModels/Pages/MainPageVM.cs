@@ -59,13 +59,13 @@ namespace HuoHuan.ViewModels.Pages
         #endregion
 
         #region [Commands]
-        private readonly Lazy<RelayCommand<bool>> _startCrawlCommand;
+        private readonly Lazy<RelayCommand<bool?>> _startCrawlCommand;
         /// <summary>
         /// 开始爬取
         /// </summary>
         public ICommand StartCrawlCommand => _startCrawlCommand.Value;
 
-        private readonly Lazy<RelayCommand<bool>> _pauseCrawlCommand;
+        private readonly Lazy<RelayCommand<bool?>> _pauseCrawlCommand;
         /// <summary>
         /// 暂停
         /// </summary>
@@ -88,8 +88,8 @@ namespace HuoHuan.ViewModels.Pages
         {
             this.spider = MainController.Instance.Spider;
 
-            this._startCrawlCommand = new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isStart => SwitchCrawl(isStart)));
-            this._pauseCrawlCommand = new Lazy<RelayCommand<bool>>(() => new RelayCommand<bool>(isPause => this.spider?.PasueCrawl(isPause)));
+            this._startCrawlCommand = new Lazy<RelayCommand<bool?>>(() => new RelayCommand<bool?>(isStart => SwitchCrawl(isStart == true)));
+            this._pauseCrawlCommand = new Lazy<RelayCommand<bool?>>(() => new RelayCommand<bool?>(isPause => this.spider?.PasueCrawl(isPause == true)));
             this._startDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
                 Task.Run(() =>

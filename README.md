@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/HuoHuan/Resources/HuoHuan.png"/>
+    <img src="src/HuoHuan/Resources/HuoHuan.png"/>
 </p>
 <h1 align="center">火浣 - 微信群耙子</h1>
 <div align="center">
@@ -15,6 +15,9 @@
     </a>
     <a href="https://github.com/laosanyuan/HuoHuan/network">
         <img alt="GitHub forks" src="https://img.shields.io/github/forks/laosanyuan/HuoHuan">
+    </a>
+    <a>
+        <img alt="Actions" src="https://github.com/laosanyuan/HuoHuan/actions/workflows/HuoHuan - CI.yml/badge.svg?event=push">
     </a>
 </p>
 
