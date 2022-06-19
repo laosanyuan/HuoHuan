@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace HuoHuan.Core.Spider
 {
+    /// <summary>
+    /// 百度贴吧
+    /// </summary>
     internal class TiebaSpider : ISpider
     {
         private readonly List<IGroupFilter> filters = new();
