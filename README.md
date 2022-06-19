@@ -21,7 +21,7 @@
     </a>
 </p>
 
-![Home Page=](/Images/HomePage.jpg)
+![Home Page](/Images/HomePage.jpg)
 
 ![View Page](/Images/ViewPage.jpg)
 

@@ -44,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HuoHuan.Plugins\HuoHuan.Plugins.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\tieba_spider_key.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -54,5 +58,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+
+  <Import Project="..\HuoHuan.Glue\HuoHuan.Glue.projitems" Label="Shared" />
 
 </Project>
