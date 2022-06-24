@@ -2,7 +2,7 @@ name: Huohuan - CI
 
 on:
   push:
-    branches: [ master, ci]
+    branches: [ master, feature, dev]
 
 jobs:
   build:
