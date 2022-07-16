@@ -22,6 +22,10 @@ namespace HuoHuan.Glue
 
         #region [Methods]
         /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init(IConfig config);
+        /// <summary>
         /// 开始爬取
         /// </summary>
         public void Start();
@@ -42,18 +46,36 @@ namespace HuoHuan.Glue
 
     public class ProgressEventArgs : EventArgs
     {
+        /// <summary>
+        /// 获取数量
+        /// </summary>
         public int Count { get; init; }
-        public int AllCount { get; init; }
+        /// <summary>
+        /// 进度
+        /// </summary>
+        public double Progress { get; init; }
+        /// <summary>
+        /// 耗时
+        /// </summary>
+        public TimeSpan UsedTime { get; init; }
+        /// <summary>
+        /// 剩余耗时
+        /// </summary>
+        public TimeSpan LeftTime { get; init; }
+        /// <summary>
+        /// 爬取状态
+        /// </summary>
         public SpiderStatus Status { get; init; }
     }
 
     public class CrawlEventArgs : EventArgs
     {
-        public string Url { get; init; }
+        public string Url { get; init; } = null!;
     }
 
     public enum SpiderStatus
     {
+        Unknown,
         Waiting,    // 等待开始
         Running,    // 运行中
         Paused,     // 暂停

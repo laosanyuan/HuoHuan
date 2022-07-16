@@ -3,14 +3,14 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>00da64db-9c28-4421-b2cf-2ba951d45ccc</SharedGUID>
+    <SharedGUID>26a0c5f0-3f28-407a-a752-2cfff994ed99</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>HuoHuan.Glue</Import_RootNamespace>
+    <Import_RootNamespace>HuoHuan.Util</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BaseConfig.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IPlugin.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ISpider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FolderUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SoftwareInfo.cs" />
   </ItemGroup>
 </Project>

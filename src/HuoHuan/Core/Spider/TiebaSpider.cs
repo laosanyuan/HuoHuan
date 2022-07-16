@@ -61,7 +61,7 @@ namespace HuoHuan.Core.Spider
                 for (int j = 0; j < keys[i].Page; j++)
                 {
                     HashSet<string> urls = new HashSet<string>();
-                    int index = keys[i].Page * 50;
+                    int index = j * 50;
                     try
                     {
                         HttpClient client = new();

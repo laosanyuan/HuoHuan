@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Test", "HuoHuan.Tes
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HuoHuan.Glue", "HuoHuan.Glue\HuoHuan.Glue.shproj", "{00DA64DB-9C28-4421-B2CF-2BA951D45CCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.Plugins", "HuoHuan.Plugins\HuoHuan.Plugins.csproj", "{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugins", "HuoHuan.Plugins\HuoHuan.Plugins.csproj", "{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HuoHuan.Util", "HuoHuan.Util\HuoHuan.Util.shproj", "{26A0C5F0-3F28-407A-A752-2CFFF994ED99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,7 +40,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		HuoHuan.Glue\HuoHuan.Glue.projitems*{00da64db-9c28-4421-b2cf-2ba951d45ccc}*SharedItemsImports = 13
+		HuoHuan.Util\HuoHuan.Util.projitems*{26a0c5f0-3f28-407a-a752-2cfff994ed99}*SharedItemsImports = 13
 		HuoHuan.Glue\HuoHuan.Glue.projitems*{50fbca05-14f9-4c24-a9ab-ffd61b881c30}*SharedItemsImports = 5
+		HuoHuan.Util\HuoHuan.Util.projitems*{50fbca05-14f9-4c24-a9ab-ffd61b881c30}*SharedItemsImports = 5
 		HuoHuan.Glue\HuoHuan.Glue.projitems*{e4d36334-e624-46f0-9f24-609b90c3ccca}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

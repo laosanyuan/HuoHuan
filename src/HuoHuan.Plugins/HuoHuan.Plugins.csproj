@@ -8,4 +8,11 @@
 
   <Import Project="..\HuoHuan.Glue\HuoHuan.Glue.projitems" Label="Shared" />
 
+  <Import Project="..\HuoHuan.Util\HuoHuan.Util.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.16.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
 </Project>
