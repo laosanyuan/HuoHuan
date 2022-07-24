@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using HuoHuan.Core.Filter;
 using HuoHuan.Enums;
+using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
 using HuoHuan.Utils;
 using System;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using HttpUtil = HuoHuan.Glue.Utils.HttpUtil;
 
 namespace HuoHuan.Core.Spider
 {
@@ -100,7 +102,6 @@ namespace HuoHuan.Core.Spider
 
                                         if (data != null)
                                         {
-                                            data.Type = filter.FilterType;
                                             this.GroupDatas.Enqueue(data);
                                             filter?.SaveData(data);
                                             this.crawledCount++;
@@ -162,7 +163,7 @@ namespace HuoHuan.Core.Spider
             this.IsDownloading = true;
             this.downloadedCount = 0;
 
-            await Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(async () =>
             {
                 try
                 {
@@ -175,11 +176,11 @@ namespace HuoHuan.Core.Spider
                         var data = this.GroupDatas.Dequeue();
 
                         var localPath = $"{this.Path}\\{data.FileName}";
-                        ImageUtil.SaveImageFile(data.SourceUrl, localPath);
+                        await ImageUtil.SaveImageFile(data.SourceUrl, localPath);
                         data.LocalPath = localPath;
                         this.downloadedCount++;
 
-                        var filter = this.filters.FirstOrDefault(t => t.FilterType == data.Type);
+                        var filter = this.filters.FirstOrDefault();
                         filter?.SaveData(data);
 
                         callback?.Invoke(new DownloadEventArgs() { GroupData = data, LaveCount = this.GroupDatas.Count, DownloadedCount = this.downloadedCount });

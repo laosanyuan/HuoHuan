@@ -37,7 +37,8 @@ namespace HuoHuan.ViewModels
         #endregion
 
         public MainViewModel()
-        {
+         {
+            var test = Plugin.PluginLoader.Plugins;
             this.Page = home;
             this._changePageCommand = new Lazy<RelayCommand<PageType>>(() => new RelayCommand<PageType>(type =>
             {

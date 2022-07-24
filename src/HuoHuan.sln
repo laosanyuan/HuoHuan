@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan", "HuoHuan\HuoHuan.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Test", "HuoHuan.Test\HuoHuan.Test.csproj", "{B4E565DC-8314-486F-880E-583EF68B27FC}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HuoHuan.Glue", "HuoHuan.Glue\HuoHuan.Glue.shproj", "{00DA64DB-9C28-4421-B2CF-2BA951D45CCC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugins", "HuoHuan.Plugins\HuoHuan.Plugins.csproj", "{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HuoHuan.Util", "HuoHuan.Util\HuoHuan.Util.shproj", "{26A0C5F0-3F28-407A-A752-2CFFF994ED99}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8763295B-BE95-4C1C-B15D-B534B2E97FE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.Plugins.Test", "HuoHuan.Plugins.Test\HuoHuan.Plugins.Test.csproj", "{F5442169-E7D2-4DF9-9CD6-9AB121981E61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.Glue", "HuoHuan.Glue\HuoHuan.Glue.csproj", "{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,18 +33,23 @@ Global
 		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B4E565DC-8314-486F-880E-583EF68B27FC} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
+		{F5442169-E7D2-4DF9-9CD6-9AB121981E61} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA1AD3A4-FA20-45D9-8B6C-9CF5064D6E79}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		HuoHuan.Glue\HuoHuan.Glue.projitems*{00da64db-9c28-4421-b2cf-2ba951d45ccc}*SharedItemsImports = 13
-		HuoHuan.Util\HuoHuan.Util.projitems*{26a0c5f0-3f28-407a-a752-2cfff994ed99}*SharedItemsImports = 13
-		HuoHuan.Glue\HuoHuan.Glue.projitems*{50fbca05-14f9-4c24-a9ab-ffd61b881c30}*SharedItemsImports = 5
-		HuoHuan.Util\HuoHuan.Util.projitems*{50fbca05-14f9-4c24-a9ab-ffd61b881c30}*SharedItemsImports = 5
-		HuoHuan.Glue\HuoHuan.Glue.projitems*{e4d36334-e624-46f0-9f24-609b90c3ccca}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

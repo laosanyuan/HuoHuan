@@ -1,6 +1,6 @@
 ﻿namespace HuoHuan.Glue
 {
-    internal interface IPlugin
+    public interface IPlugin
     {
         /// <summary>
         /// 名称

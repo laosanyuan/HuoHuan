@@ -2,7 +2,7 @@
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using HuoHuan.Glue;
-using HuoHuan.Util;
+using HuoHuan.Glue.Utils;
 using static HuoHuan.Plugins.TiebaConfig;
 
 namespace HuoHuan.Plugins
@@ -25,7 +25,6 @@ namespace HuoHuan.Plugins
         {
             return true;
         }
-
     }
 
     public class TiebaSpider : ISpider
@@ -85,6 +84,7 @@ namespace HuoHuan.Plugins
             if (config is TiebaConfig tmp)
             {
                 this.Status = SpiderStatus.Waiting;
+                config.Load();
                 this._config = tmp;
             }
         }
