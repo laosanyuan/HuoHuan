@@ -23,7 +23,7 @@ namespace HuoHuan.Core.Filter
 
         public WechatGroupFilter()
         {
-            this.db = new GroupDB("wechat_group");
+            this.db = new GroupDB();
         }
 
         public QRCodeType FilterType { get; } = QRCodeType.WechatGroup;
@@ -84,18 +84,18 @@ namespace HuoHuan.Core.Filter
         public async Task<bool> IsValidImage(string imageUrl)
         {
             // 1.判断Url数据库是否存在/标记
-            var isUsed = await UrlDB.Instance.IsUsedUrl(imageUrl, this.db.TableName);
+            var isUsed = false;// await UrlDB.Instance.IsUsedUrl(imageUrl, this.db.TableName);
             if (!isUsed)
             {
                 // 2.判断当前群数据库是否存在/标记
-                bool isExist = await this.db.IsExistUrl(imageUrl);
+                bool isExist = await this.db.IsExistsUrl(imageUrl);
 
                 // 3.判断是否为二维码及有效
                 if (!isExist && ImageUtil.IsQRCode(imageUrl, out var text) && text.Contains(this.urlFlag))
                 {
                     this.text = text;
                     // 4.更新链接标记
-                    UrlDB.Instance.UpdateUsedUrl(imageUrl, this.db.TableName);
+                    //UrlDB.Instance.UpdateUsedUrl(imageUrl, this.db.TableName);
                     return true;
                 }
             }

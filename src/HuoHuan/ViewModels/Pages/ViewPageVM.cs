@@ -2,9 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Data;
 using HuoHuan.Data.DataBase;
+using HuoHuan.Glue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 #nullable disable
@@ -89,16 +91,16 @@ namespace HuoHuan.ViewModels.Pages
 
         public ViewPageVM()
         {
-            this.db = new GroupDB("wechat_group");
+            this.db = new GroupDB();
 
-            this._refreshDataCommand = new Lazy<RelayCommand>(() => new RelayCommand(UpdateData));
+            this._refreshDataCommand = new Lazy<RelayCommand>(() => new RelayCommand(async () => _ = UpdateData()));
             this._previousCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex--));
             this._nextCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex++));
         }
 
-        private void UpdateData()
+        private async Task UpdateData()
         {
-            this.urls = this.db.QueryInvalidateGroup().Select(t => t.SourceUrl).ToList();
+            this.urls = (await this.db.QueryInvalidateGroup()).Select(t => t.SourceUrl).ToList();
 
             this.Count = this.urls?.Count ?? 0;
             if (!string.IsNullOrEmpty(this.displayUrl) && urls?.Contains(this.displayUrl) == true)

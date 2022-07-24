@@ -26,12 +26,12 @@ namespace HuoHuan.Models
         /// </summary>
         public DateTime InvalidateDate { get; init; }
         /// <summary>
-        /// 本地存储路径
-        /// </summary>
-        public string LocalPath { get; set; }
-        /// <summary>
         /// 文件名
         /// </summary>
         public string FileName { get; init; }
+        /// <summary>
+        /// 本地存储路径
+        /// </summary>
+        public string LocalPath { get; set; }
     }
 }

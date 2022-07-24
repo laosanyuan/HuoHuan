@@ -22,7 +22,6 @@ namespace HuoHuan.Plugin
 
         private readonly PaddleOCREngine _engine = new(null, new OCRParameter());
 
-
         public async Task<bool> IsValidImage(string url)
         {
             // 1. 判断url是否重复
@@ -95,7 +94,7 @@ namespace HuoHuan.Plugin
         /// </summary>
         /// <param name="bitmap"></param>
         /// <returns></returns>
-        public string GetImageText(Bitmap bitmap)
+        private string GetImageText(Bitmap bitmap)
         {
             try
             {
