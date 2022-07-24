@@ -15,7 +15,7 @@ namespace HuoHuan.ViewModels.Pages
 {
     public class MainPageVM : ObservableObject
     {
-        private readonly ISpider spider;
+        //private readonly ISpider spider;
 
         #region [Properties]
         private CrawlInfo crawl;
@@ -69,7 +69,7 @@ namespace HuoHuan.ViewModels.Pages
         /// <summary>
         /// 暂停
         /// </summary>
-        public ICommand PauseCrawlCommand => _pauseCrawlCommand.Value;
+        public ICommand PauseCrawlCommand => _pauseCrawlCommand?.Value;
 
         private readonly Lazy<RelayCommand> _startDownloadCommand;
         /// <summary>
@@ -86,21 +86,21 @@ namespace HuoHuan.ViewModels.Pages
 
         public MainPageVM()
         {
-            this.spider = MainController.Instance.Spider;
+            //this.spider = MainController.Instance.Spider;
 
             this._startCrawlCommand = new Lazy<RelayCommand<bool?>>(() => new RelayCommand<bool?>(isStart => SwitchCrawl(isStart == true)));
-            this._pauseCrawlCommand = new Lazy<RelayCommand<bool?>>(() => new RelayCommand<bool?>(isPause => this.spider?.PasueCrawl(isPause == true)));
+            //this._pauseCrawlCommand = new Lazy<RelayCommand<bool?>>(() => new RelayCommand<bool?>(isPause => this.spider?.PasueCrawl(isPause == true)));
             this._startDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() =>
             {
                 Task.Run(() =>
                 {
-                    this.spider?.StartDownload(arg =>
-                    {
-                        this.Download = new DownloadInfo() { Url = arg.GroupData.SourceUrl, Count = arg.DownloadedCount, LaveCount = arg.LaveCount };
-                    });
+                    //this.spider?.StartDownload(arg =>
+                    //{
+                    //    this.Download = new DownloadInfo() { Url = arg.GroupData.SourceUrl, Count = arg.DownloadedCount, LaveCount = arg.LaveCount };
+                    //});
                 });
             }));
-            this._stopDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.spider?.StopDownload()));
+            //this._stopDownloadCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.spider?.StopDownload()));
         }
 
         private void SwitchCrawl(bool isStart)
@@ -109,37 +109,37 @@ namespace HuoHuan.ViewModels.Pages
             {
                 Task.Run(() =>
                 {
-                    this.spider?.StartCrawl(SpiderKey.TiebaDatas, arg =>
-                    {
-                        // 更新爬取信息
-                        this.Crawl = new CrawlInfo() { Url = arg.GroupData?.SourceUrl, CrawledCount = arg.CrawledCount, Process = arg.Process };
+                    //this.spider?.StartCrawl(SpiderKey.TiebaDatas, arg =>
+                    //{
+                    //    // 更新爬取信息
+                    //    this.Crawl = new CrawlInfo() { Url = arg.GroupData?.SourceUrl, CrawledCount = arg.CrawledCount, Process = arg.Process };
 
-                        // 更新图片列表
-                        if (!arg.IsFinish)
-                        {
-                            var url = new DisplayImageInfo() { Url = arg.GroupData?.SourceUrl, IsValid = arg.IsValidImage };
+                    //    // 更新图片列表
+                    //    if (!arg.IsFinish)
+                    //    {
+                    //        var url = new DisplayImageInfo() { Url = arg.GroupData?.SourceUrl, IsValid = arg.IsValidImage };
 
-                            if (ursl == null)
-                            {
-                                Urls = new ObservableCollection<DisplayImageInfo>() { url };
-                            }
-                            else if (Urls.Count < 12)
-                            {
-                                Urls.Add(url);
-                            }
-                            else
-                            {
-                                // 随机分配至展示部分
-                                var index = new Random().Next(12);
-                                Urls[index] = url;
-                            }
-                        }
-                    });
+                    //        if (ursl == null)
+                    //        {
+                    //            Urls = new ObservableCollection<DisplayImageInfo>() { url };
+                    //        }
+                    //        else if (Urls.Count < 12)
+                    //        {
+                    //            Urls.Add(url);
+                    //        }
+                    //        else
+                    //        {
+                    //            // 随机分配至展示部分
+                    //            var index = new Random().Next(12);
+                    //            Urls[index] = url;
+                    //        }
+                    //    }
+                    //});
                 });
             }
             else
             {
-                this.spider?.StopCrawl();
+                //this.spider?.StopCrawl();
             }
         }
     }

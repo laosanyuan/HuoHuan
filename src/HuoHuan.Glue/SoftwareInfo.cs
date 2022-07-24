@@ -1,6 +1,6 @@
 ﻿namespace HuoHuan.Glue
 {
-    internal class SoftwareInfo
+    public class SoftwareInfo
     {
         public static readonly string Identity = "HuoHuan";
         public static readonly string Name = "火浣";

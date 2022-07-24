@@ -37,7 +37,7 @@ namespace HuoHuan.Glue.Utils
             HttpClient client = new();
             byte[] bytes = await client.GetByteArrayAsync(url);
             using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            stream.Write(bytes, 0, bytes.Length);
+            await stream.WriteAsync(bytes, 0, bytes.Length);
         }
 
         /// <summary>

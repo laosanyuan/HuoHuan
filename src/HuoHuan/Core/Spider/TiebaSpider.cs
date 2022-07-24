@@ -18,197 +18,197 @@ namespace HuoHuan.Core.Spider
     /// <summary>
     /// 百度贴吧
     /// </summary>
-    internal class TiebaSpider : ISpider
-    {
-        private readonly List<IGroupFilter> filters = new();
-        private readonly HtmlParser parser = new();
-        private readonly Queue<GroupData> GroupDatas = new();
-        private int downloadedCount = 0;    // 已下载数量
-        private int crawledCount = 0;       // 已获取数量
+    //internal class TiebaSpider : ISpider
+    //{
+    //    private readonly List<IGroupFilter> filters = new();
+    //    private readonly HtmlParser parser = new();
+    //    private readonly Queue<GroupData> GroupDatas = new();
+    //    private int downloadedCount = 0;    // 已下载数量
+    //    private int crawledCount = 0;       // 已获取数量
 
-        public bool IsCrawling { get; private set; }
-        public bool IsPauseCrawl { get; set; }
-        public bool IsDownloading { get; private set; }
-        public string Path { get; protected set; } = null!;
+    //    public bool IsCrawling { get; private set; }
+    //    public bool IsPauseCrawl { get; set; }
+    //    public bool IsDownloading { get; private set; }
+    //    public string Path { get; protected set; } = null!;
 
-        public void SetFilter(string path, params QRCodeType[] types)
-        {
-            this.Path = path;
-            this.filters.Clear();
-            foreach (var type in types)
-            {
-                var result = GroupFilterFactory.CreateFilter(type);
-                if (result != null)
-                {
-                    filters.Add(result);
-                }
-            }
-        }
+    //    public void SetFilter(string path, params QRCodeType[] types)
+    //    {
+    //        this.Path = path;
+    //        this.filters.Clear();
+    //        foreach (var type in types)
+    //        {
+    //            var result = GroupFilterFactory.CreateFilter(type);
+    //            if (result != null)
+    //            {
+    //                filters.Add(result);
+    //            }
+    //        }
+    //    }
 
-        public async Task StartCrawl(List<SpiderData> keys, Action<CrawlEventArgs> callback)
-        {
-            if (String.IsNullOrEmpty(this.Path) || this.filters.Count == 0)
-            {
-                return;
-            }
+    //    public async Task StartCrawl(List<SpiderData> keys, Action<CrawlEventArgs> callback)
+    //    {
+    //        if (String.IsNullOrEmpty(this.Path) || this.filters.Count == 0)
+    //        {
+    //            return;
+    //        }
 
-            this.IsCrawling = true;
-            this.IsPauseCrawl = false;
-            this.crawledCount = 0;
-            double process = 0.0;
+    //        this.IsCrawling = true;
+    //        this.IsPauseCrawl = false;
+    //        this.crawledCount = 0;
+    //        double process = 0.0;
 
-            for (int i = 0; i < keys.Count; i++)
-            {
-                for (int j = 0; j < keys[i].Page; j++)
-                {
-                    HashSet<string> urls = new HashSet<string>();
-                    int index = j * 50;
-                    try
-                    {
-                        HttpClient client = new();
-                        HttpUtil.SetHeaders(client);
+    //        for (int i = 0; i < keys.Count; i++)
+    //        {
+    //            for (int j = 0; j < keys[i].Page; j++)
+    //            {
+    //                HashSet<string> urls = new HashSet<string>();
+    //                int index = j * 50;
+    //                try
+    //                {
+    //                    HttpClient client = new();
+    //                    HttpUtil.SetHeaders(client);
 
-                        string pageData = await client.GetStringAsync($"https://tieba.baidu.com/f?kw={keys[i].Key}&ie=utf-8&pn={index}");
-                        IHtmlDocument doc = await this.parser.ParseDocumentAsync(pageData);
-                        IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".t_con.cleafix");
-                        foreach (IElement tag in tags)
-                        {
-                            IHtmlCollection<IElement> images = tag.QuerySelectorAll(".threadlist_pic.j_m_pic");
-                            for (int k = 0; k < images.Length; k++)
-                            {
-                                IElement image = images[k];
-                                var url = image.GetAttribute("bpic");
+    //                    string pageData = await client.GetStringAsync($"https://tieba.baidu.com/f?kw={keys[i].Key}&ie=utf-8&pn={index}");
+    //                    IHtmlDocument doc = await this.parser.ParseDocumentAsync(pageData);
+    //                    IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".t_con.cleafix");
+    //                    foreach (IElement tag in tags)
+    //                    {
+    //                        IHtmlCollection<IElement> images = tag.QuerySelectorAll(".threadlist_pic.j_m_pic");
+    //                        for (int k = 0; k < images.Length; k++)
+    //                        {
+    //                            IElement image = images[k];
+    //                            var url = image.GetAttribute("bpic");
 
-                                foreach (var filter in this.filters)
-                                {
-                                    if (!this.IsCrawling)
-                                    {
-                                        // 停止爬取
-                                        return;
-                                    }
-                                    while (this.IsPauseCrawl)
-                                    {
-                                        // 暂停爬取
-                                        Thread.Sleep(100);
-                                        if (!this.IsCrawling)
-                                        {
-                                            return;
-                                        }
-                                    }
-                                    if (url != null && await filter.IsValidImage(url))
-                                    {
-                                        var data = filter.GetGroupData(url);
+    //                            foreach (var filter in this.filters)
+    //                            {
+    //                                if (!this.IsCrawling)
+    //                                {
+    //                                    // 停止爬取
+    //                                    return;
+    //                                }
+    //                                while (this.IsPauseCrawl)
+    //                                {
+    //                                    // 暂停爬取
+    //                                    Thread.Sleep(100);
+    //                                    if (!this.IsCrawling)
+    //                                    {
+    //                                        return;
+    //                                    }
+    //                                }
+    //                                if (url != null && await filter.IsValidImage(url))
+    //                                {
+    //                                    var data = filter.GetGroupData(url);
 
-                                        if (data != null)
-                                        {
-                                            this.GroupDatas.Enqueue(data);
-                                            filter?.SaveData(data);
-                                            this.crawledCount++;
-                                        }
-                                        else
-                                        {
-                                            // 后期判断是否保留
-                                            data = new GroupData() { SourceUrl = url };
-                                        }
+    //                                    if (data != null)
+    //                                    {
+    //                                        this.GroupDatas.Enqueue(data);
+    //                                        filter?.SaveData(data);
+    //                                        this.crawledCount++;
+    //                                    }
+    //                                    else
+    //                                    {
+    //                                        // 后期判断是否保留
+    //                                        data = new GroupData() { SourceUrl = url };
+    //                                    }
 
-                                        try
-                                        {
-                                            // 估算进度
-                                            process = (float)(((i * 1.0 / keys.Count)
-                                                    + (j * 1.0 / keys[i].Page / keys.Count)
-                                                    + ((k + 1.0) / images.Length / keys[i].Page / keys.Count)) * 100);
-                                            callback?.Invoke(new CrawlEventArgs()
-                                            {
-                                                GroupData = data,
-                                                CrawledCount = this.crawledCount,
-                                                Process = process,
-                                                IsValidImage = true
-                                            });
-                                        }
-                                        catch (Exception)
-                                        {
-                                        }
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        callback?.Invoke(new CrawlEventArgs()
-                                        {
-                                            GroupData = new GroupData { SourceUrl = url },
-                                            CrawledCount = this.crawledCount,
-                                            Process = process,
-                                            IsValidImage = false
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-            }
-            callback?.Invoke(new CrawlEventArgs()
-            {
-                CrawledCount = this.crawledCount,
-                Process = 100,
-                IsFinish = true
-            });
-        }
+    //                                    try
+    //                                    {
+    //                                        // 估算进度
+    //                                        process = (float)(((i * 1.0 / keys.Count)
+    //                                                + (j * 1.0 / keys[i].Page / keys.Count)
+    //                                                + ((k + 1.0) / images.Length / keys[i].Page / keys.Count)) * 100);
+    //                                        callback?.Invoke(new CrawlEventArgs()
+    //                                        {
+    //                                            GroupData = data,
+    //                                            CrawledCount = this.crawledCount,
+    //                                            Process = process,
+    //                                            IsValidImage = true
+    //                                        });
+    //                                    }
+    //                                    catch (Exception)
+    //                                    {
+    //                                    }
+    //                                    break;
+    //                                }
+    //                                else
+    //                                {
+    //                                    callback?.Invoke(new CrawlEventArgs()
+    //                                    {
+    //                                        GroupData = new GroupData { SourceUrl = url },
+    //                                        CrawledCount = this.crawledCount,
+    //                                        Process = process,
+    //                                        IsValidImage = false
+    //                                    });
+    //                                }
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //                catch (Exception ex)
+    //                {
+    //                }
+    //            }
+    //        }
+    //        callback?.Invoke(new CrawlEventArgs()
+    //        {
+    //            CrawledCount = this.crawledCount,
+    //            Process = 100,
+    //            IsFinish = true
+    //        });
+    //    }
 
-        public async Task StartDownload(Action<DownloadEventArgs> callback)
-        {
-            this.IsDownloading = true;
-            this.downloadedCount = 0;
+    //    public async Task StartDownload(Action<DownloadEventArgs> callback)
+    //    {
+    //        this.IsDownloading = true;
+    //        this.downloadedCount = 0;
 
-            await Task.Factory.StartNew(async () =>
-            {
-                try
-                {
-                    while (this.GroupDatas.Count > 0)
-                    {
-                        if (!this.IsDownloading)
-                        {
-                            return;
-                        }
-                        var data = this.GroupDatas.Dequeue();
+    //        await Task.Factory.StartNew(async () =>
+    //        {
+    //            try
+    //            {
+    //                while (this.GroupDatas.Count > 0)
+    //                {
+    //                    if (!this.IsDownloading)
+    //                    {
+    //                        return;
+    //                    }
+    //                    var data = this.GroupDatas.Dequeue();
 
-                        var localPath = $"{this.Path}\\{data.FileName}";
-                        await ImageUtil.SaveImageFile(data.SourceUrl, localPath);
-                        data.LocalPath = localPath;
-                        this.downloadedCount++;
+    //                    var localPath = $"{this.Path}\\{data.FileName}";
+    //                    await ImageUtil.SaveImageFile(data.SourceUrl, localPath);
+    //                    data.LocalPath = localPath;
+    //                    this.downloadedCount++;
 
-                        var filter = this.filters.FirstOrDefault();
-                        filter?.SaveData(data);
+    //                    var filter = this.filters.FirstOrDefault();
+    //                    filter?.SaveData(data);
 
-                        callback?.Invoke(new DownloadEventArgs() { GroupData = data, LaveCount = this.GroupDatas.Count, DownloadedCount = this.downloadedCount });
-                    }
-                }
-                catch (Exception)
-                {
-                    this.IsDownloading = false;
-                }
-            });
-        }
+    //                    callback?.Invoke(new DownloadEventArgs() { GroupData = data, LaveCount = this.GroupDatas.Count, DownloadedCount = this.downloadedCount });
+    //                }
+    //            }
+    //            catch (Exception)
+    //            {
+    //                this.IsDownloading = false;
+    //            }
+    //        });
+    //    }
 
-        public void StopCrawl()
-        {
-            this.IsCrawling = false;
-            this.IsPauseCrawl = false;
-        }
+    //    public void StopCrawl()
+    //    {
+    //        this.IsCrawling = false;
+    //        this.IsPauseCrawl = false;
+    //    }
 
-        public void StopDownload()
-        {
-            this.IsDownloading = false;
-        }
+    //    public void StopDownload()
+    //    {
+    //        this.IsDownloading = false;
+    //    }
 
-        public void PasueCrawl(bool isPause)
-        {
-            if (this.IsCrawling)
-            {
-                this.IsPauseCrawl = isPause;
-            }
-        }
-    }
+    //    public void PasueCrawl(bool isPause)
+    //    {
+    //        if (this.IsCrawling)
+    //        {
+    //            this.IsPauseCrawl = isPause;
+    //        }
+    //    }
+    //}
 }

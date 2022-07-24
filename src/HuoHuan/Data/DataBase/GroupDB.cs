@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace HuoHuan.Data.DataBase
 {
     internal class GroupDB : BaseDB
     {
-        public GroupDB(string fileName)
+        public GroupDB()
         {
-            base.FileName = $"{fileName}.db";
-            base.FilePath = Environment.CurrentDirectory + @"\DataBase";
+            base.FileName = $"group.db";
+            base.FilePath = FolderUtil.DbPath + @"\DataBase";
             base.TableName = "groups";
 
             var command = $"CREATE TABLE {base.TableName} (source_url varchar(200),name varchar(100)," +
@@ -25,35 +26,31 @@ namespace HuoHuan.Data.DataBase
         /// 插入群数据
         /// </summary>
         /// <param name="wechatGroup"></param>
-        public void InsertGroup(GroupData wechatGroup)
+        public async Task InsertGroup(GroupData wechatGroup)
         {
-            using (var connection = base.DataBaseConnection())
-            {
-                var sql = $"INSERT INTO {base.TableName} (source_url,name,qr_text,invalidate_date,local_path) " +
-                    $"values (@SourceUrl,@Name,@QRText,@InvalidateDate,'{wechatGroup.InvalidateDate.ToString("yyyyy-MM-dd")}')";
-                connection.ExecuteAsync(sql, wechatGroup);
-            }
+            using var connection = base.DataBaseConnection();
+            var sql = $"INSERT INTO {base.TableName} (source_url,name,qr_text,invalidate_date,local_path) " +
+                $"values (@SourceUrl,@Name,@QRText,'{wechatGroup.InvalidateDate.ToString("yyyyy-MM-dd")}',@LocalPath)";
+            await connection.ExecuteAsync(sql, wechatGroup);
         }
 
         /// <summary>
         /// 查询当前有效微信群
         /// </summary>
         /// <returns></returns>
-        public List<GroupData> QueryInvalidateGroup()
+        public async Task<List<GroupData>> QueryInvalidateGroup()
         {
-            using (var connection = base.DataBaseConnection())
+            using var connection = base.DataBaseConnection();
+            var sql = $"SELECT * FROM {base.TableName} WHERE invalidate_date BETWEEN date('now') AND date('now','start of day','8 day')";
+            var result = (await connection.QueryAsync<dynamic>(sql)).Select(t => new GroupData()
             {
-                var sql = $"SELECT * FROM {base.TableName} WHERE invalidate_date BETWEEN date('now') AND date('now','start of day','8 day')";
-                var result = connection.Query<dynamic>(sql).Select(t => new GroupData()
-                {
-                    SourceUrl = t.source_url,
-                    Name = t.name,
-                    QRText = t.qr_text,
-                    InvalidateDate = Convert.ToDateTime(t.invalidate_date),
-                    LocalPath = t.local_path
-                }).ToList();
-                return result;
-            }
+                SourceUrl = t.source_url,
+                Name = t.name,
+                QRText = t.qr_text,
+                InvalidateDate = Convert.ToDateTime(t.invalidate_date),
+                LocalPath = t.local_path
+            }).ToList();
+            return result;
         }
 
         /// <summary>
@@ -61,13 +58,11 @@ namespace HuoHuan.Data.DataBase
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<bool> IsExistUrl(string url)
+        public async Task<bool> IsExistsUrl(string url)
         {
-            using (var connection = base.DataBaseConnection())
-            {
-                var sql = $"SELECT COUNT(*) FROM {base.TableName} WHERE source_url = '{url}'";
-                return (await connection.QueryFirstAsync<int>(sql)) > 0;
-            }
+            using var connection = base.DataBaseConnection();
+            var sql = $"SELECT COUNT(*) FROM {base.TableName} WHERE source_url = '{url}'";
+            return (await connection.QueryFirstAsync<int>(sql)) > 0;
         }
         #endregion
     }

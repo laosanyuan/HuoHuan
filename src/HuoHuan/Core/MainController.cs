@@ -5,14 +5,14 @@ namespace HuoHuan.Core
 {
     internal class MainController
     {
-        public static MainController Instance { get; private set; } = new MainController();
+        //public static MainController Instance { get; private set; } = new MainController();
 
-        private MainController()
-        {
-            this.Spider = new TiebaSpider();
-            this.Spider.SetFilter("D://test", QRCodeType.WechatGroup);
-        }
+        //private MainController()
+        //{
+        //    this.Spider = new TiebaSpider();
+        //    this.Spider.SetFilter("D://test", QRCodeType.WechatGroup);
+        //}
 
-        public ISpider Spider { get; private set; }
+        //public ISpider Spider { get; private set; }
     }
 }

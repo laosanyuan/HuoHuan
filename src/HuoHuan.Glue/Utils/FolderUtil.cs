@@ -8,33 +8,33 @@
             {
                 var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 var path = Path.Combine(appDataPath, SoftwareInfo.Identity);
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                return path;
+                return CreatePath(path);
             }
         }
 
         /// <summary>
         /// 数据库路径
         /// </summary>
-        public static string DbPath
-        {
-            get
-            {
-                var path = Path.Combine(AppData, "db");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                return path;
-            }
-        }
+        public static string DbPath => CreatePath(Path.Combine(AppData, "db"));
+
+        /// <summary>
+        /// 图片保存路径
+        /// </summary>
+        public static string ImagesFolder
+            => CreatePath(Path.Combine(AppData, "images", DateTime.Today.ToString("yyyy-MM-dd")));
 
         /// <summary>
         /// 运行路径
         /// </summary>
         public static string Current => Environment.CurrentDirectory;
+
+        private static string CreatePath(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path;
+        }
     }
 }
