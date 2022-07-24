@@ -90,14 +90,14 @@ namespace HuoHuan.Core.Filter
                 // 2.判断当前群数据库是否存在/标记
                 bool isExist = await this.db.IsExistsUrl(imageUrl);
 
-                // 3.判断是否为二维码及有效
-                if (!isExist && ImageUtil.IsQRCode(imageUrl, out var text) && text.Contains(this.urlFlag))
-                {
-                    this.text = text;
-                    // 4.更新链接标记
-                    //UrlDB.Instance.UpdateUsedUrl(imageUrl, this.db.TableName);
-                    return true;
-                }
+                //// 3.判断是否为二维码及有效
+                //if (!isExist && ImageUtil.IsQRCode(imageUrl, out var text) && text.Contains(this.urlFlag))
+                //{
+                //    this.text = text;
+                //    // 4.更新链接标记
+                //    //UrlDB.Instance.UpdateUsedUrl(imageUrl, this.db.TableName);
+                //    return true;
+                //}
             }
             this.text = String.Empty;
             return false;

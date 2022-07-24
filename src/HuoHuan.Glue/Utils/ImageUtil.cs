@@ -46,23 +46,22 @@ namespace HuoHuan.Glue.Utils
         /// <param name="url"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static bool IsQRCode(string url, out string text)
+        public static async Task<(bool, string)> IsQRCode(string url)
         {
-            text = null!;
             var reader = new ZXing.BarcodeReader();
             reader.Options.CharacterSet = "UTF-8";
             var image = ImageUtil.GetBitmapFromUrl(url).Result;
             if (image == null)
             {
-                return false;
+                return (false, null!);
             }
             var qr = reader.Decode(image);
             if (qr != null)
             {
-                text = qr.Text;
-                return true;
+                return (true, qr.Text);
             }
-            return false;
+            return (false, null!);
         }
+
     }
 }

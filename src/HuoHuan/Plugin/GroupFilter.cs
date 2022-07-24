@@ -22,19 +22,16 @@ namespace HuoHuan.Plugin
 
         private readonly PaddleOCREngine _engine = new(null, new OCRParameter());
 
-        public async Task<bool> IsValidImage(string url)
+        public async Task<(bool, string)> IsValidImage(string url)
         {
             // 1. 判断url是否重复
             if (!await CrawledImageDB.Instance.IsExistsAndInsert(url))
             {
 
                 // 2. 判断是否为二维码
-                if (ImageUtil.IsQRCode(url, out string text))
-                {
-                    return true;
-                }
+                return await ImageUtil.IsQRCode(url);
             }
-            return false;
+            return (false, null!);
         }
 
         /// <summary>
