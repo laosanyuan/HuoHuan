@@ -23,30 +23,30 @@ namespace HuoHuan.Models
         public GroupData GroupData { get; set; }
     }
 
-    /// <summary>
-    /// 爬取事件
-    /// </summary>
-    internal class CrawlEventArgs : EventArgs
-    {
-        /// <summary>
-        /// 爬取数量
-        /// </summary>
-        public int CrawledCount { get; set; }
-        /// <summary>
-        /// 爬取进度
-        /// </summary>
-        public double Process { get; set; }
-        /// <summary>
-        /// 群信息
-        /// </summary>
-        public GroupData GroupData { get; set; }
-        /// <summary>
-        /// 是否已完成
-        /// </summary>
-        public bool IsFinish { get; set; }
-        /// <summary>
-        /// 是否为有效二维码图片
-        /// </summary>
-        public bool IsValidImage { get; set; }
-    }
+    ///// <summary>
+    ///// 爬取事件
+    ///// </summary>
+    //internal class CrawlEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    /// 爬取数量
+    //    /// </summary>
+    //    public int CrawledCount { get; set; }
+    //    /// <summary>
+    //    /// 爬取进度
+    //    /// </summary>
+    //    public double Process { get; set; }
+    //    /// <summary>
+    //    /// 群信息
+    //    /// </summary>
+    //    public GroupData GroupData { get; set; }
+    //    /// <summary>
+    //    /// 是否已完成
+    //    /// </summary>
+    //    public bool IsFinish { get; set; }
+    //    /// <summary>
+    //    /// 是否为有效二维码图片
+    //    /// </summary>
+    //    public bool IsValidImage { get; set; }
+    //}
 }
