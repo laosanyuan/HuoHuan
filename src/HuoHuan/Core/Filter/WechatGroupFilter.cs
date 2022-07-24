@@ -2,7 +2,6 @@
 using HuoHuan.Enums;
 using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
-using HuoHuan.Utils;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
@@ -54,7 +53,8 @@ namespace HuoHuan.Core.Filter
                 // 二值化
                 Mat thresholdImg = simg.Threshold(210, 255, ThresholdTypes.Binary);
                 // 获取图片文字内容
-                var dateStr = PaddleUtil.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
+                //var dateStr = PaddleUtil.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
+                var dateStr = "";
                 if (!String.IsNullOrWhiteSpace(dateStr))
                 {
                     string pattern = @"内\((.+)前\)";

@@ -1,8 +1,8 @@
 ﻿using YamlDotNet.Serialization;
 
-namespace HuoHuan.Utils
+namespace HuoHuan.Glue.Utils
 {
-    internal class YamlUtil
+    public class YamlUtil
     {
         private static Deserializer deserializer = null!;
 
@@ -12,7 +12,7 @@ namespace HuoHuan.Utils
         /// <typeparam name="T"></typeparam>
         /// <param name="yaml"></param>
         /// <returns></returns>
-        internal static T Deserializer<T>(string yaml)
+        public static T Deserializer<T>(string yaml)
         {
             if (deserializer == null)
             {
