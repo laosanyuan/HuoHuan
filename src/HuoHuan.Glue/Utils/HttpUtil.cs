@@ -1,15 +1,15 @@
 ﻿using System.Net;
 using System.Net.Http;
 
-namespace HuoHuan.Utils
+namespace HuoHuan.Glue.Utils
 {
-    internal class HttpUtil
+    public class HttpUtil
     {
         /// <summary>
         /// 设置伪装请求头
         /// </summary>
         /// <param name="http"></param>
-        internal static void SetHeaders(HttpClient http)
+        public static void SetHeaders(HttpClient http)
         {
             http.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             http.DefaultRequestHeaders.Add("Cache-Control", "max-age=0");
@@ -23,7 +23,7 @@ namespace HuoHuan.Utils
         /// 设置伪装请求头
         /// </summary>
         /// <param name="client"></param>
-        internal static void SetHeaders(WebClient client)
+        public static void SetHeaders(WebClient client)
         {
             client.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             client.Headers.Add("Cache-Control", "max-age=0");

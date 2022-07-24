@@ -1,19 +1,16 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using Image = System.Drawing.Image;
 
-namespace HuoHuan.Utils
+namespace HuoHuan.Glue.Utils
 {
-    internal class ImageUtil
+    public class ImageUtil
     {
         /// <summary>
         /// 根据URL获取图像
         /// </summary>
         /// <param name="Url"></param>
         /// <returns></returns>
-        internal static async Task<Bitmap> GetBitmapFromUrl(string url)
+        public static async Task<Bitmap> GetBitmapFromUrl(string url)
         {
             Bitmap result = null!;
             try
@@ -35,7 +32,7 @@ namespace HuoHuan.Utils
         /// </summary>
         /// <param name="url"></param>
         /// <param name="fileName"></param>
-        internal static async void SaveImageFile(string url, string fileName)
+        public static async Task SaveImageFile(string url, string fileName)
         {
             HttpClient client = new();
             byte[] bytes = await client.GetByteArrayAsync(url);
@@ -49,7 +46,7 @@ namespace HuoHuan.Utils
         /// <param name="url"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        internal static bool IsQRCode(string url, out string text)
+        public static bool IsQRCode(string url, out string text)
         {
             text = null!;
             var reader = new ZXing.BarcodeReader();

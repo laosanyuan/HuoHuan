@@ -10,8 +10,7 @@ namespace HuoHuan.Test.Utils
         [Test]
         public void AppDataTest()
         {
-            var path = FolderUtil.AppData;
-            Assert.IsTrue(Directory.Exists(path));
+
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace HuoHuan.Util
+﻿namespace HuoHuan.Glue.Utils
 {
     public class FolderUtil
     {

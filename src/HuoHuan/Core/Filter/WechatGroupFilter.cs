@@ -1,5 +1,6 @@
 ﻿using HuoHuan.Data.DataBase;
 using HuoHuan.Enums;
+using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
 using HuoHuan.Utils;
 using OpenCvSharp;
