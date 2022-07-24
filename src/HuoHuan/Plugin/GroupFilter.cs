@@ -1,10 +1,11 @@
 ﻿using HuoHuan.Data.DataBase;
 using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
-using HuoHuan.Utils;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using PaddleOCRSharp;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -18,6 +19,9 @@ namespace HuoHuan.Plugin
     internal class GroupFilter
     {
         private readonly string _urlFlag = "https://weixin.qq.com/g/";  // 微信群链接标记
+
+        private readonly PaddleOCREngine _engine = new(null, new OCRParameter());
+
 
         public async Task<bool> IsValidImage(string url)
         {
@@ -65,7 +69,7 @@ namespace HuoHuan.Plugin
                 // 二值化
                 Mat thresholdImg = simg.Threshold(210, 255, ThresholdTypes.Binary);
                 // 获取图片文字内容
-                var dateStr = PaddleUtil.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
+                var dateStr = this.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
                 string pattern = @"内\((.+)前\)";
 
                 if (!String.IsNullOrWhiteSpace(dateStr)
@@ -84,6 +88,25 @@ namespace HuoHuan.Plugin
                 }
             }
             return null!;
+        }
+
+        /// <summary>
+        /// 识别获取Bitmap文字内容
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
+        public string GetImageText(Bitmap bitmap)
+        {
+            try
+            {
+                var ocrResult = _engine.DetectText(bitmap);
+
+                return ocrResult.Text;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
     }
 }

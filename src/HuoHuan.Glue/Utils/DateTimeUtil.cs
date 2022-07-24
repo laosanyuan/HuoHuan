@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace HuoHuan.Utils
+﻿namespace HuoHuan.Glue.Utils
 {
-    internal class DateTimeUtil
+    public class DateTimeUtil
     {
         /// <summary>
         /// 比较日期是否在有效范围内
