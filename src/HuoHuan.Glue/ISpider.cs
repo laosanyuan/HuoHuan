@@ -77,6 +77,7 @@ namespace HuoHuan.Glue
     {
         Unknown,
         Waiting,    // 等待开始
+
         Running,    // 运行中
         Paused,     // 暂停
 
