@@ -17,17 +17,17 @@ namespace HuoHuan.Plugin
     {
         private GroupFilter _filter = new GroupFilter();
         private GroupDB _db = new GroupDB();
-        private IList<IPlugin> _cachePlugins;
+        private IList<IPlugin> _cachePlugins = null!;
 
         #region [Events]
         /// <summary>
         /// 进度状态变更
         /// </summary>
-        public event SpiderProgressEventHandler ProgressStatusChanged;
+        public event SpiderProgressEventHandler ProgressStatusChanged = null!;
         /// <summary>
         /// 爬取结果通知
         /// </summary>
-        public event SpiderCrawledEventHandler Crawled;
+        public event SpiderCrawledEventHandler Crawled = null!;
         #endregion
 
         #region [Public Methods]
@@ -112,12 +112,15 @@ namespace HuoHuan.Plugin
 
         private async void Spider_Crawled(object sender, CrawlEventArgs e)
         {
-            var result = await this._filter.IsValidImage(e.Url);
-            if (result.Item1)
+            if (sender is not null)
             {
-                var group = this._filter.GetGroupData(e.Url, result.Item2);
-                await this.Save(group);
-                this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, sender as ISpider, group));
+                var result = await this._filter.IsValidImage(e.Url);
+                if (result.Item1)
+                {
+                    var group = this._filter.GetGroupData(e.Url, result.Item2);
+                    await this.Save(group);
+                    this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                }
             }
         }
 
@@ -128,7 +131,7 @@ namespace HuoHuan.Plugin
                 return;
             }
 
-            ISpider spider = sender! as ISpider;
+            ISpider spider = (sender as ISpider)!;
             if (e.Status == SpiderStatus.Stopped || e.Status == SpiderStatus.Finished)
             {
                 spider!.ProgressStatusChanged -= Spider_ProgressStatusChanged;

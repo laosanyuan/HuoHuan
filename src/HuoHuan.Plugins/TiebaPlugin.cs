@@ -46,7 +46,9 @@ namespace HuoHuan.Plugins
         #region [Public Methods]
         public void Start()
         {
-            if (this.Status != SpiderStatus.Unknown && this.Status != SpiderStatus.Running)
+            if (this._config is not null
+                && this.Status != SpiderStatus.Unknown
+                && this.Status != SpiderStatus.Running)
             {
                 this.Status = SpiderStatus.Running;
                 _ = this.CrawlImage();
@@ -56,7 +58,7 @@ namespace HuoHuan.Plugins
 
         public void Pause()
         {
-            if (this.Status == SpiderStatus.Running)
+            if (this._config is not null && this.Status == SpiderStatus.Running)
             {
                 this.Status = SpiderStatus.Paused;
                 this.NotifyStatusProgressChange();
@@ -65,7 +67,7 @@ namespace HuoHuan.Plugins
 
         public void Continue()
         {
-            if (this.Status == SpiderStatus.Paused)
+            if (this._config is not null && this.Status == SpiderStatus.Paused)
             {
                 this.Status = SpiderStatus.Running;
             }
@@ -73,7 +75,7 @@ namespace HuoHuan.Plugins
 
         public void Stop()
         {
-            if (this.Status != SpiderStatus.Unknown)
+            if (this._config is not null && this.Status != SpiderStatus.Unknown)
             {
                 this.Status = SpiderStatus.Waiting;
             }
@@ -98,7 +100,7 @@ namespace HuoHuan.Plugins
             this._progress = 0;
             this._startTime = DateTime.Now;
             var pageCount = 0;
-            this._config.Config?.ForEach(t => pageCount += t.PageCount);
+            this._config?.Config?.ForEach(t => pageCount += t.PageCount);
             var currentPage = 0;
 
             for (int i = 0; i < this._config?.Config?.Count; i++)

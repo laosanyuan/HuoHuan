@@ -51,7 +51,6 @@ namespace HuoHuan.Plugin
             }
             catch (Exception)
             {
-
             }
 
             return plugins;
