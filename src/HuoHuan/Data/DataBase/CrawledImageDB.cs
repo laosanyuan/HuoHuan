@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using HuoHuan.Glue.Utils;
+using HuoHuan.Utils;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

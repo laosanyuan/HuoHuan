@@ -1,6 +1,6 @@
 ﻿using YamlDotNet.Serialization;
 
-namespace HuoHuan.Glue.Utils
+namespace HuoHuan.Utils
 {
     public class YamlUtil
     {

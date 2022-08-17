@@ -1,11 +1,11 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using HuoHuan.Glue;
-using HuoHuan.Glue.Utils;
-using static HuoHuan.Plugins.TiebaConfig;
+using HuoHuan.Plugin.Contracs;
+using HuoHuan.Utils;
+using static HuoHuan.Plugin.Plugins.TiebaConfig;
 
-namespace HuoHuan.Plugins
+namespace HuoHuan.Plugin.Plugins
 {
     public class TiebaPlugin : IPlugin
     {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 
-namespace HuoHuan.Glue.Utils
+namespace HuoHuan.Utils
 {
     public class HttpUtil
     {

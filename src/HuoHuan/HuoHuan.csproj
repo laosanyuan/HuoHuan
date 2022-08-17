@@ -12,10 +12,13 @@
     <PackageReference Include="CalcBinding" Version="2.5.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="DapperExtensions" Version="1.7.0" />
     <PackageReference Include="DryIoc" Version="4.8.8" />
-    <PackageReference Include="OpenCvSharp3-AnyCPU" Version="4.0.0.20181129" />
-    <PackageReference Include="PaddleOCRSharp" Version="1.3.0" />
+    <PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
+    <PackageReference Include="OpenCvSharp4.Extensions" Version="4.6.0.20220608" />
+    <PackageReference Include="PaddleOCRSharp" Version="2.0.3" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+    <PackageReference Include="System.Threading.Channels" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HuoHuan.Glue\HuoHuan.Glue.csproj" />
-    <ProjectReference Include="..\HuoHuan.Plugins\HuoHuan.Plugins.csproj" />
+    <ProjectReference Include="..\HuoHuan.Glue\HuoHuan.Utils.csproj" />
+    <ProjectReference Include="..\HuoHuan.Plugins\HuoHuan.Plugin.Plugins.csproj" />
   </ItemGroup>
 
   <ItemGroup>

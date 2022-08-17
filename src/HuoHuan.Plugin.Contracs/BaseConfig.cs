@@ -1,8 +1,8 @@
-﻿using HuoHuan.Glue.Utils;
+﻿using HuoHuan.Utils;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace HuoHuan.Glue
+namespace HuoHuan.Plugin.Contracs
 {
     public interface IConfig
     {

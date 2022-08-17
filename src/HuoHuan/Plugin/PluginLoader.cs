@@ -1,5 +1,5 @@
-﻿using HuoHuan.Glue;
-using HuoHuan.Glue.Utils;
+﻿using HuoHuan.Plugin.Contracs;
+using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;

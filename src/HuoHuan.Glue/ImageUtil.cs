@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Image = System.Drawing.Image;
 
-namespace HuoHuan.Glue.Utils
+namespace HuoHuan.Utils
 {
     public class ImageUtil
     {
@@ -50,7 +50,7 @@ namespace HuoHuan.Glue.Utils
         {
             var reader = new ZXing.BarcodeReader();
             reader.Options.CharacterSet = "UTF-8";
-            var image = ImageUtil.GetBitmapFromUrl(url).Result;
+            var image = GetBitmapFromUrl(url).Result;
             if (image == null)
             {
                 return (false, null!);

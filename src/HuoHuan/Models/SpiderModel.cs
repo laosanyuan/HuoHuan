@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using HuoHuan.Glue;
+using HuoHuan.Plugin.Contracs;
 
 #nullable disable
 

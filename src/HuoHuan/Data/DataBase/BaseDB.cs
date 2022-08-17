@@ -8,9 +8,20 @@ namespace HuoHuan.Data.DataBase
 {
     internal abstract class BaseDB
     {
+        #region [Properties]
+        /// <summary>
+        /// 数据库文件路径
+        /// </summary>
         public string FilePath { get; protected set; } = null!;
+        /// <summary>
+        /// 文件名
+        /// </summary>
         public string FileName { get; protected set; } = null!;
+        /// <summary>
+        /// 表名称
+        /// </summary>
         public string TableName { get; protected set; } = null!;
+        #endregion
 
         #region [Methods]
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using HuoHuan.Data.DataBase;
-using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
+using HuoHuan.Utils;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using PaddleOCRSharp;

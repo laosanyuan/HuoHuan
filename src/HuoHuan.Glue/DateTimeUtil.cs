@@ -1,4 +1,4 @@
-﻿namespace HuoHuan.Glue.Utils
+﻿namespace HuoHuan.Utils
 {
     public class DateTimeUtil
     {
