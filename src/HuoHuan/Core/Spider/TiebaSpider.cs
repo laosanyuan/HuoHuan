@@ -3,7 +3,6 @@ using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
 using HuoHuan.Core.Filter;
 using HuoHuan.Enums;
-using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using HttpUtil = HuoHuan.Glue.Utils.HttpUtil;
+using HttpUtil = HuoHuan.Utils.HttpUtil;
 
 namespace HuoHuan.Core.Spider
 {

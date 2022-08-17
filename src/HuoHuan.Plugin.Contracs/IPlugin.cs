@@ -1,4 +1,4 @@
-﻿namespace HuoHuan.Glue
+﻿namespace HuoHuan.Plugin.Contracs
 {
     public interface IPlugin
     {

@@ -1,12 +1,12 @@
 ﻿using HuoHuan.Data.DataBase;
-using HuoHuan.Glue;
-using HuoHuan.Glue.Utils;
 using HuoHuan.Models;
+using HuoHuan.Plugin.Contracs;
+using HuoHuan.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Channels;
 using System.Threading.Tasks;
-using ProgressEventArgs = HuoHuan.Glue.ProgressEventArgs;
 
 namespace HuoHuan.Plugin
 {
@@ -15,9 +15,15 @@ namespace HuoHuan.Plugin
 
     internal class SpiderManager
     {
+        #region [Fileds]
         private GroupFilter _filter = new GroupFilter();
         private GroupDB _db = new GroupDB();
         private IList<IPlugin> _cachePlugins = null!;
+        #endregion
+
+        #region [Properties]
+        public Channel<string> ImageChannels;
+        #endregion
 
         #region [Events]
         /// <summary>
@@ -108,6 +114,15 @@ namespace HuoHuan.Plugin
         }
         #endregion
 
+        public SpiderManager()
+        {
+            this.ImageChannels = Channel.CreateBounded<string>(
+                new BoundedChannelOptions(30)
+                {
+                    FullMode = BoundedChannelFullMode.DropOldest
+                });
+        }
+
         #region [Private Methods]
 
         private async void Spider_Crawled(object sender, CrawlEventArgs e)
@@ -122,6 +137,7 @@ namespace HuoHuan.Plugin
                     this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                 }
             }
+            await this.ImageChannels.Writer.WriteAsync(e.Url);
         }
 
         private void Spider_ProgressStatusChanged(object sender, ProgressEventArgs e)

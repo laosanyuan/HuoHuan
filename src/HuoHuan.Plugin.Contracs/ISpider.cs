@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HuoHuan.Glue
+﻿namespace HuoHuan.Plugin.Contracs
 {
     public delegate void ProgressEventHandler(object sender, ProgressEventArgs e);
     public delegate void CrawledEventHandler(object sender, CrawlEventArgs e);

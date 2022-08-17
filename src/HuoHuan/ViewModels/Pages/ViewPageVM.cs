@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HuoHuan.Data;
 using HuoHuan.Data.DataBase;
-using HuoHuan.Glue;
+using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

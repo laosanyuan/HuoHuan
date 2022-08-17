@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HuoHuan.Glue;
 using HuoHuan.Models;
 using HuoHuan.Plugin;
+using HuoHuan.Plugin.Contracs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
