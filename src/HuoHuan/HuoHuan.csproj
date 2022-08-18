@@ -12,7 +12,6 @@
     <PackageReference Include="CalcBinding" Version="2.5.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="DapperExtensions" Version="1.7.0" />
     <PackageReference Include="DryIoc" Version="4.8.8" />
     <PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.6.0.20220608" />
