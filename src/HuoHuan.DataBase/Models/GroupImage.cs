@@ -1,13 +1,17 @@
-﻿namespace HuoHuan.DataBase.Models
+﻿using Dapper.Contrib.Extensions;
+
+namespace HuoHuan.DataBase.Models
 {
     /// <summary>
     /// 群图片
     /// </summary>
-    public class GroupImage
+    [Table("groups")]
+    public record GroupImage
     {
         /// <summary>
         /// 资源url
         /// </summary>
+        [ExplicitKey]
         public string Url { get; init; } = null!;
         /// <summary>
         /// 群名称
@@ -16,11 +20,11 @@
         /// <summary>
         /// 二维码解析内容
         /// </summary>
-        public string? QrText { get; set; }
+        public string? QRText { get; set; }
         /// <summary>
-        /// 失效时间
+        /// 失效日期
         /// </summary>
-        public DateTime InvalideTime { get; set; }
+        public DateOnly InvalidateDate { get; init; }
         /// <summary>
         /// 本地存储文件
         /// </summary>
