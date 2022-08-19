@@ -6,7 +6,7 @@ namespace HuoHuan.DataBase.Models
     /// 预识别图片
     /// </summary>
     [Table("urls")]
-    public class PreviewImage
+    public record PreviewImage
     {
         [ExplicitKey]
         public string Url { get; init; } = null!;

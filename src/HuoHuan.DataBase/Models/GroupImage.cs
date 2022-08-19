@@ -16,7 +16,7 @@ namespace HuoHuan.DataBase.Models
         /// <summary>
         /// 群名称
         /// </summary>
-        public string? Name { get; set; }
+        public string? GroupName { get; set; }
         /// <summary>
         /// 二维码解析内容
         /// </summary>
@@ -24,10 +24,17 @@ namespace HuoHuan.DataBase.Models
         /// <summary>
         /// 失效日期
         /// </summary>
-        public DateOnly InvalidateDate { get; init; }
+        public DateTime InvalidateDate { get; init; }
         /// <summary>
-        /// 本地存储文件
+        /// 文件名称
         /// </summary>
-        public string? LocalFile { get; set; }
+        public string FileName { get; init; } = null!;
+        /// <summary>
+        /// 本地存储路径
+        /// </summary>
+        public string? LocalPath { get; set; }
+
+        [Computed]
+        public string FullName => Path.Combine(LocalPath ?? "", FileName);
     }
 }

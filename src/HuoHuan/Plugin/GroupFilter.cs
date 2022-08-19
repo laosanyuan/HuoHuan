@@ -1,5 +1,5 @@
-﻿using HuoHuan.Data.DataBase;
-using HuoHuan.Models;
+﻿using HuoHuan.DataBase.Models;
+using HuoHuan.DataBase.Services;
 using HuoHuan.Utils;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
@@ -18,16 +18,23 @@ namespace HuoHuan.Plugin
     /// </summary>
     internal class GroupFilter
     {
+        #region [Fields]
         private readonly string _urlFlag = "https://weixin.qq.com/g/";  // 微信群链接标记
-
+        private readonly CrawledImageDB _db = new();
         private readonly PaddleOCREngine _engine = new(null, new OCRParameter());
+        #endregion
 
-        public async Task<(bool, string)> IsValidImage(string url)
+        #region [Methods]
+        /// <summary>
+        /// 判断url是否未有效图片
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<(bool IsValidate, string Message)> IsValidImage(string url)
         {
             // 1. 判断url是否重复
-            if (!await CrawledImageDB.Instance.IsExistsAndInsert(url))
+            if (!await this._db.IsExistsAndInsert(url))
             {
-
                 // 2. 判断是否为二维码
                 return await ImageUtil.IsQRCode(url);
             }
@@ -40,12 +47,11 @@ namespace HuoHuan.Plugin
         /// <param name="imageUrl"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public GroupData GetGroupData(string imageUrl, string text)
+        public GroupImage GetGroupData(string imageUrl, string text)
         {
             if (!String.IsNullOrWhiteSpace(text))
             {
-
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpUtil.SetHeaders(httpClient);
                 httpClient.DefaultRequestHeaders.Add("User-Agent", "Microsoft Internet Explorer");
                 httpClient.BaseAddress = new Uri(imageUrl);
@@ -73,11 +79,11 @@ namespace HuoHuan.Plugin
                     && DateTime.TryParse(dateStr[..dateStr.LastIndexOf("前")].Split('(')[1], out var date)
                     && DateTimeUtil.IsValidTime(DateTime.Now, date, 7))
                 {
-                    var result = new GroupData()
+                    var result = new GroupImage()
                     {
                         InvalidateDate = date,
                         QRText = text,
-                        SourceUrl = imageUrl,
+                        Url = imageUrl,
                         FileName = text.Replace(this._urlFlag, "")
                     };
                     return result;
@@ -96,13 +102,13 @@ namespace HuoHuan.Plugin
             try
             {
                 var ocrResult = _engine.DetectText(bitmap);
-
                 return ocrResult.Text;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
         }
+        #endregion
     }
 }

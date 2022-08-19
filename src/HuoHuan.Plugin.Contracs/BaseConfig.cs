@@ -15,7 +15,7 @@ namespace HuoHuan.Plugin.Contracs
         public abstract T Config { get; protected set; }
         public abstract string Name { get; }
 
-        public async void Load()
+        public virtual async void Load()
         {
             var file = Path.Combine(FolderUtil.AppData, this.Name);
             if (!File.Exists(file))
@@ -29,7 +29,7 @@ namespace HuoHuan.Plugin.Contracs
             }
         }
 
-        public void Save()
+        public virtual void Save()
         {
             var str = JsonConvert.SerializeObject(this.Config);
             File.WriteAllTextAsync(Path.Combine(FolderUtil.AppData, this.Name), str, Encoding.UTF8);

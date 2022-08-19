@@ -42,14 +42,14 @@ namespace HuoHuan.DataBase.Test
             this._db.Insert("test_clear2").Wait();
             Assert.Multiple(() =>
             {
-                Assert.That(this._db.IsExists("test_clear1").Result, Is.True);
-                Assert.That(this._db.IsExists("test_clear2").Result, Is.True);
+                Assert.That(this._db.IsExists("test_clear1", false).Result, Is.True);
+                Assert.That(this._db.IsExists("test_clear2", false).Result, Is.True);
             });
             this._db.ClearStaleUrls().Wait();
             Assert.Multiple(() =>
             {
-                Assert.That(this._db.IsExists("test_clear1").Result, Is.False);
-                Assert.That(this._db.IsExists("test_clear2").Result);
+                Assert.That(this._db.IsExists("test_clear1", false).Result, Is.False);
+                Assert.That(this._db.IsExists("test_clear2", false).Result);
             });
         }
     }

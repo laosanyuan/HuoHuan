@@ -4,6 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>HuoHuan-Plugins</Title>
+    <Company>一刀</Company>
+    <Product>火浣</Product>
   </PropertyGroup>
 
   <ItemGroup>

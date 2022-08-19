@@ -1,10 +1,8 @@
-﻿using HuoHuan.Data.DataBase;
-using HuoHuan.Models;
+﻿using HuoHuan.DataBase.Models;
+using HuoHuan.DataBase.Services;
 using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -16,13 +14,15 @@ namespace HuoHuan.Plugin
     internal class SpiderManager
     {
         #region [Fileds]
-        private GroupFilter _filter = new GroupFilter();
-        private GroupDB _db = new GroupDB();
-        private IList<IPlugin> _cachePlugins = null!;
+        private readonly GroupFilter _filter = new();   // 群图片过滤器
+        private readonly GroupDB _db = new();           // 群数据库
         #endregion
 
         #region [Properties]
-        public Channel<string> ImageChannels;
+        /// <summary>
+        /// 展示用图片队列
+        /// </summary>
+        public Channel<string> ImageChannels { get; private set; }
         #endregion
 
         #region [Events]
@@ -36,103 +36,83 @@ namespace HuoHuan.Plugin
         public event SpiderCrawledEventHandler Crawled = null!;
         #endregion
 
-        #region [Public Methods]
-        public void Start(IList<IPlugin> plugins)
-        {
-            this._cachePlugins = plugins;
-            Parallel.ForEach(plugins, t =>
-            {
-                if (t.IsValid())
-                {
-                    t.Spider.ProgressStatusChanged -= Spider_ProgressStatusChanged;
-                    t.Spider.Crawled -= Spider_Crawled;
-
-                    t.Spider.ProgressStatusChanged += Spider_ProgressStatusChanged;
-                    t.Spider.Crawled += Spider_Crawled;
-                    t.Init();
-                    t.Spider.Start();
-                }
-            });
-        }
-
-        public void Continue(IPlugin plugin = null!)
-        {
-            if (plugin is null)
-            {
-                Parallel.ForEach(this._cachePlugins, t =>
-                {
-                    t.Spider.Continue();
-                });
-            }
-            else
-            {
-                this._cachePlugins.FirstOrDefault(t => t == plugin)?.Spider.Continue();
-            }
-        }
-
-        public void Pause(IPlugin plugin = null!)
-        {
-            if (plugin is null)
-            {
-                Parallel.ForEach(this._cachePlugins, t =>
-                {
-                    t.Spider.Pause();
-                });
-            }
-            else
-            {
-                this._cachePlugins.FirstOrDefault(t => t == plugin)?.Spider.Pause();
-            }
-        }
-
-        public void Stop(IPlugin plugin = null!)
-        {
-            if (plugin is null)
-            {
-                Parallel.ForEach(this._cachePlugins, t =>
-                {
-                    t.Spider.Stop();
-                });
-            }
-            else
-            {
-                this._cachePlugins.FirstOrDefault(t => t == plugin)?.Spider.Stop();
-            }
-        }
-
-        /// <summary>
-        /// 保存群数据
-        /// </summary>
-        /// <param name="group"></param>
-        /// <returns></returns>
-        public async Task Save(GroupData group)
-        {
-            var fileName = Path.Combine(FolderUtil.ImagesFolder, group.FileName);
-            await ImageUtil.SaveImageFile(group.SourceUrl, fileName);
-            group.LocalPath = FolderUtil.ImagesFolder;
-            await this._db.InsertGroup(group);
-        }
-        #endregion
-
         public SpiderManager()
         {
             this.ImageChannels = Channel.CreateBounded<string>(
-                new BoundedChannelOptions(30)
+                new BoundedChannelOptions(50)
                 {
                     FullMode = BoundedChannelFullMode.DropOldest
                 });
         }
 
-        #region [Private Methods]
+        #region [Public Methods]
+        /// <summary>
+        /// 开始全部
+        /// </summary>
+        public void StartAll() => Parallel.ForEach(PluginLoader.Plugins, t => Start(t));
+        /// <summary>
+        /// 全部开始
+        /// </summary>
+        /// <param name="plugin"></param>
+        public void Start(IPlugin plugin)
+        {
+            if (plugin?.IsValid() == true)
+            {
+                plugin.Spider.ProgressStatusChanged -= Spider_ProgressStatusChanged;
+                plugin.Spider.Crawled -= Spider_Crawled;
 
+                plugin.Spider.ProgressStatusChanged += Spider_ProgressStatusChanged;
+                plugin.Spider.Crawled += Spider_Crawled;
+                plugin.Init();
+                plugin.Spider.Start();
+            }
+        }
+        /// <summary>
+        /// 继续全部
+        /// </summary>
+        public void ContinueAll() => Parallel.ForEach(PluginLoader.Plugins, t => Continue(t));
+        /// <summary>
+        /// 继续
+        /// </summary>
+        /// <param name="plugin"></param>
+        public void Continue(IPlugin plugin = null!) => plugin?.Spider.Continue();
+        /// <summary>
+        /// 暂停全部
+        /// </summary>
+        public void PauseAll() => Parallel.ForEach(PluginLoader.Plugins, t => Pause(t));
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        /// <param name="plugin"></param>
+        public void Pause(IPlugin plugin = null!) => plugin?.Spider.Pause();
+        /// <summary>
+        /// 停止全部
+        /// </summary>
+        public void StopAll() => Parallel.ForEach(PluginLoader.Plugins, t => Stop(t));
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="plugin"></param>
+        public void Stop(IPlugin plugin)
+        {
+            if (plugin is not null)
+            {
+                plugin.Spider.Stop();
+                plugin.Spider.ProgressStatusChanged -= Spider_ProgressStatusChanged;
+                plugin.Spider.Crawled -= Spider_Crawled;
+            }
+        }
+        #endregion
+
+        #region [Private Methods]
         private async void Spider_Crawled(object sender, CrawlEventArgs e)
         {
             if (sender is not null)
             {
-                var result = await this._filter.IsValidImage(e.Url);
-                if (result.Item1)
+                var (IsValidate, Message) = await this._filter.IsValidImage(e.Url);
+                if (IsValidate)
                 {
-                    var group = this._filter.GetGroupData(e.Url, result.Item2);
+                    var group = this._filter.GetGroupData(e.Url, Message);
                     await this.Save(group);
                     this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                 }
@@ -142,19 +122,29 @@ namespace HuoHuan.Plugin
 
         private void Spider_ProgressStatusChanged(object sender, ProgressEventArgs e)
         {
-            if (sender is null)
+            if (sender is not null)
             {
-                return;
+                ISpider spider = (sender as ISpider)!;
+                if (e.Status == SpiderStatus.Stopped || e.Status == SpiderStatus.Finished)
+                {
+                    spider!.ProgressStatusChanged -= Spider_ProgressStatusChanged;
+                    spider.Crawled -= Spider_Crawled;
+                }
+                this.ProgressStatusChanged?.Invoke(this, new SpiderProgressEventArgs(e, spider!));
             }
+        }
 
-            ISpider spider = (sender as ISpider)!;
-            if (e.Status == SpiderStatus.Stopped || e.Status == SpiderStatus.Finished)
-            {
-                spider!.ProgressStatusChanged -= Spider_ProgressStatusChanged;
-                spider.Crawled -= Spider_Crawled;
-            }
-
-            this.ProgressStatusChanged?.Invoke(this, new SpiderProgressEventArgs(e, spider!));
+        /// <summary>
+        /// 保存群数据
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        private async Task Save(GroupImage group)
+        {
+            var fileName = Path.Combine(FolderUtil.ImagesFolder, group.FileName);
+            await ImageUtil.SaveImageFile(group.Url, fileName);
+            group.LocalPath = FolderUtil.ImagesFolder;
+            await this._db.InsertGroup(group);
         }
         #endregion
     }
@@ -176,13 +166,13 @@ namespace HuoHuan.Plugin
 
     internal class SpiderCrawlEventArgs : CrawlEventArgs
     {
-        public SpiderCrawlEventArgs(CrawlEventArgs args, ISpider spider, GroupData group)
+        public SpiderCrawlEventArgs(CrawlEventArgs args, ISpider spider, GroupImage group)
         {
             base.Url = args.Url;
             this.Spider = spider;
             this.Group = group;
         }
         public ISpider Spider { get; init; } = null!;
-        public GroupData Group { get; init; } = null!;
+        public GroupImage Group { get; init; } = null!;
     }
 }
