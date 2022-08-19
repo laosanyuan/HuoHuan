@@ -15,10 +15,7 @@ namespace HuoHuan.Plugin
         {
             get
             {
-                if (_plugins is null)
-                {
-                    _plugins = LoadPlugins();
-                }
+                _plugins ??= LoadPlugins();
                 return _plugins;
             }
         }

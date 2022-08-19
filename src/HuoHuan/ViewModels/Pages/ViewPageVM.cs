@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HuoHuan.Data.DataBase;
+using HuoHuan.DataBase.Services;
 using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
@@ -99,7 +99,7 @@ namespace HuoHuan.ViewModels.Pages
 
         private async Task UpdateData()
         {
-            this.urls = (await this.db.QueryInvalidateGroup()).Select(t => t.SourceUrl).ToList();
+            this.urls = (await this.db.QueryValidateGroup()).Select(t => t.Url).ToList();
 
             this.Count = this.urls?.Count ?? 0;
             if (!string.IsNullOrEmpty(this.displayUrl) && urls?.Contains(this.displayUrl) == true)

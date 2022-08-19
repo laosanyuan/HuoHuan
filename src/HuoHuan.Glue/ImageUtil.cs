@@ -17,7 +17,9 @@ namespace HuoHuan.Utils
             {
                 HttpClient httpClient = new();
                 using Stream stream = await httpClient.GetStreamAsync(url);
+#pragma warning disable CA1416 // 验证平台兼容性
                 result = (Bitmap)Image.FromStream(stream);
+#pragma warning restore CA1416 // 验证平台兼容性
             }
             catch (Exception)
             {
@@ -46,16 +48,18 @@ namespace HuoHuan.Utils
         /// <param name="url"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static async Task<(bool, string)> IsQRCode(string url)
+        public static async Task<(bool IsQRCode, string Message)> IsQRCode(string url)
         {
             var reader = new ZXing.BarcodeReader();
             reader.Options.CharacterSet = "UTF-8";
-            var image = GetBitmapFromUrl(url).Result;
+            var image = await GetBitmapFromUrl(url);
             if (image == null)
             {
                 return (false, null!);
             }
+#pragma warning disable CA1416 // 验证平台兼容性
             var qr = reader.Decode(image);
+#pragma warning restore CA1416 // 验证平台兼容性
             if (qr != null)
             {
                 return (true, qr.Text);

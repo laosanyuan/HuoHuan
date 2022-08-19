@@ -18,7 +18,7 @@ namespace HuoHuan.DataBase.Services
             base.InitDataBase(command);
         }
 
-        #region [Public Methods]
+        #region [Methods]
         /// <summary>
         /// 插入数据
         /// </summary>
@@ -35,7 +35,7 @@ namespace HuoHuan.DataBase.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<bool> IsExists(string url)
+        public async Task<bool> IsExists(string url, bool needUpdate = true)
         {
             using var connection = base.DataBaseConnection();
             var sql = $"SELECT * FROM {base.TableName} WHERE Url = '{url}'";
@@ -45,7 +45,7 @@ namespace HuoHuan.DataBase.Services
 
             if (result is not null && result.Value.url?.Equals(url) == true)
             {
-                if ((DateTime.Now - result.Value.time).Days > 3)
+                if (needUpdate && (DateTime.Now - result.Value.time).Days > 3)
                 {
                     await connection.UpdateAsync(new PreviewImage() { Url = url, DateTime = DateTime.Now });
                 }
