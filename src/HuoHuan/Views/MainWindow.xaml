@@ -27,9 +27,8 @@
                         <Image Source="/Resources/HuoHuan.png" Margin="10"/>
                     </Border>
                     <StackPanel Margin="0,20,0,0" DockPanel.Dock="Top">
-                        <RadioButton Content="&#xe65f;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.Home}" ToolTip="获取二维码" IsChecked="True"/>
-                        <RadioButton Content="&#xe6d1;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.View}" ToolTip="查看"/>
-                        <RadioButton Visibility="Hidden" Content="&#xe634;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePage}" CommandParameter="{x:Static enum:PageType.Download}" ToolTip="下载"/>
+                        <RadioButton Content="&#xe65f;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePageCommand}" CommandParameter="{x:Static enum:PageType.Home}" ToolTip="获取二维码" IsChecked="True"/>
+                        <RadioButton Content="&#xe6d1;" Style="{DynamicResource MenuButtonStyle}" Command="{Binding ChangePageCommand}" CommandParameter="{x:Static enum:PageType.View}" ToolTip="查看"/>
                     </StackPanel>
                     <StackPanel Visibility="Hidden" Orientation="Vertical" VerticalAlignment="Bottom">
                         <Button Content="&#xe8b8;" 

@@ -11,13 +11,13 @@ namespace HuoHuan.ViewModels
             this._container = new Container();
 
             this._container.Register<MainViewModel>();
-            this._container.Register<MainPageVM>();
+            this._container.Register<HomePageVM>();
             this._container.Register<ViewPageVM>();
         }
 
         public MainViewModel Main => _container.Resolve<MainViewModel>();
 
-        public MainPageVM MainPage => _container.Resolve<MainPageVM>();
+        public HomePageVM HomePage => _container.Resolve<HomePageVM>();
 
         public ViewPageVM ViewPage => _container.Resolve<ViewPageVM>();
     }

@@ -2,33 +2,27 @@
 using CommunityToolkit.Mvvm.Input;
 using HuoHuan.DataBase.Services;
 using HuoHuan.Utils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-#nullable disable
-
 namespace HuoHuan.ViewModels.Pages
 {
-    public class ViewPageVM : ObservableObject
+    [ObservableObject]
+    public partial class ViewPageVM
     {
         #region [Fields]
+        private readonly GroupDB db = new();    // 微信群链接数据库
         private List<string> urls = null!;
-        private readonly GroupDB db;    // 微信群链接数据库
         #endregion
 
         #region [Properties]
-        private string displayUrl = SoftwareInfo.LogoPath;
         /// <summary>
         /// 显示Url
         /// </summary>
-        public string DisplayUrl
-        {
-            get => displayUrl;
-            set => SetProperty(ref displayUrl, value);
-        }
+        [ObservableProperty]
+        private string _displayUrl = SoftwareInfo.LogoPath;
 
         private int displayIndex;
         /// <summary>
@@ -39,11 +33,11 @@ namespace HuoHuan.ViewModels.Pages
             get => displayIndex;
             set
             {
-                if (value == this.displayIndex && !displayUrl.Equals(SoftwareInfo.LogoPath))
+                if (value == this.displayIndex && !_displayUrl.Equals(SoftwareInfo.LogoPath))
                 {
                     return;
                 }
-                if (value < 0 || this.count == 0)
+                if (value < 0 || this._count == 0)
                 {
                     value = 0;
                 }
@@ -51,65 +45,49 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     value = urls.Count - 1;
                 }
-                this.DisplayUrl = this.count == 0 ? SoftwareInfo.LogoPath : this.urls[value];
+                this.DisplayUrl = this._count == 0 ? SoftwareInfo.LogoPath : this.urls[value];
 
                 SetProperty(ref displayIndex, value);
             }
         }
-
-        private int count;
         /// <summary>
         /// 图片数量
         /// </summary>
-        public int Count
-        {
-            get => count;
-            set => SetProperty<int>(ref count, value);
-        }
+        [ObservableProperty]
+        private int _count;
         #endregion
 
         #region [Commands]
-        private readonly Lazy<RelayCommand> _refreshDataCommand;
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public ICommand RefreshDataCommand => _refreshDataCommand.Value;
-
-        private readonly Lazy<RelayCommand> _previousCommand;
-        /// <summary>
-        /// 前一张
-        /// </summary>
-        public ICommand PreviousCommand => _previousCommand.Value;
-
-        private readonly Lazy<RelayCommand> _nextCommand;
-        /// <summary>
-        /// 后一张
-        /// </summary>
-        public ICommand NextCommand => _nextCommand.Value;
-        #endregion
-
-        public ViewPageVM()
-        {
-            this.db = new GroupDB();
-
-            this._refreshDataCommand = new Lazy<RelayCommand>(() => new RelayCommand(async () => _ = UpdateData()));
-            this._previousCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex--));
-            this._nextCommand = new Lazy<RelayCommand>(() => new RelayCommand(() => this.DisplayIndex++));
-        }
-
-        private async Task UpdateData()
+        [ICommand]
+        private async Task RefreshData()
         {
             this.urls = (await this.db.QueryValidateGroup()).Select(t => t.Url).ToList();
 
             this.Count = this.urls?.Count ?? 0;
-            if (!string.IsNullOrEmpty(this.displayUrl) && urls?.Contains(this.displayUrl) == true)
+            if (!string.IsNullOrEmpty(this._displayUrl) && urls?.Contains(this._displayUrl) == true)
             {
-                this.DisplayIndex = this.urls.IndexOf(this.displayUrl);
+                this.DisplayIndex = this.urls.IndexOf(this._displayUrl);
             }
             else
             {
                 this.DisplayIndex = 0;
             }
         }
+
+        /// <summary>
+        /// 前一张
+        /// </summary>
+        [ICommand]
+        private void Previous() => this.DisplayIndex--;
+
+        /// <summary>
+        /// 后一张
+        /// </summary>
+        [ICommand]
+        private void Next() => this.DisplayIndex++;
+        #endregion
     }
 }

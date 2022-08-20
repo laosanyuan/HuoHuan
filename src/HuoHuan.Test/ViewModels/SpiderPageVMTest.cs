@@ -9,7 +9,7 @@ namespace HuoHuan.Test.ViewModels
         [Test]
         public void TestLoadSpider()
         {
-            var vm = new SpiderPageVM();
+            var vm = new HomePageVM();
             vm.StartCommand.Execute(null);
 
             Assert.IsTrue(vm.SpiderInfos is not null);

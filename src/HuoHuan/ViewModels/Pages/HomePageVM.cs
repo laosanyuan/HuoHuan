@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Models;
 using HuoHuan.Plugin;
 using HuoHuan.Plugin.Contracs;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,72 +11,39 @@ using System.Windows.Input;
 
 namespace HuoHuan.ViewModels.Pages
 {
-    public class SpiderPageVM : ObservableObject
+    [ObservableObject]
+    public partial class HomePageVM
     {
         #region [Fileds]
-        private readonly SpiderManager _spiderManager = new SpiderManager();
-        private Dictionary<ISpider, int> _cacheCount = new Dictionary<ISpider, int>();  // 爬取数量缓存
+        private readonly SpiderManager _spiderManager = new();
+        private Dictionary<ISpider, int> _cacheCount = new();  // 爬取数量缓存
         #endregion
 
         #region [Properties]
-        private ObservableCollection<SpiderInfo> _spiderInfos = null!;
-        public ObservableCollection<SpiderInfo> SpiderInfos
-        {
-            get => this._spiderInfos;
-            set => SetProperty(ref _spiderInfos, value);
-        }
 
-        private int _successCount;
+        [ObservableProperty]
+        private ObservableCollection<SpiderInfo> _spiderInfos = null!;
+
         /// <summary>
         /// 获取成功总数
         /// </summary>
-        public int SuccessCount
-        {
-            get => this._successCount;
-            set => SetProperty(ref this._successCount, value);
-        }
+        [ObservableProperty]
+        private int _successCount;
         #endregion 
 
+        public HomePageVM()
+        {
+            this._spiderManager.Crawled += SpiderManager_Crawled;
+            this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
+        }
+
         #region [Commands]
-        private readonly Lazy<RelayCommand<ISpider>> _startCommand;
         /// <summary>
         /// 开始
         /// </summary>
-        public ICommand StartCommand => _startCommand.Value;
-
-        private readonly Lazy<RelayCommand<ISpider>> _stopCommand;
-        /// <summary>
-        /// 停止
-        /// </summary>
-        public ICommand StopCommand => _stopCommand.Value;
-
-        private readonly Lazy<RelayCommand<ISpider>> _pauseCommand;
-        /// <summary>
-        /// 暂停
-        /// </summary>
-        public ICommand PauseCommand => _pauseCommand.Value;
-
-        private readonly Lazy<RelayCommand<ISpider>> _continueCommand;
-        /// <summary>
-        /// 继续
-        /// </summary>
-        public ICommand ContinueCommand => _continueCommand.Value;
-        #endregion
-
-        public SpiderPageVM()
-        {
-            this._startCommand = new Lazy<RelayCommand<ISpider>>(() => new RelayCommand<ISpider>(StartCommandExecute));
-            this._stopCommand = new Lazy<RelayCommand<ISpider>>(() => new RelayCommand<ISpider>(StopCommandExecute));
-            this._pauseCommand = new Lazy<RelayCommand<ISpider>>(() => new RelayCommand<ISpider>(PauseCommandExecute));
-            this._continueCommand = new Lazy<RelayCommand<ISpider>>(() => new RelayCommand<ISpider>(ContinueCommandExecute));
-
-            this._spiderManager.Crawled += _spiderManager_Crawled;
-            this._spiderManager.ProgressStatusChanged += _spiderManager_ProgressStatusChanged;
-        }
-
-
-        #region [Command Methods]
-        private void StartCommandExecute(ISpider? spider)
+        /// <param name="spider"></param>
+        [ICommand]
+        private void Start(ISpider? spider)
         {
             if (spider is null)
             {
@@ -101,8 +67,12 @@ namespace HuoHuan.ViewModels.Pages
                 }
             }
         }
-
-        private void StopCommandExecute(ISpider? spider)
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="spider"></param>
+        [ICommand]
+        private void Stop(ISpider? spider)
         {
             if (spider is null)
             {
@@ -127,8 +97,12 @@ namespace HuoHuan.ViewModels.Pages
                 }
             }
         }
-
-        private void PauseCommandExecute(ISpider? spider)
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        /// <param name="spider"></param>
+        [ICommand]
+        private void Pause(ISpider? spider)
         {
             if (spider is null)
             {
@@ -150,8 +124,12 @@ namespace HuoHuan.ViewModels.Pages
                 }
             }
         }
-
-        private void ContinueCommandExecute(ISpider? spider)
+        /// <summary>
+        /// 继续
+        /// </summary>
+        /// <param name="spider"></param>
+        [ICommand]
+        private void Continue(ISpider? spider)
         {
             if (spider is null)
             {
@@ -187,7 +165,7 @@ namespace HuoHuan.ViewModels.Pages
                 }));
         }
 
-        private void _spiderManager_ProgressStatusChanged(object sender, SpiderProgressEventArgs e)
+        private void SpiderManager_ProgressStatusChanged(object sender, SpiderProgressEventArgs e)
         {
             var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t.Spider == e.Spider);
             if (spiderInfo is not null)
@@ -209,7 +187,7 @@ namespace HuoHuan.ViewModels.Pages
             }
         }
 
-        private void _spiderManager_Crawled(object sender, SpiderCrawlEventArgs e)
+        private void SpiderManager_Crawled(object sender, SpiderCrawlEventArgs e)
         {
             var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t.Spider == e.Spider);
             if (spiderInfo is not null)
