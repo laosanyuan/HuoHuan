@@ -22,7 +22,7 @@ namespace HuoHuan.Plugin
         /// <summary>
         /// 展示用图片队列
         /// </summary>
-        public Channel<string> ImageChannels { get; private set; }
+        public Channel<(string Url, bool IsValidate)> ImageChannels { get; private set; }
         #endregion
 
         #region [Events]
@@ -38,7 +38,7 @@ namespace HuoHuan.Plugin
 
         public SpiderManager()
         {
-            this.ImageChannels = Channel.CreateBounded<string>(
+            this.ImageChannels = Channel.CreateBounded<(string, bool)>(
                 new BoundedChannelOptions(50)
                 {
                     FullMode = BoundedChannelFullMode.DropOldest
@@ -110,14 +110,15 @@ namespace HuoHuan.Plugin
             if (sender is not null)
             {
                 var (IsValidate, Message) = await this._filter.IsValidImage(e.Url);
+
                 if (IsValidate)
                 {
                     var group = this._filter.GetGroupData(e.Url, Message);
                     await this.Save(group);
                     this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                 }
+                await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
             }
-            await this.ImageChannels.Writer.WriteAsync(e.Url);
         }
 
         private void Spider_ProgressStatusChanged(object sender, ProgressEventArgs e)

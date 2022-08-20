@@ -2,59 +2,46 @@
 using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Enums;
 using HuoHuan.Views.Pages;
-using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace HuoHuan.ViewModels
 {
-    public class MainViewModel : ObservableObject
+    [ObservableObject]
+    public partial class MainViewModel
     {
         #region [Fields]
-        private readonly Page home = new MainPage();
-        private readonly Page view = new ViewPage();
-        private readonly Page download = new DownloadPage();
+        private readonly Page _home = new MainPage();
+        private readonly Page _view = new ViewPage();
         #endregion
 
         #region [Properties]
-        private Page page = null!;
         /// <summary>
         /// 子页面
         /// </summary>
-        public Page Page
-        {
-            get => page;
-            set => SetProperty(ref page, value);
-        }
-        #endregion
-
-        #region [Commands]
-        private readonly Lazy<RelayCommand<PageType>> _changePageCommand;
-        /// <summary>
-        /// 切换页面
-        /// </summary>
-        public ICommand ChangePage => _changePageCommand.Value;
+        [ObservableProperty]
+        private Page _page = null!;
         #endregion
 
         public MainViewModel()
-         {
-            var test = Plugin.PluginLoader.Plugins;
-            this.Page = home;
-            this._changePageCommand = new Lazy<RelayCommand<PageType>>(() => new RelayCommand<PageType>(type =>
-            {
-                switch (type)
-                {
-                    case PageType.Home:
-                        this.Page = home;
-                        break;
-                    case PageType.View:
-                        this.Page = view;
-                        break;
-                    case PageType.Download:
-                        this.Page = download;
-                        break;
-                }
-            }));
+        {
+            this.Page = _home;
         }
+
+        #region [Commands]
+        /// <summary>
+        /// 切换页面
+        /// </summary>
+        /// <param name="type"></param>
+        [ICommand]
+        private void ChangePage(PageType type)
+        {
+            this.Page = type switch
+            {
+                PageType.View => _view,
+                PageType.Home or _ => _home,
+            };
+        }
+        #endregion
     }
 }

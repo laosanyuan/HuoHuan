@@ -20,38 +20,23 @@ namespace HuoHuan.Models
         public int Page { get; set; }
     }
 
-    public class SpiderInfo : ObservableObject
+    [ObservableObject]
+    public partial class SpiderInfo
     {
         public ISpider Spider { get; init; }
 
         public string Name { get; init; }
 
+        [ObservableProperty]
         private int _count;
-        public int Count
-        {
-            get => this._count;
-            set => SetProperty(ref this._count, value);
-        }
 
+        [ObservableProperty]
         private SpiderStatus _status;
-        public SpiderStatus Status
-        {
-            get => this._status;
-            set => SetProperty(ref this._status, value);
-        }
 
+        [ObservableProperty]
         private double _progress;
-        public double Progress
-        {
-            get => this._progress;
-            set => SetProperty(ref _progress, value);
-        }
 
+        [ObservableProperty]
         private string _imageUrl;
-        public string ImageUrl
-        {
-            get => this._imageUrl;
-            set => SetProperty(ref _imageUrl, value);
-        }
     }
 }

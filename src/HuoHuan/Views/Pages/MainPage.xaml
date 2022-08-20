@@ -7,7 +7,7 @@
       xmlns:control="clr-namespace:HuoHuan.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      DataContext="{Binding MainPage, Source={StaticResource Locator}}">
+      DataContext="{Binding HomePage, Source={StaticResource Locator}}">
     <Page.Resources>
         <Style x:Key="CenterButton" TargetType="{x:Type Button}">
             <Setter Property="Cursor" Value="Hand"/>
