@@ -17,7 +17,7 @@ namespace HuoHuan.ViewModels.Pages
         private List<string> urls = null!;
         #endregion
 
-        #region [Properties]
+        #region [Dependency Properties]
         /// <summary>
         /// 显示Url
         /// </summary>

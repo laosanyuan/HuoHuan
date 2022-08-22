@@ -19,6 +19,11 @@ namespace HuoHuan.Utils
         public static string DbPath => CreatePath(Path.Combine(AppData, "db"));
 
         /// <summary>
+        /// 配置文件保存路径
+        /// </summary>
+        public static string ConfigPath => CreatePath(Path.Combine(AppData, "configs"));
+
+        /// <summary>
         /// 图片保存路径
         /// </summary>
         public static string ImagesFolder

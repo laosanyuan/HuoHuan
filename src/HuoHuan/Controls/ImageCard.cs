@@ -5,6 +5,9 @@ using System.Windows.Media;
 
 namespace HuoHuan.Controls
 {
+    /// <summary>
+    /// 图片展示控件
+    /// </summary>
     internal class ImageCard : Control
     {
         public static readonly DependencyProperty IsValidProperty 

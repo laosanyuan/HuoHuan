@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\HuoHuan.Glue\HuoHuan.Utils.csproj" />
   </ItemGroup>
 

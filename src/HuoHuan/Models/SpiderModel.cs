@@ -23,9 +23,9 @@ namespace HuoHuan.Models
     [ObservableObject]
     public partial class SpiderInfo
     {
-        public ISpider Spider { get; init; }
+        public IPlugin Plugin { get; init; }
 
-        public string Name { get; init; }
+        public string Name => Plugin?.Name;
 
         [ObservableProperty]
         private int _count;

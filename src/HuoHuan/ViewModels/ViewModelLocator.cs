@@ -1,24 +1,23 @@
-﻿using DryIoc;
-using HuoHuan.ViewModels.Pages;
+﻿using HuoHuan.ViewModels.Pages;
+using Ninject;
 
 namespace HuoHuan.ViewModels
 {
     public class ViewModelLocator
     {
-        private readonly Container _container;
+        private readonly IKernel _ninjectKernel = new StandardKernel();
         public ViewModelLocator()
         {
-            this._container = new Container();
+            this._ninjectKernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
 
-            this._container.Register<MainViewModel>();
-            this._container.Register<HomePageVM>();
-            this._container.Register<ViewPageVM>();
+            this._ninjectKernel.Bind<HomePageVM>().ToSelf().InSingletonScope();
+            this._ninjectKernel.Bind<ViewPageVM>().ToSelf().InSingletonScope();
         }
 
-        public MainViewModel Main => _container.Resolve<MainViewModel>();
+        public MainViewModel Main => _ninjectKernel.Get<MainViewModel>();
 
-        public HomePageVM HomePage => _container.Resolve<HomePageVM>();
+        public HomePageVM HomePage => _ninjectKernel.Get<HomePageVM>();
 
-        public ViewPageVM ViewPage => _container.Resolve<ViewPageVM>();
+        public ViewPageVM ViewPage => _ninjectKernel.Get<ViewPageVM>();
     }
 }

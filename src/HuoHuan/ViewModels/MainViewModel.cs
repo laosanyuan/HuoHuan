@@ -11,7 +11,7 @@ namespace HuoHuan.ViewModels
     public partial class MainViewModel
     {
         #region [Fields]
-        private readonly Page _home = new MainPage();
+        private readonly Page _home = new HomePage();
         private readonly Page _view = new ViewPage();
         #endregion
 

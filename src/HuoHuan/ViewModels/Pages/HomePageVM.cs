@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HuoHuan.Enums;
 using HuoHuan.Models;
 using HuoHuan.Plugin;
 using HuoHuan.Plugin.Contracs;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HuoHuan.ViewModels.Pages
@@ -16,11 +15,12 @@ namespace HuoHuan.ViewModels.Pages
     {
         #region [Fileds]
         private readonly SpiderManager _spiderManager = new();
-        private Dictionary<ISpider, int> _cacheCount = new();  // 爬取数量缓存
         #endregion
 
-        #region [Properties]
-
+        #region [Dependency Properties]
+        /// <summary>
+        /// 爬虫集合
+        /// </summary>
         [ObservableProperty]
         private ObservableCollection<SpiderInfo> _spiderInfos = null!;
 
@@ -35,6 +35,8 @@ namespace HuoHuan.ViewModels.Pages
         {
             this._spiderManager.Crawled += SpiderManager_Crawled;
             this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
+
+            this.LoadSpider();
         }
 
         #region [Commands]
@@ -43,27 +45,24 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         /// <param name="spider"></param>
         [ICommand]
-        private void Start(ISpider? spider)
+        private void Start(IPlugin? plugin)
         {
-            if (spider is null)
+            if (plugin is null)
             {
-                this.LoadSpider();
-                Parallel.ForEach(this.SpiderInfos, (spiderInfo) => spiderInfo.Spider.Start());
-                this._cacheCount.Clear();
+                this._spiderManager.StartAll();
                 this.SuccessCount = 0;
             }
             else
             {
-                var tmp = this.SpiderInfos?.FirstOrDefault(t => t.Spider == spider);
+                var tmp = this.SpiderInfos?.FirstOrDefault(t => t?.Plugin == plugin);
                 if (tmp is not null)
                 {
+                    this._spiderManager.Start(plugin);
                     // 如果当前已没有正在运行的Spider，则重新计数
                     if (!(this.SpiderInfos?.Any(t => t.Status == SpiderStatus.Running || t.Status == SpiderStatus.Paused) == true))
                     {
-                        this._cacheCount.Clear();
                         this.SuccessCount = 0;
                     }
-                    tmp?.Spider.Start();
                 }
             }
         }
@@ -72,29 +71,15 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         /// <param name="spider"></param>
         [ICommand]
-        private void Stop(ISpider? spider)
+        private void Stop(IPlugin? plugin)
         {
-            if (spider is null)
+            if (plugin is null)
             {
-                Parallel.ForEach(this.SpiderInfos,
-                    info =>
-                    {
-                        if (info.Status == SpiderStatus.Running || info.Status == SpiderStatus.Paused)
-                        {
-                            info.Spider.Stop();
-                        }
-                    });
+                this._spiderManager.StopAll();
             }
             else
             {
-                var tmp = this.SpiderInfos?.FirstOrDefault(t => t.Spider == spider);
-                if (tmp is not null)
-                {
-                    if (tmp.Status == SpiderStatus.Running || tmp.Status == SpiderStatus.Paused)
-                    {
-                        tmp?.Spider.Stop();
-                    }
-                }
+                this._spiderManager.Stop(plugin);
             }
         }
         /// <summary>
@@ -102,26 +87,15 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         /// <param name="spider"></param>
         [ICommand]
-        private void Pause(ISpider? spider)
+        private void Pause(IPlugin? plugin)
         {
-            if (spider is null)
+            if (plugin is null)
             {
-                Parallel.ForEach(this.SpiderInfos,
-                    info =>
-                    {
-                        if (info.Status == SpiderStatus.Running)
-                        {
-                            info.Spider.Pause();
-                        }
-                    });
+                this._spiderManager.PauseAll();
             }
             else
             {
-                var tmp = this.SpiderInfos?.FirstOrDefault(t => t.Spider == spider);
-                if (tmp is not null && tmp.Status == SpiderStatus.Running)
-                {
-                    tmp?.Spider.Pause();
-                }
+                this._spiderManager.Pause(plugin);
             }
         }
         /// <summary>
@@ -129,25 +103,41 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         /// <param name="spider"></param>
         [ICommand]
-        private void Continue(ISpider? spider)
+        private void Continue(IPlugin? plugin)
         {
-            if (spider is null)
+            if (plugin is null)
             {
-                Parallel.ForEach(this.SpiderInfos,
-                    info =>
-                    {
-                        if (info.Status == SpiderStatus.Paused)
-                        {
-                            info.Spider.Continue();
-                        }
-                    });
+                this._spiderManager.ContinueAll();
             }
             else
             {
-                var tmp = this.SpiderInfos?.FirstOrDefault(t => t.Spider == spider);
-                if (tmp is not null && tmp.Status == SpiderStatus.Paused)
+                this._spiderManager.Continue(plugin);
+            }
+        }
+
+        /// <summary>
+        /// 操作全部爬取器
+        /// </summary>
+        /// <param name="param"></param>
+        [ICommand]
+        private void OperationAll(object param)
+        {
+            if (param is SpiderOperationStatus status)
+            {
+                switch (status)
                 {
-                    tmp?.Spider.Continue();
+                    case SpiderOperationStatus.Start:
+                        this.Start(null);
+                        break;
+                    case SpiderOperationStatus.Stop:
+                        this.Stop(null);
+                        break;
+                    case SpiderOperationStatus.Pause:
+                        this.Pause(null);
+                        break;
+                    case SpiderOperationStatus.Continue:
+                        this.Continue(null);
+                        break;
                 }
             }
         }
@@ -156,18 +146,17 @@ namespace HuoHuan.ViewModels.Pages
         #region [Private Commands]
         private void LoadSpider()
         {
-            this._spiderInfos = new ObservableCollection<SpiderInfo>(PluginLoader.Plugins.Select(
+            this.SpiderInfos = new ObservableCollection<SpiderInfo>(PluginLoader.Plugins.Select(
                 t => new SpiderInfo()
                 {
-                    Name = t.Name,
-                    Spider = t.Spider,
+                    Plugin = t,
                     Status = SpiderStatus.Waiting
                 }));
         }
 
         private void SpiderManager_ProgressStatusChanged(object sender, SpiderProgressEventArgs e)
         {
-            var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t.Spider == e.Spider);
+            var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t?.Plugin?.Spider == e.Spider);
             if (spiderInfo is not null)
             {
                 spiderInfo.Progress = e.Progress;
@@ -175,21 +164,13 @@ namespace HuoHuan.ViewModels.Pages
                 spiderInfo.Status = e.Status;
 
                 // 更新总数
-                if (this._cacheCount.ContainsKey(e.Spider))
-                {
-                    this._cacheCount[e.Spider] = e.Count;
-                }
-                else
-                {
-                    this._cacheCount[e.Spider] = e.Count;
-                }
-                this.SuccessCount = this._cacheCount.Sum(t => t.Value);
+                this.SuccessCount = this.SpiderInfos?.Sum(t => t.Count) ?? 0;
             }
         }
 
         private void SpiderManager_Crawled(object sender, SpiderCrawlEventArgs e)
         {
-            var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t.Spider == e.Spider);
+            var spiderInfo = this.SpiderInfos?.FirstOrDefault(t => t?.Plugin?.Spider == e.Spider);
             if (spiderInfo is not null)
             {
                 spiderInfo.ImageUrl = e.Url;

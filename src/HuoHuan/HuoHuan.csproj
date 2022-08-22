@@ -14,7 +14,7 @@
     <PackageReference Include="AngleSharp" Version="0.16.1" />
     <PackageReference Include="CalcBinding" Version="2.5.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
-    <PackageReference Include="DryIoc" Version="4.8.8" />
+    <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.6.0.20220608" />
     <PackageReference Include="PaddleOCRSharp" Version="2.0.3" />
@@ -50,9 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\tieba_spider_key.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Resources\HuoHuan.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
