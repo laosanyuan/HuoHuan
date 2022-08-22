@@ -7,19 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan", "HuoHuan\HuoHuan.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Test", "HuoHuan.Test\HuoHuan.Test.csproj", "{B4E565DC-8314-486F-880E-583EF68B27FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Plugins", "HuoHuan.Plugins\HuoHuan.Plugin.Plugins.csproj", "{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HuoHuan.Tests", "HuoHuan.Tests", "{8763295B-BE95-4C1C-B15D-B534B2E97FE7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Plugins.Test", "HuoHuan.Plugins.Test\HuoHuan.Plugin.Plugins.Test.csproj", "{F5442169-E7D2-4DF9-9CD6-9AB121981E61}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Utils", "HuoHuan.Glue\HuoHuan.Utils.csproj", "{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Contracs", "HuoHuan.Plugin.Contracs\HuoHuan.Plugin.Contracs.csproj", "{143C6C59-BAFF-452D-A58D-01EC3C24583C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.DataBase", "HuoHuan.DataBase\HuoHuan.DataBase.csproj", "{02822A6F-A637-4367-9210-3C23B99A7E82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.DataBase", "HuoHuan.DataBase\HuoHuan.DataBase.csproj", "{02822A6F-A637-4367-9210-3C23B99A7E82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.DataBase.Test", "HuoHuan.DataBase.Test\HuoHuan.DataBase.Test.csproj", "{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.DataBase.Test", "HuoHuan.DataBase.Test\HuoHuan.DataBase.Test.csproj", "{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Plugins", "HuoHuan.Plugin.Plugins\HuoHuan.Plugin.Plugins.csproj", "{25D5F9ED-22A7-49DB-949B-EBF29A6FC6C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Utils", "HuoHuan.Utils\HuoHuan.Utils.csproj", "{5924CAC4-BFA4-4FB9-AE1D-A03E5D71964D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Plugins.Test", "HuoHuan.Plugin.Plugins.Test\HuoHuan.Plugin.Plugins.Test.csproj", "{B41940BA-0F30-4282-91E5-7E8001ECA741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,18 +35,6 @@ Global
 		{B4E565DC-8314-486F-880E-583EF68B27FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4E565DC-8314-486F-880E-583EF68B27FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4E565DC-8314-486F-880E-583EF68B27FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50FBCA05-14F9-4C24-A9AB-FFD61B881C30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5442169-E7D2-4DF9-9CD6-9AB121981E61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83D32378-F6DA-4CE0-B79C-CAFE8BFD72E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{143C6C59-BAFF-452D-A58D-01EC3C24583C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{143C6C59-BAFF-452D-A58D-01EC3C24583C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{143C6C59-BAFF-452D-A58D-01EC3C24583C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,14 +47,26 @@ Global
 		{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25D5F9ED-22A7-49DB-949B-EBF29A6FC6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25D5F9ED-22A7-49DB-949B-EBF29A6FC6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25D5F9ED-22A7-49DB-949B-EBF29A6FC6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25D5F9ED-22A7-49DB-949B-EBF29A6FC6C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5924CAC4-BFA4-4FB9-AE1D-A03E5D71964D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5924CAC4-BFA4-4FB9-AE1D-A03E5D71964D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5924CAC4-BFA4-4FB9-AE1D-A03E5D71964D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5924CAC4-BFA4-4FB9-AE1D-A03E5D71964D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B4E565DC-8314-486F-880E-583EF68B27FC} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
-		{F5442169-E7D2-4DF9-9CD6-9AB121981E61} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
 		{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
+		{B41940BA-0F30-4282-91E5-7E8001ECA741} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA1AD3A4-FA20-45D9-8B6C-9CF5064D6E79}

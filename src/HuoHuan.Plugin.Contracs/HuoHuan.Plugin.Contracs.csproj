@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HuoHuan.Glue\HuoHuan.Utils.csproj" />
+    <ProjectReference Include="..\HuoHuan.Utils\HuoHuan.Utils.csproj" />
   </ItemGroup>
 
 </Project>

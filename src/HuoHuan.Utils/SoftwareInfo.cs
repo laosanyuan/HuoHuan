@@ -1,6 +1,6 @@
 ﻿namespace HuoHuan.Utils
 {
-    public class SoftwareInfo
+    public static class SoftwareInfo
     {
         public static readonly string Identity = "HuoHuan";
         public static readonly string Name = "火浣";
