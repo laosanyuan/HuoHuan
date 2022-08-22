@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/ImageCardStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/SpiderCardStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:HuoHuan.ViewModels"/>
         </ResourceDictionary>

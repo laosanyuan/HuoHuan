@@ -75,7 +75,7 @@ namespace HuoHuan.Plugin
         /// 继续
         /// </summary>
         /// <param name="plugin"></param>
-        public void Continue(IPlugin plugin = null!) => plugin?.Spider.Continue();
+        public void Continue(IPlugin plugin = null!) => plugin?.Spider?.Continue();
         /// <summary>
         /// 暂停全部
         /// </summary>
@@ -84,7 +84,7 @@ namespace HuoHuan.Plugin
         /// 暂停
         /// </summary>
         /// <param name="plugin"></param>
-        public void Pause(IPlugin plugin = null!) => plugin?.Spider.Pause();
+        public void Pause(IPlugin plugin = null!) => plugin?.Spider?.Pause();
         /// <summary>
         /// 停止全部
         /// </summary>

@@ -11,7 +11,7 @@ namespace HuoHuan.DataBase.Services
         public CrawledImageDB()
         {
             base.FileName = "crawled_url.db";
-            base.FilePath = FolderUtil.DbPath + @"\DataBase";
+            base.FilePath = FolderUtil.DbPath;
             base.TableName = "urls";
 
             var command = $"CREATE TABLE {base.TableName} (Url varchar(200) not null, DateTime DateTime, PRIMARY KEY(Url))";

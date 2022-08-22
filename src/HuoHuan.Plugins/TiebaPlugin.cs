@@ -145,7 +145,7 @@ namespace HuoHuan.Plugin.Plugins
                         this._progress = currentPage / (pageCount * 1.0);
                         this.NotifyStatusProgressChange();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // log
                     }
@@ -160,7 +160,7 @@ namespace HuoHuan.Plugin.Plugins
         private void NotifyStatusProgressChange()
         {
             var used = DateTime.Now - this._startTime;
-            var left = used / this._progress - used;
+            var left = this._progress <= 0 ? default : used / this._progress - used;
 
             this.ProgressStatusChanged?.Invoke(this,
                 new ProgressEventArgs()
@@ -180,6 +180,13 @@ namespace HuoHuan.Plugin.Plugins
         public override List<TiebaInfo> Config { get; protected set; } = new List<TiebaInfo>();
 
         public override string Name => nameof(TiebaConfig);
+
+        public override void Reset()
+        {
+            var text = DefaultConfigProvider.GetFileByPath("DefaultConfigs/TiebaConfig.yaml");
+            this.Config = this.Config = YamlUtil.Deserializer<List<TiebaInfo>>(text);
+            base.Save();
+        }
 
         [Serializable]
         public record TiebaInfo

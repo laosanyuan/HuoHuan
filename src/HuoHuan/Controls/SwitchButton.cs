@@ -7,7 +7,8 @@ namespace HuoHuan.Controls
 {
     public class SwitchButton : CheckBox
     {
-        public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(nameof(Size), typeof(double), typeof(SwitchButton));
+        public static readonly DependencyProperty SizeProperty
+            = DependencyProperty.Register(nameof(Size), typeof(double), typeof(SwitchButton));
         /// <summary>
         /// 按钮大小
         /// </summary>
@@ -17,7 +18,8 @@ namespace HuoHuan.Controls
             set => SetValue(SizeProperty, value);
         }
 
-        public static readonly DependencyProperty OpenIconProperty = DependencyProperty.Register(nameof(OpenIcon), typeof(string), typeof(SwitchButton));
+        public static readonly DependencyProperty OpenIconProperty
+            = DependencyProperty.Register(nameof(OpenIcon), typeof(string), typeof(SwitchButton));
         /// <summary>
         /// 开启状态图标
         /// </summary>
@@ -27,7 +29,8 @@ namespace HuoHuan.Controls
             set => SetValue(OpenIconProperty, value);
         }
 
-        public static readonly DependencyProperty CloseIconProperty = DependencyProperty.Register(nameof(CloseIcon), typeof(string), typeof(SwitchButton));
+        public static readonly DependencyProperty CloseIconProperty
+            = DependencyProperty.Register(nameof(CloseIcon), typeof(string), typeof(SwitchButton));
         /// <summary>
         /// 关闭状态图标
         /// </summary>
@@ -37,7 +40,8 @@ namespace HuoHuan.Controls
             set => SetValue(CloseIconProperty, value);
         }
 
-        public static readonly DependencyProperty OpenForegroundProperty = DependencyProperty.Register(nameof(OpenForeground), typeof(Brush), typeof(SwitchButton));
+        public static readonly DependencyProperty OpenForegroundProperty
+            = DependencyProperty.Register(nameof(OpenForeground), typeof(Brush), typeof(SwitchButton));
         /// <summary>
         /// 开启状态前景色
         /// </summary>
@@ -49,7 +53,8 @@ namespace HuoHuan.Controls
             set => SetValue(OpenForegroundProperty, value);
         }
 
-        public static readonly DependencyProperty CloseForegroundProperty = DependencyProperty.Register(nameof(CloseForeground), typeof(Brush), typeof(SwitchButton));
+        public static readonly DependencyProperty CloseForegroundProperty
+            = DependencyProperty.Register(nameof(CloseForeground), typeof(Brush), typeof(SwitchButton));
         /// <summary>
         /// 关闭状态前景色
         /// </summary>
