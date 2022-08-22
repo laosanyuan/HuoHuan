@@ -45,8 +45,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HuoHuan.DataBase\HuoHuan.DataBase.csproj" />
-    <ProjectReference Include="..\HuoHuan.Glue\HuoHuan.Utils.csproj" />
-    <ProjectReference Include="..\HuoHuan.Plugins\HuoHuan.Plugin.Plugins.csproj" />
+    <ProjectReference Include="..\HuoHuan.Plugin.Plugins\HuoHuan.Plugin.Plugins.csproj" />
+    <ProjectReference Include="..\HuoHuan.Utils\HuoHuan.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
