@@ -4,8 +4,11 @@ using HuoHuan.Enums;
 using HuoHuan.Models;
 using HuoHuan.Plugin;
 using HuoHuan.Plugin.Contracs;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace HuoHuan.ViewModels.Pages
@@ -15,6 +18,8 @@ namespace HuoHuan.ViewModels.Pages
     {
         #region [Fileds]
         private readonly SpiderManager _spiderManager = new();
+        private readonly Timer _timer = null!;
+        private readonly Random _random = new();
         #endregion
 
         #region [Dependency Properties]
@@ -29,12 +34,27 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         [ObservableProperty]
         private int _successCount;
+
+        /// <summary>
+        /// 展示URL。后续替换为其他形式
+        /// </summary>
+        [ObservableProperty]
+        private ObservableCollection<(string Image, bool IsValid)> _urls = new();
+
+        /// <summary>
+        /// 当前是否存在正在运行的爬取器
+        /// </summary>
+        [ObservableProperty]
+        private bool _isRunning;
         #endregion 
 
         public HomePageVM()
         {
             this._spiderManager.Crawled += SpiderManager_Crawled;
             this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
+
+            this._timer = new Timer(_ => this.UpdateShowImages());
+            this._timer.Change(Timeout.Infinite, 150);
 
             this.LoadSpider();
         }
@@ -49,6 +69,8 @@ namespace HuoHuan.ViewModels.Pages
         {
             if (plugin is null)
             {
+                Parallel.ForEach(this.SpiderInfos, t => t.Reset());
+                this.Urls.Clear();
                 this._spiderManager.StartAll();
                 this.SuccessCount = 0;
             }
@@ -57,6 +79,7 @@ namespace HuoHuan.ViewModels.Pages
                 var tmp = this.SpiderInfos?.FirstOrDefault(t => t?.Plugin == plugin);
                 if (tmp is not null)
                 {
+                    tmp.Reset();
                     this._spiderManager.Start(plugin);
                     // 如果当前已没有正在运行的Spider，则重新计数
                     if (!(this.SpiderInfos?.Any(t => t.Status == SpiderStatus.Running || t.Status == SpiderStatus.Paused) == true))
@@ -128,9 +151,11 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     case SpiderOperationStatus.Start:
                         this.Start(null);
+                        this._timer.Change(0, 150);
                         break;
                     case SpiderOperationStatus.Stop:
                         this.Stop(null);
+                        this._timer.Change(Timeout.Infinite, 150);
                         break;
                     case SpiderOperationStatus.Pause:
                         this.Pause(null);
@@ -143,7 +168,25 @@ namespace HuoHuan.ViewModels.Pages
         }
         #endregion
 
-        #region [Private Commands]
+        #region [Private Methods]
+        private void UpdateShowImages()
+        {
+            if (this._spiderManager.ImageChannels.Reader.TryRead(out var reader))
+            {
+                if (this.Urls.Count < 12)
+                {
+                    this.Urls.Add(reader);
+                }
+                else
+                {
+                    this.Urls[this._random.Next(11)] = reader;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 加载爬取器
+        /// </summary>
         private void LoadSpider()
         {
             this.SpiderInfos = new ObservableCollection<SpiderInfo>(PluginLoader.Plugins.Select(
@@ -160,11 +203,15 @@ namespace HuoHuan.ViewModels.Pages
             if (spiderInfo is not null)
             {
                 spiderInfo.Progress = e.Progress;
-                spiderInfo.Count = e.Count;
                 spiderInfo.Status = e.Status;
 
-                // 更新总数
-                this.SuccessCount = this.SpiderInfos?.Sum(t => t.Count) ?? 0;
+                if (this.SpiderInfos?.All(t => t.Status == SpiderStatus.Waiting
+                    || t.Status == SpiderStatus.Stopped
+                    || t.Status == SpiderStatus.Finished
+                    || t.Status == SpiderStatus.Unknown) == true)
+                {
+                    this.IsRunning = false;
+                }
             }
         }
 
@@ -174,6 +221,9 @@ namespace HuoHuan.ViewModels.Pages
             if (spiderInfo is not null)
             {
                 spiderInfo.ImageUrl = e.Url;
+                spiderInfo.Count++;
+                // 更新总数
+                this.SuccessCount = this.SpiderInfos?.Sum(t => t.Count) ?? 0;
             }
         }
         #endregion

@@ -22,7 +22,7 @@
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init(IConfig config);
+        public Task Init(IConfig config);
         /// <summary>
         /// 开始爬取
         /// </summary>

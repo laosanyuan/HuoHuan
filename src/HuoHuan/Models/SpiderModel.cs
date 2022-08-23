@@ -38,5 +38,13 @@ namespace HuoHuan.Models
 
         [ObservableProperty]
         private string _imageUrl;
+
+        public void Reset()
+        {
+            this.Count = 0;
+            this.Status = SpiderStatus.Waiting;
+            this.Progress = 0;
+            this.ImageUrl = null;
+        }
     }
 }
