@@ -8,7 +8,7 @@ namespace HuoHuan.Plugin.Contracs
         /// <summary>
         /// 加载
         /// </summary>
-        public void Load();
+        public Task Load();
         /// <summary>
         /// 保存
         /// </summary>
@@ -38,12 +38,13 @@ namespace HuoHuan.Plugin.Contracs
         /// <summary>
         /// 加载配置
         /// </summary>
-        public virtual async void Load()
+        public virtual async Task Load()
         {
             var file = Path.Combine(FolderUtil.ConfigPath, this.Name);
             if (!File.Exists(file))
             {
-                File.Create(file);
+                File.Create(file).Close();
+                this.Reset();
             }
             else
             {
@@ -58,7 +59,7 @@ namespace HuoHuan.Plugin.Contracs
         public virtual void Save()
         {
             var str = YamlUtil.Serializer(this.Config);
-            File.WriteAllTextAsync(Path.Combine(FolderUtil.AppData, this.Name), str, Encoding.UTF8);
+            File.WriteAllTextAsync(Path.Combine(FolderUtil.ConfigPath, this.Name), str, Encoding.UTF8);
         }
 
         /// <summary>

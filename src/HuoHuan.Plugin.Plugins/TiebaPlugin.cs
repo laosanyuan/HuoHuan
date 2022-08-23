@@ -19,7 +19,7 @@ namespace HuoHuan.Plugin.Plugins
         public IConfig Config { get; init; } = new TiebaConfig();
         #endregion
 
-        public void Init() => this.Spider.Init(this.Config);
+        public async Task Init() => await this.Spider.Init(this.Config);
 
         public bool IsValid()
         {
@@ -81,12 +81,12 @@ namespace HuoHuan.Plugin.Plugins
             }
         }
 
-        public void Init(IConfig config)
+        public async Task Init(IConfig config)
         {
             if (config is TiebaConfig tmp)
             {
                 this.Status = SpiderStatus.Waiting;
-                config.Load();
+                await config.Load();
                 this._config = tmp;
             }
         }

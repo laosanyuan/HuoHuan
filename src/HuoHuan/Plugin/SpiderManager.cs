@@ -54,7 +54,7 @@ namespace HuoHuan.Plugin
         /// 全部开始
         /// </summary>
         /// <param name="plugin"></param>
-        public void Start(IPlugin plugin)
+        public async void Start(IPlugin plugin)
         {
             if (plugin?.IsValid() == true)
             {
@@ -63,7 +63,7 @@ namespace HuoHuan.Plugin
 
                 plugin.Spider.ProgressStatusChanged += Spider_ProgressStatusChanged;
                 plugin.Spider.Crawled += Spider_Crawled;
-                plugin.Init();
+                await plugin.Init();
                 plugin.Spider.Start();
             }
         }
@@ -114,8 +114,11 @@ namespace HuoHuan.Plugin
                 if (IsValidate)
                 {
                     var group = this._filter.GetGroupData(e.Url, Message);
-                    await this.Save(group);
-                    this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                    if (group is not null)
+                    {
+                        await this.Save(group);
+                        this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                    }
                 }
                 await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
             }
