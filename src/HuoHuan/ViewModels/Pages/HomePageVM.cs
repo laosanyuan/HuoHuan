@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace HuoHuan.ViewModels.Pages
 {
@@ -64,7 +63,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 开始
         /// </summary>
         /// <param name="spider"></param>
-        [ICommand]
+        [RelayCommand]
         private void Start(IPlugin? plugin)
         {
             if (plugin is null)
@@ -93,7 +92,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 停止
         /// </summary>
         /// <param name="spider"></param>
-        [ICommand]
+        [RelayCommand]
         private void Stop(IPlugin? plugin)
         {
             if (plugin is null)
@@ -109,7 +108,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 暂停
         /// </summary>
         /// <param name="spider"></param>
-        [ICommand]
+        [RelayCommand]
         private void Pause(IPlugin? plugin)
         {
             if (plugin is null)
@@ -125,7 +124,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 继续
         /// </summary>
         /// <param name="spider"></param>
-        [ICommand]
+        [RelayCommand]
         private void Continue(IPlugin? plugin)
         {
             if (plugin is null)
@@ -142,7 +141,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 操作全部爬取器
         /// </summary>
         /// <param name="param"></param>
-        [ICommand]
+        [RelayCommand]
         private void OperationAll(object param)
         {
             if (param is SpiderOperationStatus status)

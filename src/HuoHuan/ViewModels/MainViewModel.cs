@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Enums;
 using HuoHuan.Views.Pages;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace HuoHuan.ViewModels
 {
@@ -33,7 +32,7 @@ namespace HuoHuan.ViewModels
         /// 切换页面
         /// </summary>
         /// <param name="type"></param>
-        [ICommand]
+        [RelayCommand]
         private void ChangePage(PageType type)
         {
             this.Page = type switch

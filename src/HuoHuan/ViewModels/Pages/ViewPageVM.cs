@@ -5,7 +5,6 @@ using HuoHuan.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace HuoHuan.ViewModels.Pages
 {
@@ -61,7 +60,7 @@ namespace HuoHuan.ViewModels.Pages
         /// <summary>
         /// 刷新数据
         /// </summary>
-        [ICommand]
+        [RelayCommand]
         private async Task RefreshData()
         {
             this.urls = (await this.db.QueryValidateGroup()).Select(t => t.Url).ToList();
@@ -80,13 +79,13 @@ namespace HuoHuan.ViewModels.Pages
         /// <summary>
         /// 前一张
         /// </summary>
-        [ICommand]
+        [RelayCommand]
         private void Previous() => this.DisplayIndex--;
 
         /// <summary>
         /// 后一张
         /// </summary>
-        [ICommand]
+        [RelayCommand]
         private void Next() => this.DisplayIndex++;
         #endregion
     }
