@@ -8,6 +8,7 @@
     <Authors>一刀</Authors>
     <Product>火浣</Product>
     <PackageIcon>HuoHuan.png</PackageIcon>
+    <ApplicationIcon>Resources\HuoHuan.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +42,7 @@
     <Content Include="Resources\Fonts\xiaoweilogo.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\HuoHuan.ico" />
   </ItemGroup>
 
   <ItemGroup>
