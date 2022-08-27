@@ -99,8 +99,8 @@ namespace HuoHuan.Plugin.Plugins
             this._count = 0;
             this._progress = 0;
             this._startTime = DateTime.Now;
-            var pageCount = 0;
-            this._config?.Config?.ForEach(t => pageCount += t.PageCount);
+
+            var pageCount = this._config?.Config?.Sum(t => t.PageCount) ?? 0;
             var currentPage = 0;
 
             for (int i = 0; i < this._config?.Config?.Count; i++)
@@ -110,12 +110,19 @@ namespace HuoHuan.Plugin.Plugins
                 {
                     try
                     {
-                        HashSet<string> urls = new HashSet<string>();
+                        HashSet<string> urls = new();
                         int index = j * 50;
 
                         HttpClient client = new();
                         HttpUtil.SetHeaders(client);
                         string pageData = await client.GetStringAsync($"https://tieba.baidu.com/f?kw={page.Name}&ie=utf-8&pn={index}");
+                        if (pageData?.Contains("百度安全验证") == true
+                            || pageData?.Contains("网络不给力") == true)
+                        {
+                            this.Status = SpiderStatus.Error;
+                            this.NotifyStatusProgressChange();
+                            return;
+                        }
                         IHtmlDocument doc = await this._parser.ParseDocumentAsync(pageData);
                         IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".t_con.cleafix");
                         foreach (IElement tag in tags)
@@ -144,6 +151,7 @@ namespace HuoHuan.Plugin.Plugins
                         currentPage++;
                         this._progress = currentPage / (pageCount * 1.0);
                         this.NotifyStatusProgressChange();
+                        await Task.Delay(100);
                     }
                     catch (Exception)
                     {

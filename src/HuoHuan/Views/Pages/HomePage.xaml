@@ -106,18 +106,18 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <control:ImageCard Margin="1" Url="{Binding Urls[0].Image}" IsValid="{Binding Urls[0].IsValid}"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[1].Image}" IsValid="{Binding Urls[1].IsValid}" Grid.Column="1"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[2].Image}" IsValid="{Binding Urls[2].IsValid}" Grid.Column="2"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[3].Image}" IsValid="{Binding Urls[3].IsValid}" Grid.Column="3"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[4].Image}" IsValid="{Binding Urls[4].IsValid}" Grid.Row="1"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[5].Image}" IsValid="{Binding Urls[5].IsValid}" Grid.Row="1" Grid.Column="1"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[6].Image}" IsValid="{Binding Urls[6].IsValid}" Grid.Row="1" Grid.Column="2"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[7].Image}" IsValid="{Binding Urls[7].IsValid}" Grid.Row="1" Grid.Column="3"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[8].Image}" IsValid="{Binding Urls[8].IsValid}" Grid.Row="2"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[9].Image}" IsValid="{Binding Urls[9].IsValid}" Grid.Row="2" Grid.Column="1"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[10].Image}" IsValid="{Binding Urls[10].IsValid}" Grid.Row="2" Grid.Column="2"/>
-                <control:ImageCard Margin="1" Url="{Binding Urls[11].Image}" IsValid="{Binding Urls[11].IsValid}" Grid.Row="2" Grid.Column="3"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[0].Url}" IsValid="{Binding Urls[0].IsValid}"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[1].Url}" IsValid="{Binding Urls[1].IsValid}" Grid.Column="1"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[2].Url}" IsValid="{Binding Urls[2].IsValid}" Grid.Column="2"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[3].Url}" IsValid="{Binding Urls[3].IsValid}" Grid.Column="3"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[4].Url}" IsValid="{Binding Urls[4].IsValid}" Grid.Row="1"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[5].Url}" IsValid="{Binding Urls[5].IsValid}" Grid.Row="1" Grid.Column="1"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[6].Url}" IsValid="{Binding Urls[6].IsValid}" Grid.Row="1" Grid.Column="2"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[7].Url}" IsValid="{Binding Urls[7].IsValid}" Grid.Row="1" Grid.Column="3"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[8].Url}" IsValid="{Binding Urls[8].IsValid}" Grid.Row="2"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[9].Url}" IsValid="{Binding Urls[9].IsValid}" Grid.Row="2" Grid.Column="1"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[10].Url}" IsValid="{Binding Urls[10].IsValid}" Grid.Row="2" Grid.Column="2"/>
+                <control:ImageCard Margin="1" Url="{Binding Urls[11].Url}" IsValid="{Binding Urls[11].IsValid}" Grid.Row="2" Grid.Column="3"/>
             </Grid>
         </Grid>
     </Grid>

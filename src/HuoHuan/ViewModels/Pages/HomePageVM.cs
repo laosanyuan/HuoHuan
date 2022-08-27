@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Enums;
+using HuoHuan.Extensions;
 using HuoHuan.Models;
 using HuoHuan.Plugin;
 using HuoHuan.Plugin.Contracs;
@@ -38,7 +39,7 @@ namespace HuoHuan.ViewModels.Pages
         /// 展示URL。后续替换为其他形式
         /// </summary>
         [ObservableProperty]
-        private ObservableCollection<(string Image, bool IsValid)> _urls = new();
+        private ObservableCollection<DisplayImageInfo> _urls = new();
 
         /// <summary>
         /// 当前是否存在正在运行的爬取器
@@ -172,13 +173,18 @@ namespace HuoHuan.ViewModels.Pages
         {
             if (this._spiderManager.ImageChannels.Reader.TryRead(out var reader))
             {
+                var image = new DisplayImageInfo()
+                {
+                    Url = reader.Url,
+                    IsValid = reader.IsValidate
+                };
                 if (this.Urls.Count < 12)
                 {
-                    this.Urls.Add(reader);
+                    this.Urls.Add(image);
                 }
                 else
                 {
-                    this.Urls[this._random.Next(11)] = reader;
+                    this.Urls[this._random.Next(11)] = image;
                 }
             }
         }
@@ -204,10 +210,7 @@ namespace HuoHuan.ViewModels.Pages
                 spiderInfo.Progress = e.Progress;
                 spiderInfo.Status = e.Status;
 
-                if (this.SpiderInfos?.All(t => t.Status == SpiderStatus.Waiting
-                    || t.Status == SpiderStatus.Stopped
-                    || t.Status == SpiderStatus.Finished
-                    || t.Status == SpiderStatus.Unknown) == true)
+                if (this.SpiderInfos?.All(t => t.Status.IsEnded()) == true)
                 {
                     this.IsRunning = false;
                 }

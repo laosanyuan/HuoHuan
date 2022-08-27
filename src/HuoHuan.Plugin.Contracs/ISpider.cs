@@ -81,5 +81,6 @@
 
         Stopped,    // 停止
         Finished,   // 完成
+        Error,      // 异常
     }
 }
