@@ -60,56 +60,62 @@ namespace HuoHuan.Plugin
         /// <returns></returns>
         public GroupImage GetGroupData(string imageUrl, string text)
         {
-            if (!String.IsNullOrWhiteSpace(text) && text.Contains(this._urlFlag))
+            try
             {
-                var handler = new HttpClientHandler();
-                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                handler.ServerCertificateCustomValidationCallback =
-                    (httpRequestMessage, cert, cetChain, policyErrors) =>
-                    {
-                        return true;
-                    };
-                HttpClient httpClient = new(handler);
-                HttpUtil.SetHeaders(httpClient);
-                httpClient.DefaultRequestHeaders.Add("User-Agent", "Microsoft Internet Explorer");
-                httpClient.BaseAddress = new Uri(imageUrl);
-
-                Mat thresholdImg = null!;
-                using (Stream s = httpClient.GetStreamAsync(imageUrl).Result)
+                if (!String.IsNullOrWhiteSpace(text) && text.Contains(this._urlFlag))
                 {
-                    byte[] data = new byte[1024];
-                    int length = 0;
-                    using MemoryStream ms = new();
-                    while ((length = s.Read(data, 0, data.Length)) > 0)
+                    var handler = new HttpClientHandler();
+                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                    handler.ServerCertificateCustomValidationCallback =
+                        (httpRequestMessage, cert, cetChain, policyErrors) =>
+                        {
+                            return true;
+                        };
+                    HttpClient httpClient = new(handler);
+                    HttpUtil.SetHeaders(httpClient);
+                    httpClient.DefaultRequestHeaders.Add("User-Agent", "Microsoft Internet Explorer");
+                    httpClient.BaseAddress = new Uri(imageUrl);
+
+                    Mat thresholdImg = null!;
+                    using (Stream s = httpClient.GetStreamAsync(imageUrl).Result)
                     {
-                        ms.Write(data, 0, length);
+                        byte[] data = new byte[1024];
+                        int length = 0;
+                        using MemoryStream ms = new();
+                        while ((length = s.Read(data, 0, data.Length)) > 0)
+                        {
+                            ms.Write(data, 0, length);
+                        }
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        // 降噪
+                        Mat simg = Mat.FromStream(ms, ImreadModes.Grayscale);
+                        // 二值化
+                        thresholdImg = simg.Threshold(220, 255, ThresholdTypes.Binary);
                     }
-                    ms.Seek(0, SeekOrigin.Begin);
+                    // 获取图片文字内容
+                    var dateStr = this.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
+                    string pattern = @"内\((.+)前\)";
 
-                    // 降噪
-                    Mat simg = Mat.FromStream(ms, ImreadModes.Grayscale);
-                    // 二值化
-                    thresholdImg = simg.Threshold(220, 255, ThresholdTypes.Binary);
-                }
-                // 获取图片文字内容
-                var dateStr = this.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
-                string pattern = @"内\((.+)前\)";
-
-                if (!String.IsNullOrWhiteSpace(dateStr)
-                    && Regex.Matches(dateStr, pattern).Count > 0
-                    && DateTime.TryParse(dateStr[..dateStr.LastIndexOf("前")].Split('(')[1], out var date)
-                    && DateTimeUtil.IsValidTime(DateTime.Now, date, 7))
-                {
-                    var result = new GroupImage()
+                    if (!String.IsNullOrWhiteSpace(dateStr)
+                        && Regex.Matches(dateStr, pattern).Count > 0
+                        && DateTime.TryParse(dateStr[..dateStr.LastIndexOf("前")].Split('(')[1], out var date)
+                        && DateTimeUtil.IsValidTime(DateTime.Now, date, 7))
                     {
-                        InvalidateDate = date,
-                        QRText = text,
-                        Url = imageUrl,
-                        GroupName = dateStr.Contains("该二维码") ? dateStr.Split("该二维码")?[0] : String.Empty,
-                        FileName = text.Replace(this._urlFlag, "") + ".jpg"
-                    };
-                    return result;
+                        var result = new GroupImage()
+                        {
+                            InvalidateDate = date,
+                            QRText = text,
+                            Url = imageUrl,
+                            GroupName = dateStr.Contains("该二维码") ? dateStr.Split("该二维码")?[0] : String.Empty,
+                            FileName = text.Replace(this._urlFlag, "") + ".jpg"
+                        };
+                        return result;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
             }
             return null!;
         }

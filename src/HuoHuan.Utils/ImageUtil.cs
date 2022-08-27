@@ -36,10 +36,16 @@ namespace HuoHuan.Utils
         /// <param name="fileName"></param>
         public static async Task SaveImageFile(string url, string fileName)
         {
-            HttpClient client = new();
-            byte[] bytes = await client.GetByteArrayAsync(url);
-            using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-            await stream.WriteAsync(bytes, 0, bytes.Length);
+            try
+            {
+                HttpClient client = new();
+                byte[] bytes = await client.GetByteArrayAsync(url);
+                using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+                await stream.WriteAsync(bytes, 0, bytes.Length);
+            }
+            catch (Exception ex)
+            { 
+            }
         }
 
         /// <summary>

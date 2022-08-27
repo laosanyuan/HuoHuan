@@ -11,7 +11,7 @@ namespace HuoHuan.Plugin.Plugins
     /// </summary>
     public class WwqunPlugin : IPlugin
     {
-        public string Name => "wwqun.com";
+        public string Name => "wwqun";
 
         public ISpider Spider { get; init; } = new WwqunSpider();
 

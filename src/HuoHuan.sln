@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Utils", "HuoHuan.Ut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Plugin.Plugins.Test", "HuoHuan.Plugin.Plugins.Test\HuoHuan.Plugin.Plugins.Test.csproj", "{B41940BA-0F30-4282-91E5-7E8001ECA741}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.Test", "HuoHuan.Test\HuoHuan.Test.csproj", "{499099BD-C017-404D-9D14-EE00C4683F21}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,10 +53,6 @@ Global
 		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B41940BA-0F30-4282-91E5-7E8001ECA741}.Release|Any CPU.Build.0 = Release|Any CPU
-		{499099BD-C017-404D-9D14-EE00C4683F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{499099BD-C017-404D-9D14-EE00C4683F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{499099BD-C017-404D-9D14-EE00C4683F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{499099BD-C017-404D-9D14-EE00C4683F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0D79BED1-1D54-48BE-90A7-9FE0E0C0BD79} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
 		{B41940BA-0F30-4282-91E5-7E8001ECA741} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
-		{499099BD-C017-404D-9D14-EE00C4683F21} = {8763295B-BE95-4C1C-B15D-B534B2E97FE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA1AD3A4-FA20-45D9-8B6C-9CF5064D6E79}
