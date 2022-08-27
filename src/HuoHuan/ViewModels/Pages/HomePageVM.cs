@@ -213,6 +213,7 @@ namespace HuoHuan.ViewModels.Pages
                 if (this.SpiderInfos?.All(t => t.Status.IsEnded()) == true)
                 {
                     this.IsRunning = false;
+                    this._timer.Change(Timeout.Infinite, 150);
                 }
             }
         }

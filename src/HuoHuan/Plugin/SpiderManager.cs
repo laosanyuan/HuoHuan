@@ -3,6 +3,7 @@ using HuoHuan.DataBase.Services;
 using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
 using System.IO;
+using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -109,18 +110,37 @@ namespace HuoHuan.Plugin
         {
             if (sender is not null)
             {
-                var (IsValidate, Message) = await this._filter.IsValidImage(e.Url);
-
-                if (IsValidate)
+                if (e.NeedFilter)
                 {
-                    var group = this._filter.GetGroupData(e.Url, Message);
-                    if (group is not null)
+                    var (IsValidate, Message) = await this._filter.IsValidImage(e.Url);
+
+                    if (IsValidate)
                     {
+                        var group = this._filter.GetGroupData(e.Url, Message);
+                        if (group is not null)
+                        {
+                            await this.Save(group);
+                            this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                        }
+                    }
+                    await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
+                }
+                else
+                {
+                    if (!await this._filter.IsRepeatImage(e.Url))
+                    {
+                        var group = new GroupImage()
+                        {
+                            GroupName = e.Name,
+                            InvalidateDate = e.InvalidTime,
+                            Url = e.Url,
+                            FileName = e.Url.Split("/").LastOrDefault()!
+                        };
                         await this.Save(group);
                         this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                     }
+                    await this.ImageChannels.Writer.WriteAsync((e.Url, true));
                 }
-                await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
             }
         }
 

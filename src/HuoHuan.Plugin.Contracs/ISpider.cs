@@ -68,7 +68,22 @@
 
     public class CrawlEventArgs : EventArgs
     {
+        /// <summary>
+        /// 图片链接
+        /// </summary>
         public string Url { get; init; } = null!;
+        /// <summary>
+        /// 群名称
+        /// </summary>
+        public string Name { get; init; } = null!;
+        /// <summary>
+        /// 失效时间
+        /// </summary>
+        public DateTime InvalidTime { get; init; }
+        /// <summary>
+        /// 是否需要过滤图片
+        /// </summary>
+        public bool NeedFilter { get; init; } = true;
     }
 
     public enum SpiderStatus

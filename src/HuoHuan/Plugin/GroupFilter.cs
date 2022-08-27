@@ -26,7 +26,14 @@ namespace HuoHuan.Plugin
 
         #region [Methods]
         /// <summary>
-        /// 判断url是否未有效图片
+        /// 是否为重复图片
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<bool> IsRepeatImage(string url) => await this._db.IsExistsAndInsert(url);
+
+        /// <summary>
+        /// 判断url是否为有效图片
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>

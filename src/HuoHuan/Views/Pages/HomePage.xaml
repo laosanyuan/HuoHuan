@@ -45,9 +45,9 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                            <ItemsControl VerticalContentAlignment="Center" 
+                            <ItemsControl VerticalContentAlignment="Center"  
                                           VerticalAlignment="Center" 
-                                          Margin="10" 
+                                          Margin="5,10" 
                                           ItemsSource="{Binding SpiderInfos}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -56,7 +56,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <control:SpiderCard SpiderInfo="{Binding .}"/>
+                                        <control:SpiderCard SpiderInfo="{Binding .}" Margin="5,0"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

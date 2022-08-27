@@ -7,6 +7,9 @@ using static HuoHuan.Plugin.Plugins.TiebaConfig;
 
 namespace HuoHuan.Plugin.Plugins
 {
+    /// <summary>
+    /// 百度贴吧
+    /// </summary>
     public class TiebaPlugin : IPlugin
     {
         #region [Properties]
@@ -27,65 +30,48 @@ namespace HuoHuan.Plugin.Plugins
         }
     }
 
-    public class TiebaSpider : ISpider
+    public class TiebaSpider : BaseSpider
     {
-        #region [Fileds]
-        private TiebaConfig _config = null!;
-        private readonly HtmlParser _parser = new();
-
-        private int _count;             // 爬取数量
-        private double _progress;       // 爬取进度
-        private DateTime _startTime;    // 爬取起始时间
-        #endregion
-
-        public SpiderStatus Status { get; set; } = SpiderStatus.Waiting;
-
-        public event ProgressEventHandler ProgressStatusChanged = null!;
-        public event CrawledEventHandler Crawled = null!;
+        private TiebaConfig _config = null!;    //配置
 
         #region [Public Methods]
-        public void Start()
+        public override void Start()
         {
-            if (this._config is not null
-                && this.Status != SpiderStatus.Unknown
-                && this.Status != SpiderStatus.Running)
+            if (this._config is not null)
             {
-                this.Status = SpiderStatus.Running;
-                _ = this.CrawlImage();
-                this.NotifyStatusProgressChange();
+                base.Start();
             }
         }
 
-        public void Pause()
+        public override void Pause()
         {
-            if (this._config is not null && this.Status == SpiderStatus.Running)
+            if (this._config is not null)
             {
-                this.Status = SpiderStatus.Paused;
-                this.NotifyStatusProgressChange();
+                base.Pause();
             }
         }
 
-        public void Continue()
+        public override void Continue()
         {
-            if (this._config is not null && this.Status == SpiderStatus.Paused)
+            if (this._config is not null)
             {
-                this.Status = SpiderStatus.Running;
+                base.Continue();
             }
         }
 
-        public void Stop()
+        public override void Stop()
         {
-            if (this._config is not null && this.Status != SpiderStatus.Unknown)
+            if (this._config is not null)
             {
-                this.Status = SpiderStatus.Waiting;
+                base.Stop();
             }
         }
 
-        public async Task Init(IConfig config)
+        public override async Task Init(IConfig config)
         {
             if (config is TiebaConfig tmp)
             {
-                this.Status = SpiderStatus.Waiting;
+                base.Status = SpiderStatus.Waiting;
                 await config.Load();
                 this._config = tmp;
             }
@@ -94,14 +80,12 @@ namespace HuoHuan.Plugin.Plugins
 
         #region [Private Methods]
         // 爬取任务
-        private async Task CrawlImage()
+        protected override async Task CrawlImage()
         {
-            this._count = 0;
-            this._progress = 0;
-            this._startTime = DateTime.Now;
-
             var pageCount = this._config?.Config?.Sum(t => t.PageCount) ?? 0;
             var currentPage = 0;
+            HttpClient client = new();
+            HttpUtil.SetHeaders(client);
 
             for (int i = 0; i < this._config?.Config?.Count; i++)
             {
@@ -113,9 +97,11 @@ namespace HuoHuan.Plugin.Plugins
                         HashSet<string> urls = new();
                         int index = j * 50;
 
-                        HttpClient client = new();
-                        HttpUtil.SetHeaders(client);
                         string pageData = await client.GetStringAsync($"https://tieba.baidu.com/f?kw={page.Name}&ie=utf-8&pn={index}");
+                        if (pageData is null)
+                        {
+                            continue;
+                        }
                         if (pageData?.Contains("百度安全验证") == true
                             || pageData?.Contains("网络不给力") == true)
                         {
@@ -123,7 +109,7 @@ namespace HuoHuan.Plugin.Plugins
                             this.NotifyStatusProgressChange();
                             return;
                         }
-                        IHtmlDocument doc = await this._parser.ParseDocumentAsync(pageData);
+                        IHtmlDocument doc = await this._parser.ParseDocumentAsync(pageData!);
                         IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".t_con.cleafix");
                         foreach (IElement tag in tags)
                         {
@@ -134,8 +120,7 @@ namespace HuoHuan.Plugin.Plugins
                                 var url = image.GetAttribute("bpic");
                                 if (url != null)
                                 {
-                                    this.Crawled?.Invoke(this, new CrawlEventArgs() { Url = url });
-                                    this._count++;
+                                    base.NotifyCrawledChange(new CrawlEventArgs() { Url = url });
                                 }
                                 if (this.Status == SpiderStatus.Paused)
                                 {
@@ -149,8 +134,8 @@ namespace HuoHuan.Plugin.Plugins
                             }
                         }
                         currentPage++;
-                        this._progress = currentPage / (pageCount * 1.0);
-                        this.NotifyStatusProgressChange();
+                        base._progress = currentPage / (pageCount * 1.0);
+                        base.NotifyStatusProgressChange();
                         await Task.Delay(100);
                     }
                     catch (Exception)
@@ -162,23 +147,6 @@ namespace HuoHuan.Plugin.Plugins
 
             this.Status = SpiderStatus.Finished;
             this.NotifyStatusProgressChange();
-        }
-
-        // 通知当前运行状态
-        private void NotifyStatusProgressChange()
-        {
-            var used = DateTime.Now - this._startTime;
-            var left = this._progress <= 0 ? default : used / this._progress - used;
-
-            this.ProgressStatusChanged?.Invoke(this,
-                new ProgressEventArgs()
-                {
-                    Count = this._count,
-                    Status = this.Status,
-                    Progress = this._progress,
-                    UsedTime = used,
-                    LeftTime = left
-                });
         }
         #endregion
     }
