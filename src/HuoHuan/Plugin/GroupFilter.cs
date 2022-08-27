@@ -56,7 +56,7 @@ namespace HuoHuan.Plugin
         /// <returns></returns>
         public GroupImage GetGroupData(string imageUrl, string text)
         {
-            if (!String.IsNullOrWhiteSpace(text))
+            if (!String.IsNullOrWhiteSpace(text) && text.Contains(this._urlFlag))
             {
                 HttpClient httpClient = new();
                 HttpUtil.SetHeaders(httpClient);

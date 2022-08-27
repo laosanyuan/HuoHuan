@@ -34,7 +34,7 @@ namespace HuoHuan.Plugin.Plugins
     {
         public override Task Init(IConfig config)
         {
-            return default!;
+            return Task.CompletedTask;
         }
 
         protected override async Task CrawlImage()
