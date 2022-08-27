@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HuoHuan.Plugin.Plugins\HuoHuan.Plugin.Plugins.csproj" />
+    <ProjectReference Include="..\HuoHuan\HuoHuan.csproj" />
   </ItemGroup>
 
 </Project>

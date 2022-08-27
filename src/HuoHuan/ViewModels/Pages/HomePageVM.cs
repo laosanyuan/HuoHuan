@@ -151,7 +151,7 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     case SpiderOperationStatus.Start:
                         this.Start(null);
-                        this._timer.Change(0, 150);
+                        this._timer.Change(0, 300);
                         break;
                     case SpiderOperationStatus.Stop:
                         this.Stop(null);

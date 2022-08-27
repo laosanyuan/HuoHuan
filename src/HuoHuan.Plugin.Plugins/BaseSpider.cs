@@ -37,7 +37,7 @@ namespace HuoHuan.Plugin.Plugins
                 this._progress = 0;
                 this._startTime = DateTime.Now;
 
-                _ = this.CrawlImage();
+                Task.Run(this.CrawlImage);
                 this.NotifyStatusProgressChange();
             }
         }
