@@ -43,7 +43,7 @@ namespace HuoHuan.Utils
                 using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
                 await stream.WriteAsync(bytes, 0, bytes.Length);
             }
-            catch (Exception ex)
+            catch (Exception)
             { 
             }
         }

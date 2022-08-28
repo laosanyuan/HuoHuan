@@ -9,6 +9,8 @@
     <Product>火浣</Product>
     <PackageIcon>HuoHuan.png</PackageIcon>
     <ApplicationIcon>Resources\HuoHuan.ico</ApplicationIcon>
+    <PackageId>HuoHuan</PackageId>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

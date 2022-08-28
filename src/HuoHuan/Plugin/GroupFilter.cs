@@ -114,7 +114,7 @@ namespace HuoHuan.Plugin
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             return null!;

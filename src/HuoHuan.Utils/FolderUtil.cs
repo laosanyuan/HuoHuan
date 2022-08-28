@@ -8,7 +8,7 @@ namespace HuoHuan.Utils
             get
             {
                 var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var path = Path.Combine(appDataPath, SoftwareInfo.Identity);
+                var path = Path.Combine(appDataPath, "HuoHuan");
                 return CreatePath(path);
             }
         }
