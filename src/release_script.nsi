@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "»ðä½"
-!define PRODUCT_VERSION "1.0.0"
+!define PRODUCT_VERSION "#replace_version#"
 !define PRODUCT_PUBLISHER "Ò»µ¶"
 !define PRODUCT_WEB_SITE "https://github.com/laosanyuan/HuoHuan"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\HuoHuan.exe"
