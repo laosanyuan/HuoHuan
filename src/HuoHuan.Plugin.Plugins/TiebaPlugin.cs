@@ -84,7 +84,7 @@ namespace HuoHuan.Plugin.Plugins
         {
             var pageCount = this._config?.Config?.Sum(t => t.PageCount) ?? 0;
             var currentPage = 0;
-            HttpClient client = new();
+            using HttpClient client = new();
             HttpUtil.SetHeaders(client);
 
             for (int i = 0; i < this._config?.Config?.Count; i++)

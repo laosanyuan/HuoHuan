@@ -1,17 +1,10 @@
 ﻿using HuoHuan.DataBase.Models;
 using HuoHuan.DataBase.Services;
 using HuoHuan.Utils;
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
 using PaddleOCRSharp;
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace HuoHuan.Plugin
@@ -58,43 +51,22 @@ namespace HuoHuan.Plugin
         /// <param name="imageUrl"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public GroupImage GetGroupData(string imageUrl, string text)
+        public async Task<GroupImage> GetGroupData(string imageUrl, string text)
         {
             try
             {
                 if (!String.IsNullOrWhiteSpace(text) && text.Contains(this._urlFlag))
                 {
-                    var handler = new HttpClientHandler();
-                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                    handler.ServerCertificateCustomValidationCallback =
-                        (httpRequestMessage, cert, cetChain, policyErrors) =>
-                        {
-                            return true;
-                        };
-                    HttpClient httpClient = new(handler);
-                    HttpUtil.SetHeaders(httpClient);
-                    httpClient.DefaultRequestHeaders.Add("User-Agent", "Microsoft Internet Explorer");
-                    httpClient.BaseAddress = new Uri(imageUrl);
-
-                    Mat thresholdImg = null!;
-                    using (Stream s = httpClient.GetStreamAsync(imageUrl).Result)
+                    var image = await ImageUtil.GetBitmapFromUrl(imageUrl);
+                    if (image is null)
                     {
-                        byte[] data = new byte[1024];
-                        int length = 0;
-                        using MemoryStream ms = new();
-                        while ((length = s.Read(data, 0, data.Length)) > 0)
-                        {
-                            ms.Write(data, 0, length);
-                        }
-                        ms.Seek(0, SeekOrigin.Begin);
-
-                        // 降噪
-                        Mat simg = Mat.FromStream(ms, ImreadModes.Grayscale);
-                        // 二值化
-                        thresholdImg = simg.Threshold(220, 255, ThresholdTypes.Binary);
+                        return default!;
                     }
+                    // 图像预处理
+                    image = ImageUtil.ToGray(image);
+                    image = ImageUtil.ConvertToBpp(image, 20);
                     // 获取图片文字内容
-                    var dateStr = this.GetImageText(BitmapConverter.ToBitmap(thresholdImg)).Replace(" ", "");
+                    var dateStr = this.GetImageText(image).Replace(" ", "");
                     string pattern = @"内\((.+)前\)";
 
                     if (!String.IsNullOrWhiteSpace(dateStr)
@@ -140,7 +112,6 @@ namespace HuoHuan.Plugin
                 return "";
             }
         }
-
         #endregion
     }
 }

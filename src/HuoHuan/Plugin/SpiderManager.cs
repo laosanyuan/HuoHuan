@@ -116,7 +116,7 @@ namespace HuoHuan.Plugin
 
                     if (IsValidate)
                     {
-                        var group = this._filter.GetGroupData(e.Url, Message);
+                        var group = await this._filter.GetGroupData(e.Url, Message);
                         if (group is not null)
                         {
                             await this.Save(group);

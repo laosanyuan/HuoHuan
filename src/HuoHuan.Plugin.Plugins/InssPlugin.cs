@@ -39,7 +39,7 @@ namespace HuoHuan.Plugin.Plugins
 
         protected override async Task CrawlImage()
         {
-            HttpClient client = new();
+            using HttpClient client = new();
             HttpUtil.SetHeaders(client);
             for (int i = 0; i < 20; i++)
             {
