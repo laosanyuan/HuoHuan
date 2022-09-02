@@ -8,6 +8,7 @@ using HuoHuan.Plugin.Contracs;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -169,6 +170,9 @@ namespace HuoHuan.ViewModels.Pages
         #endregion
 
         #region [Private Methods]
+        /// <summary>
+        /// 更新展示界面图片墙
+        /// </summary>
         private void UpdateShowImages()
         {
             if (this._spiderManager.ImageChannels.Reader.TryRead(out var reader))
@@ -214,6 +218,7 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     this.IsRunning = false;
                     this._timer.Change(Timeout.Infinite, 150);
+                    this.PlaySound();
                 }
             }
         }
@@ -228,6 +233,16 @@ namespace HuoHuan.ViewModels.Pages
                 // 更新总数
                 this.SuccessCount = this.SpiderInfos?.Sum(t => t.Count) ?? 0;
             }
+        }
+
+        /// <summary>
+        /// 播放结束音频
+        /// </summary>
+        private void PlaySound()
+        {
+            SoundPlayer player = new("Resources\\complate.wav");
+            player.Load();
+            player.Play();
         }
         #endregion
     }

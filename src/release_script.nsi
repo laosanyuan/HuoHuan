@@ -107,6 +107,8 @@ Section "MainSection" SEC01
   File "HuoHuan\bin\publish\PaddleOCR.dll"
   File "HuoHuan\bin\publish\PaddleOCRSharp.dll"
   File "HuoHuan\bin\publish\paddle_inference.dll"
+  SetOutPath "$INSTDIR\Resources"
+  File "HuoHuan\bin\publish\Resources\complate.wav"
   SetOutPath "$INSTDIR\Resources\Fonts"
   File "HuoHuan\bin\publish\Resources\Fonts\iconfont.ttf"
   File "HuoHuan\bin\publish\Resources\Fonts\jiangxizhuokai.ttf"
