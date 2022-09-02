@@ -2,6 +2,7 @@
 using HuoHuan.DataBase.Services;
 using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Channels;
@@ -23,7 +24,7 @@ namespace HuoHuan.Plugin
         /// <summary>
         /// 展示用图片队列
         /// </summary>
-        public Channel<(string Url, bool IsValidate)> ImageChannels { get; private set; }
+        public Channel<(Bitmap Bitmap, bool IsValidate)> ImageChannels { get; private set; }
         #endregion
 
         #region [Events]
@@ -39,7 +40,7 @@ namespace HuoHuan.Plugin
 
         public SpiderManager()
         {
-            this.ImageChannels = Channel.CreateBounded<(string, bool)>(
+            this.ImageChannels = Channel.CreateBounded<(Bitmap, bool)>(
                 new BoundedChannelOptions(50)
                 {
                     FullMode = BoundedChannelFullMode.DropOldest
@@ -110,9 +111,9 @@ namespace HuoHuan.Plugin
         {
             if (sender is not null)
             {
+                var image = await ImageUtil.GetBitmapFromUrl(e.Url);
                 if (e.NeedFilter)
                 {
-                    var image = await ImageUtil.GetBitmapFromUrl(e.Url);
                     if (image is not null)
                     {
                         var (IsValidate, Message, Bitmap) = await this._filter.IsValidImage(image, e.Url);
@@ -125,7 +126,7 @@ namespace HuoHuan.Plugin
                                 this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                             }
                         }
-                        await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
+                        await this.ImageChannels.Writer.WriteAsync((image, IsValidate));
                     }
                 }
                 else
@@ -142,7 +143,7 @@ namespace HuoHuan.Plugin
                         await this.Save(group);
                         this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
                     }
-                    await this.ImageChannels.Writer.WriteAsync((e.Url, true));
+                    await this.ImageChannels.Writer.WriteAsync((image, true));
                 }
             }
         }

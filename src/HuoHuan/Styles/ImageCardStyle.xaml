@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:control="clr-namespace:HuoHuan.Controls">
+    <control:BitmapConverter x:Key="bitmapConverter"/>
+    
     <Style TargetType="{x:Type control:ImageCard}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
@@ -8,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type control:ImageCard}">
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource Foreground.3}">
                         <Grid>
-                            <Image Name="image" Source="{TemplateBinding Url}"/>
+                            <Image Name="image" Source="{TemplateBinding Bitmap,Converter={StaticResource bitmapConverter}}"/>
                             <StackPanel Name="result_stack" 
                                         HorizontalAlignment="Left" 
                                         Opacity="0.8" 
@@ -39,7 +41,7 @@
                             <Setter TargetName="result_text" Property="Foreground" Value="{DynamicResource FailColor}"/>
                             <Setter TargetName="result_text" Property="Text" Value="当前图片不是有效群！"/>
                         </Trigger>
-                        <Trigger Property="Url" Value="{x:Null}">
+                        <Trigger Property="Bitmap" Value="{x:Null}">
                             <Setter TargetName="image" Property="Source" Value="/Resources/HuoHuan.png"/>
                             <Setter TargetName="image" Property="Opacity" Value="0.5"/>
                             <Setter TargetName="image" Property="Width" Value="100"/>

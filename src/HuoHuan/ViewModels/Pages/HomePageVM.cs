@@ -55,7 +55,7 @@ namespace HuoHuan.ViewModels.Pages
             this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
 
             this._timer = new Timer(_ => this.UpdateShowImages());
-            this._timer.Change(Timeout.Infinite, 150);
+            this._timer.Change(Timeout.Infinite, 100);
 
             this.LoadSpider();
         }
@@ -152,11 +152,11 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     case SpiderOperationStatus.Start:
                         this.Start(null);
-                        this._timer.Change(0, 300);
+                        this._timer.Change(0, 100);
                         break;
                     case SpiderOperationStatus.Stop:
                         this.Stop(null);
-                        this._timer.Change(Timeout.Infinite, 150);
+                        this._timer.Change(Timeout.Infinite, 100);
                         break;
                     case SpiderOperationStatus.Pause:
                         this.Pause(null);
@@ -179,7 +179,7 @@ namespace HuoHuan.ViewModels.Pages
             {
                 var image = new DisplayImageInfo()
                 {
-                    Url = reader.Url,
+                    Image = reader.Bitmap,
                     IsValid = reader.IsValidate
                 };
                 if (this.Urls.Count < 12)
@@ -217,7 +217,7 @@ namespace HuoHuan.ViewModels.Pages
                 if (this.SpiderInfos?.All(t => t.Status.IsEnded()) == true)
                 {
                     this.IsRunning = false;
-                    this._timer.Change(Timeout.Infinite, 150);
+                    this._timer.Change(Timeout.Infinite, 100);
                     this.PlaySound();
                 }
             }
