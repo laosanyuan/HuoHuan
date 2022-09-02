@@ -86,6 +86,7 @@ namespace HuoHuan.Plugin.Plugins
                         this.NotifyStatusProgressChange();
                         return;
                     }
+                    await Task.Delay(80);
                 }
                 base._progress = (i + 1) / (10.0);
                 base.NotifyStatusProgressChange();

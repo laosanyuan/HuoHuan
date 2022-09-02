@@ -112,18 +112,21 @@ namespace HuoHuan.Plugin
             {
                 if (e.NeedFilter)
                 {
-                    var (IsValidate, Message) = await this._filter.IsValidImage(e.Url);
-
-                    if (IsValidate)
+                    var image = await ImageUtil.GetBitmapFromUrl(e.Url);
+                    if (image is not null)
                     {
-                        var group = await this._filter.GetGroupData(e.Url, Message);
-                        if (group is not null)
+                        var (IsValidate, Message, Bitmap) = await this._filter.IsValidImage(image, e.Url);
+                        if (IsValidate)
                         {
-                            await this.Save(group);
-                            this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                            var group = this._filter.GetGroupData(Bitmap, Message, e.Url);
+                            if (group is not null)
+                            {
+                                await this.Save(group);
+                                this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
+                            }
                         }
+                        await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
                     }
-                    await this.ImageChannels.Writer.WriteAsync((e.Url, IsValidate));
                 }
                 else
                 {

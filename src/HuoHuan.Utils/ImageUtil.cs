@@ -1,11 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using ZXing;
 using Image = System.Drawing.Image;
 
 namespace HuoHuan.Utils
 {
-    public class ImageUtil
+    public static class ImageUtil
     {
+        private static BarcodeReader _barcodeReader = new() { Options = new ZXing.Common.DecodingOptions() { CharacterSet = "UTF-8" } };
+
         /// <summary>
         /// 根据URL获取图像
         /// </summary>
@@ -67,21 +70,33 @@ namespace HuoHuan.Utils
         /// <param name="text"></param>
         /// <returns></returns>
         [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public static async Task<(bool IsQRCode, string Message)> IsQRCode(string url)
+        public static (bool IsQRCode, string Message, Bitmap Bitmap) IsQRCode(Bitmap image)
         {
-            var reader = new ZXing.BarcodeReader();
-            reader.Options.CharacterSet = "UTF-8";
-            var image = await GetBitmapFromUrl(url);
-            if (image == null)
+            if (image is not null)
             {
-                return (false, null!);
+                var reader = new BarcodeReader();
+                reader.Options.CharacterSet = "UTF-8";
+                var qr = reader.Decode(image);
+                if (qr is not null)
+                {
+                    var startY = (int)(qr.ResultPoints[0].Y * 2 - qr.ResultPoints[3].Y) + 10;
+                    return (true, qr.Text, CropBitmap(image, startY));
+                }
             }
-            var qr = reader.Decode(image);
-            if (qr != null)
-            {
-                return (true, qr.Text);
-            }
-            return (false, null!);
+            return (false, default!, default!);
+        }
+
+        /// <summary>
+        /// 裁剪提示信息图片
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="startY"></param>
+        /// <returns></returns>
+        [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        public static Bitmap CropBitmap(Bitmap bitmap, int startY)
+        {
+            Rectangle cropRect = new(0, startY, bitmap.Width, bitmap.Height - startY);
+            return bitmap.Clone(cropRect, bitmap.PixelFormat);
         }
 
         /// <summary>
@@ -114,7 +129,7 @@ namespace HuoHuan.Utils
         /// <param name="threshold">二值化分界阈值</param>
         /// <returns></returns>
         [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public static Bitmap ConvertToBpp(Bitmap bmp, byte threshold = 20)
+        public static Bitmap ConvertToBpp(Bitmap bmp, byte threshold = 40)
         {
             for (int i = 0; i < bmp.Width; i++)
             {

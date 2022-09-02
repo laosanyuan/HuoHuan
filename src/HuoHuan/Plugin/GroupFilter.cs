@@ -17,7 +17,7 @@ namespace HuoHuan.Plugin
         #region [Fields]
         private readonly string _urlFlag = "https://weixin.qq.com/g/";  // 微信群链接标记
         private readonly CrawledImageDB _db = new();
-        private readonly PaddleOCREngine _engine = new(null, new OCRParameter());
+        private readonly PaddleOCREngine _engine = new(null, new OCRParameter() { use_gpu = 1 });
         private object _sync = new();
         #endregion
 
@@ -34,15 +34,15 @@ namespace HuoHuan.Plugin
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<(bool IsValidate, string Message)> IsValidImage(string url)
+        public async Task<(bool IsValidate, string Message, Bitmap Bitmap)> IsValidImage(Bitmap bitmap, string url)
         {
             // 1. 判断url是否重复
             if (!await this._db.IsExistsAndInsert(url))
             {
                 // 2. 判断是否为二维码
-                return await ImageUtil.IsQRCode(url);
+                return ImageUtil.IsQRCode(bitmap);
             }
-            return (false, null!);
+            return (false, default!, default!);
         }
 
         /// <summary>
@@ -51,38 +51,36 @@ namespace HuoHuan.Plugin
         /// <param name="imageUrl"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public async Task<GroupImage> GetGroupData(string imageUrl, string text)
+        public GroupImage GetGroupData(Bitmap image, string text, string url)
         {
             try
             {
                 if (!String.IsNullOrWhiteSpace(text) && text.Contains(this._urlFlag))
                 {
-                    var image = await ImageUtil.GetBitmapFromUrl(imageUrl);
-                    if (image is null)
-                    {
-                        return default!;
-                    }
                     // 图像预处理
                     image = ImageUtil.ToGray(image);
-                    image = ImageUtil.ConvertToBpp(image, 20);
+                    image = ImageUtil.ConvertToBpp(image);
                     // 获取图片文字内容
                     var dateStr = this.GetImageText(image).Replace(" ", "");
-                    string pattern = @"内\((.+)前\)";
-
-                    if (!String.IsNullOrWhiteSpace(dateStr)
-                        && Regex.Matches(dateStr, pattern).Count > 0
-                        && DateTime.TryParse(dateStr[..dateStr.LastIndexOf("前")].Split('(')[1], out var date)
-                        && DateTimeUtil.IsValidTime(DateTime.Now, date, 7))
+                    if (!string.IsNullOrWhiteSpace(dateStr))
                     {
-                        var result = new GroupImage()
+                        string pattern = @"[1-9][0-2]{0,1}月[1-3]{0,1}[0-9]日";
+                        var regex = Regex.Match(dateStr, pattern);
+
+                        if (regex.Success
+                            && DateTime.TryParse(regex.Value, out var date)
+                            && DateTimeUtil.IsValidTime(DateTime.Now, date, 7))
                         {
-                            InvalidateDate = date,
-                            QRText = text,
-                            Url = imageUrl,
-                            GroupName = dateStr.Contains("该二维码") ? dateStr.Split("该二维码")?[0] : String.Empty,
-                            FileName = text.Replace(this._urlFlag, "") + ".jpg"
-                        };
-                        return result;
+                            var result = new GroupImage()
+                            {
+                                InvalidateDate = date,
+                                QRText = text,
+                                Url = url,
+                                GroupName = dateStr.Contains("该二维码") ? dateStr.Split("该二维码")?[0] : String.Empty,
+                                FileName = text.Replace(this._urlFlag, "") + ".jpg"
+                            };
+                            return result;
+                        }
                     }
                 }
             }
@@ -103,6 +101,7 @@ namespace HuoHuan.Plugin
             {
                 lock (_sync)
                 {
+                    // paddleocrsharp不支持多线程操作
                     var ocrResult = _engine.DetectText(bitmap);
                     return ocrResult.Text;
                 }
