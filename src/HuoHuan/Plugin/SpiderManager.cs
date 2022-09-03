@@ -138,7 +138,7 @@ namespace HuoHuan.Plugin
                             GroupName = e.Name,
                             InvalidateDate = e.InvalidTime,
                             Url = e.Url,
-                            FileName = e.Url.Split("/").LastOrDefault()!
+                            FileName = e.Url.Split("/").LastOrDefault()?.Replace(".jpg", "") + ".jpg"
                         };
                         await this.Save(group);
                         this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
