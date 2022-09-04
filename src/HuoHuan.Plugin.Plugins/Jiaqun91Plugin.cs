@@ -8,27 +8,28 @@ namespace HuoHuan.Plugin.Plugins
 {
     /// <summary>
     /// https://www.91jiaqun.com/
+    /// 需要翻墙才能使用
     /// </summary>
-    public class Jiaqun91Plugin : IPlugin
-    {
-        public string Name => "91jiaqun";
+    //internal class Jiaqun91Plugin : IPlugin
+    //{
+    //    public string Name => "91jiaqun";
 
-        public ISpider Spider { get; init; } = new Jiaqun91Spider();
+    //    public ISpider Spider { get; init; } = new Jiaqun91Spider();
 
-        public bool IsNeedConfig => false;
+    //    public bool IsNeedConfig => false;
 
-        public IConfig Config { get; init; } = null!;
+    //    public IConfig Config { get; init; } = null!;
 
-        public Task Init()
-        {
-            return Task.CompletedTask;
-        }
+    //    public Task Init()
+    //    {
+    //        return Task.CompletedTask;
+    //    }
 
-        public bool IsValid()
-        {
-            return true;
-        }
-    }
+    //    public bool IsValid()
+    //    {
+    //        return true;
+    //    }
+    //}
 
     public class Jiaqun91Spider : BaseSpider
     {
@@ -41,9 +42,11 @@ namespace HuoHuan.Plugin.Plugins
         {
             using HttpClient client = new();
             HttpUtil.SetHeaders(client);
+            client.Timeout = TimeSpan.FromSeconds(30);
             for (int i = 1; i < 500; i++)
             {
-                string pageData = await client.GetStringAsync($"https://www.91jiaqun.com/page/{i}");
+                var response = await client.GetAsync($"http://www.91jiaqun.com/page/{i}", HttpCompletionOption.ResponseHeadersRead);
+                var pageData = await response.Content.ReadAsStringAsync();
                 if (String.IsNullOrEmpty(pageData))
                 {
                     continue;

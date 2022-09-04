@@ -1,11 +1,11 @@
 ﻿namespace HuoHuan.Plugin.Plugins.Test
 {
-    internal class Jiaqun91SpiderTest
+    internal class QunfabaSpiderTest
     {
         [Test]
         public void TestStart()
         {
-            Jiaqun91Spider spider = new Jiaqun91Spider();
+            QunfabaSpider spider = new QunfabaSpider();
             bool crawledFlag = false;
             bool progressFlag = false;
             spider.ProgressStatusChanged += (sender, e) =>
@@ -34,7 +34,7 @@
                         return Task.CompletedTask;
                     }
                 }
-            }).Wait(60 * 1000);
+            }).Wait(120 * 1000);
             Assert.That(checkResult, Is.True);
         }
     }
