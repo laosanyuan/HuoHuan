@@ -42,6 +42,11 @@
                                      Command="{Binding ChangePageCommand}" 
                                      CommandParameter="{x:Static enum:PageType.View}" 
                                      ToolTip="查看"/>
+                        <RadioButton Content="&#xe64f;"
+                                     Style="{DynamicResource MenuButtonStyle}"
+                                     Command="{Binding ChangePageCommand}"
+                                     CommandParameter="{x:Static enum:PageType.ManagePlugin}"
+                                     ToolTip="插件管理"/>
                     </StackPanel>
                     <StackPanel Visibility="Hidden" Orientation="Vertical" VerticalAlignment="Bottom">
                         <Button Content="&#xe8b8;" 

@@ -5,8 +5,9 @@
     /// </summary>
     public enum PageType
     {
-        Home,
-        View,
-        Download,
+        Home,           // 首页
+        View,           // 查看
+        ManagePlugin,   // 管理插件
+        Download,       // 下载
     }
 }

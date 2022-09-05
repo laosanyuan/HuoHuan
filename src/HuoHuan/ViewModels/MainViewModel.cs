@@ -12,6 +12,7 @@ namespace HuoHuan.ViewModels
         #region [Fields]
         private readonly Page _home = new HomePage();
         private readonly Page _view = new ViewPage();
+        private readonly Page _manage = new ManagePluginPage();
         #endregion
 
         #region [Properties]
@@ -38,6 +39,7 @@ namespace HuoHuan.ViewModels
             this.Page = type switch
             {
                 PageType.View => _view,
+                PageType.ManagePlugin => _manage,
                 PageType.Home or _ => _home,
             };
         }
