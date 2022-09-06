@@ -101,7 +101,6 @@ Section "MainSection" SEC01
   File "HuoHuan\bin\publish\Microsoft.Extensions.Primitives.dll"
   File "HuoHuan\bin\publish\mkldnn.dll"
   File "HuoHuan\bin\publish\mklml.dll"
-  File "HuoHuan\bin\publish\Newtonsoft.Json.dll"
   File "HuoHuan\bin\publish\Ninject.dll"
   File "HuoHuan\bin\publish\opencv_world411.dll"
   File "HuoHuan\bin\publish\PaddleOCR.dll"
