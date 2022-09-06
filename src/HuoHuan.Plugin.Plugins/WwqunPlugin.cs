@@ -13,6 +13,8 @@ namespace HuoHuan.Plugin.Plugins
     {
         public string Name => "wwqun";
 
+        public string Description => String.Empty;
+
         public ISpider Spider { get; init; } = new WwqunSpider();
 
         public bool IsNeedConfig => false;

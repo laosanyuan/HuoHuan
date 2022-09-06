@@ -19,7 +19,11 @@ namespace HuoHuan.Plugin
             get
             {
                 _plugins ??= LoadPlugins();
-                return _plugins;
+                if (_plugins == null || _plugins.Count <= 0)
+                {
+                    return default!;
+                }
+                return PluginConfig.FilterPlugins(_plugins);
             }
         }
 
@@ -38,7 +42,7 @@ namespace HuoHuan.Plugin
         /// <returns></returns>
         private static List<IPlugin> LoadPlugins()
         {
-            List<IPlugin> plugins = new List<IPlugin>();
+            List<IPlugin> plugins = new();
             try
             {
                 var types = Assembly.LoadFile(Path.Combine(FolderUtil.Current, "HuoHuan.Plugin.Plugins.dll")).GetTypes();

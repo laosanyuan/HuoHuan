@@ -7,7 +7,11 @@
         /// </summary>
         public string Name { get; }
         /// <summary>
-        /// 
+        /// 描述
+        /// </summary>
+        public string Description { get; }
+        /// <summary>
+        /// 爬取器
         /// </summary>
         public ISpider Spider { get; init; }
         /// <summary>

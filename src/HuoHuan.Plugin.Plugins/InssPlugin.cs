@@ -12,12 +12,14 @@ namespace HuoHuan.Plugin.Plugins
     public class InssPlugin : IPlugin
     {
         public string Name => "每天有群";
+        public string Description => String.Empty;
 
         public ISpider Spider { get; init; } = new InssSpider();
 
         public bool IsNeedConfig => false;
 
         public IConfig Config { get; init; } = default!;
+
 
         public Task Init()
         {

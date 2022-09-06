@@ -13,6 +13,8 @@ namespace HuoHuan.Plugin.Plugins
     {
         public string Name => "群发吧";
 
+        public string Description => String.Empty;
+
         public ISpider Spider { get; init; } = new QunfabaSpider();
 
         public bool IsNeedConfig => false;

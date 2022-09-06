@@ -10,9 +10,11 @@ namespace HuoHuan.Plugin.Plugins
     /// https://www.91jiaqun.com/
     /// 需要翻墙才能使用
     /// </summary>
-    //internal class Jiaqun91Plugin : IPlugin
+    //public class Jiaqun91Plugin : IPlugin
     //{
     //    public string Name => "91jiaqun";
+
+    //    public string Description => "翻墙可用";
 
     //    public ISpider Spider { get; init; } = new Jiaqun91Spider();
 

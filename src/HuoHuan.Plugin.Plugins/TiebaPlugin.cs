@@ -15,6 +15,8 @@ namespace HuoHuan.Plugin.Plugins
         #region [Properties]
         public string Name => "百度贴吧";
 
+        public string Description => String.Empty;
+
         public ISpider Spider { get; init; } = new TiebaSpider();
 
         public bool IsNeedConfig => true;
