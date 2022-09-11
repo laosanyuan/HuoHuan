@@ -1,4 +1,5 @@
-﻿using HuoHuan.Plugin.Contracs;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace HuoHuan.Plugin
         /// 保存配置
         /// </summary>
         /// <param name="items"></param>
-        public static void Save(List<PluginConfigItem> items)
+        public static void Save(IList<PluginConfigItem> items)
         {
             if (!File.Exists(_path))
             {
@@ -95,8 +96,9 @@ namespace HuoHuan.Plugin
         }
     }
 
+    [ObservableObject]
     [Serializable]
-    internal class PluginConfigItem
+    public partial class PluginConfigItem
     {
         /// <summary>
         /// 插件名称
@@ -109,6 +111,7 @@ namespace HuoHuan.Plugin
         /// <summary>
         /// 是否启用
         /// </summary>
-        public bool IsEnabled { get; set; }
+        [ObservableProperty]
+        private bool _isEnabled;
     }
 }

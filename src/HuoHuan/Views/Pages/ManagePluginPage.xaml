@@ -3,9 +3,91 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:plugin="clr-namespace:HuoHuan.Plugin"
+      xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManagePluginPage">
-    <Grid>
+      DataContext="{Binding ManagePlugin, Source={StaticResource Locator}}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+        <ItemsControl ItemsSource="{Binding PluginItems}" x:Name="items">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Grid.IsSharedSizeScope="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type plugin:PluginConfigItem}">
+                    <Grid x:Name="item" Height="50" HorizontalAlignment="Center">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Grid}">
+                                <Style.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation To="65"
+                                                                 Duration="00:00:0.1"
+                                                                 AccelerationRatio="0.1"
+                                                                 DecelerationRatio="0.25"
+                                                                 Storyboard.TargetProperty="Height"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation To="50"
+                                                                 Duration="00:00:0.2"
+                                                                 AccelerationRatio="0.1"
+                                                                 DecelerationRatio="0.25"
+                                                                 Storyboard.TargetProperty="Height"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" SharedSizeGroup="title"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="descripton"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="operation"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}"
+                                   VerticalAlignment="Center" 
+                                   Foreground="{DynamicResource Background.2}"
+                                   FontSize="20"
+                                   Margin="10,3"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Description}" Margin="10,3"/>
+                        <Button Grid.Column="2"
+                                Margin="10,3" 
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ItemsControl}}, Path=DataContext.OperationCommand}"
+                                CommandParameter="{Binding .}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NormalButton}">
+                                    <Setter Property="Width" Value="60"/>
+                                    <Setter Property="Height" Value="28"/>
+                                    <Setter Property="FontSize" Value="12"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEnabled}" Value="true">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Content" Value="移除"/>
+                                                <Setter Property="Background" Value="{DynamicResource FailColor}"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsEnabled}" Value="false">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Content" Value="加入"/>
+                                                <Setter Property="Background" Value="{DynamicResource SuccessColor}"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!--冻结遮罩-->
+        <Border Background="{DynamicResource Background.1}" Opacity="0.7" Visibility="{c:Binding IsFreezen,FalseToVisibility=Hidden}"/>
     </Grid>
 </Page>

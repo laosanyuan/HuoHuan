@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using HuoHuan.Enums;
 using HuoHuan.Extensions;
 using HuoHuan.Models;
@@ -42,11 +43,20 @@ namespace HuoHuan.ViewModels.Pages
         [ObservableProperty]
         private ObservableCollection<DisplayImageInfo> _urls = new();
 
+        private bool _isRunning;
         /// <summary>
         /// 当前是否存在正在运行的爬取器
         /// </summary>
-        [ObservableProperty]
-        private bool _isRunning;
+        public bool IsRunning
+        {
+            get => this._isRunning;
+            set
+            {
+                SetProperty(ref this._isRunning, value);
+                StrongReferenceMessenger.Default.Send(value.ToString());
+            }
+        }
+
         #endregion 
 
         public HomePageVM()
@@ -58,6 +68,11 @@ namespace HuoHuan.ViewModels.Pages
             this._timer.Change(Timeout.Infinite, 100);
 
             this.LoadSpider();
+
+            StrongReferenceMessenger.Default.Register<object>(this, (r, m) =>
+            {
+                this.LoadSpider();
+            });
         }
 
         #region [Commands]
@@ -74,6 +89,10 @@ namespace HuoHuan.ViewModels.Pages
                 this.Urls.Clear();
                 this._spiderManager.StartAll();
                 this.SuccessCount = 0;
+                if (this.SpiderInfos?.Count > 0 == true)
+                {
+                    this.IsRunning = true;
+                }
             }
             else
             {
@@ -87,6 +106,7 @@ namespace HuoHuan.ViewModels.Pages
                     {
                         this.SuccessCount = 0;
                     }
+                    this.IsRunning = true;
                 }
             }
         }

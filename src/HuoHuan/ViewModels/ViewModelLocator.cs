@@ -12,11 +12,14 @@ namespace HuoHuan.ViewModels
 
             this._ninjectKernel.Bind<HomePageVM>().ToSelf().InSingletonScope();
             this._ninjectKernel.Bind<ViewPageVM>().ToSelf().InSingletonScope();
+            this._ninjectKernel.Bind<ManagePluginVM>().ToSelf().InSingletonScope();
         }
 
         public MainViewModel Main => _ninjectKernel.Get<MainViewModel>();
 
         public HomePageVM HomePage => _ninjectKernel.Get<HomePageVM>();
+
+        public ManagePluginVM ManagePlugin => _ninjectKernel.Get<ManagePluginVM>();
 
         public ViewPageVM ViewPage => _ninjectKernel.Get<ViewPageVM>();
     }
