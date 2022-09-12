@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       xmlns:control="clr-namespace:HuoHuan.Controls"
+      xmlns:models="clr-namespace:HuoHuan.Models"
       xmlns:local="clr-namespace:HuoHuan.Views.Pages"
       Background="Transparent"
       mc:Ignorable="d" 
@@ -56,7 +57,7 @@
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type models:SpiderInfo}">
                                         <control:SpiderCard SpiderInfo="{Binding .}" Margin="5,0"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

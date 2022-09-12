@@ -9,12 +9,16 @@ namespace HuoHuan.ViewModels
         public ViewModelLocator()
         {
             this._ninjectKernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
-
             this._ninjectKernel.Bind<HomePageVM>().ToSelf().InSingletonScope();
             this._ninjectKernel.Bind<ViewPageVM>().ToSelf().InSingletonScope();
             this._ninjectKernel.Bind<ManagePluginVM>().ToSelf().InSingletonScope();
+
+            this._ninjectKernel.Bind<UpgradeViewModel>().ToSelf().InSingletonScope();
         }
 
+        public UpgradeViewModel Upgrade => _ninjectKernel.Get<UpgradeViewModel>();
+
+        #region [MainView]
         public MainViewModel Main => _ninjectKernel.Get<MainViewModel>();
 
         public HomePageVM HomePage => _ninjectKernel.Get<HomePageVM>();
@@ -22,5 +26,6 @@ namespace HuoHuan.ViewModels
         public ManagePluginVM ManagePlugin => _ninjectKernel.Get<ManagePluginVM>();
 
         public ViewPageVM ViewPage => _ninjectKernel.Get<ViewPageVM>();
+        #endregion
     }
 }
