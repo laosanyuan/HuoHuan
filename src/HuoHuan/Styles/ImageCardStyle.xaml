@@ -33,13 +33,13 @@
                             <Setter TargetName="icon" Property="Text" Value="&#xe631;"/>
                             <Setter TargetName="icon" Property="Foreground" Value="{DynamicResource SuccessColor}"/>
                             <Setter TargetName="result_text" Property="Foreground" Value="{DynamicResource SuccessColor}"/>
-                            <Setter TargetName="result_text" Property="Text" Value="获取到有效群！"/>
+                            <Setter TargetName="result_text" Property="Text" Value="解析成功"/>
                         </Trigger>
                         <Trigger Property="IsValid" Value="False">
                             <Setter TargetName="icon" Property="Text" Value="&#xe62f;"/>
                             <Setter TargetName="icon" Property="Foreground" Value="{DynamicResource FailColor}"/>
                             <Setter TargetName="result_text" Property="Foreground" Value="{DynamicResource FailColor}"/>
-                            <Setter TargetName="result_text" Property="Text" Value="当前图片不是有效群！"/>
+                            <Setter TargetName="result_text" Property="Text" Value="解析失败"/>
                         </Trigger>
                         <Trigger Property="Bitmap" Value="{x:Null}">
                             <Setter TargetName="image" Property="Source" Value="/Resources/HuoHuan.png"/>

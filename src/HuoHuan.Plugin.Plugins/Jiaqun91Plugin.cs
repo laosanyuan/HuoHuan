@@ -14,7 +14,7 @@ namespace HuoHuan.Plugin.Plugins
     //{
     //    public string Name => "91jiaqun";
 
-    //    public string Description => "翻墙可用";
+    //    public string Description => "开启VPN后可用";
 
     //    public ISpider Spider { get; init; } = new Jiaqun91Spider();
 

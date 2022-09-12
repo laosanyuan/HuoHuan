@@ -10,6 +10,7 @@ namespace HuoHuan.Views.Pages
         public ManagePluginPage()
         {
             InitializeComponent();
+            this.MouseMove += (_, e) => e.Handled = true;
         }
     }
 }

@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="CalcBinding" Version="2.5.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="GongSolutions.WPF.DragDrop" Version="1.0.0.1" />
     <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="PaddleOCRSharp" Version="2.0.3" />
     <PackageReference Include="System.Threading.Channels" Version="7.0.0-preview.7.22375.6" />

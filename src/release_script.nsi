@@ -70,6 +70,8 @@ Section "MainSection" SEC01
   File "HuoHuan\bin\publish\System.Threading.Channels.dll"
   File "HuoHuan\bin\publish\HuoHuan.dll"
   File "HuoHuan\bin\publish\HuoHuan.exe"
+  File "HuoHuan\bin\publish\GongSolutions.WPF.DragDrop.dll"
+  File "HuoHuan\bin\publish\JetBrains.Annotations.dll"
   CreateDirectory "$SMPROGRAMS\»ðä½"
   CreateShortCut "$SMPROGRAMS\»ðä½\»ðä½.lnk" "$INSTDIR\HuoHuan.exe"
   CreateShortCut "$DESKTOP\»ðä½.lnk" "$INSTDIR\HuoHuan.exe"

@@ -15,6 +15,7 @@ namespace HuoHuan.Views.Pages
         public HomePage()
         {
             InitializeComponent();
+            this.MouseMove += (_, e) => e.Handled = true;
         }
 
         private void start_button_Checked(object sender, System.Windows.RoutedEventArgs e)

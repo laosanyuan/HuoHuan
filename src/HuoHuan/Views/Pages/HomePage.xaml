@@ -6,6 +6,7 @@
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       xmlns:control="clr-namespace:HuoHuan.Controls"
       xmlns:local="clr-namespace:HuoHuan.Views.Pages"
+      Background="Transparent"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding HomePage, Source={StaticResource Locator}}">

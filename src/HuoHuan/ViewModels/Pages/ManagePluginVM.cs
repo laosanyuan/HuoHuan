@@ -26,25 +26,39 @@ namespace HuoHuan.ViewModels.Pages
 
         public ManagePluginVM()
         {
-            StrongReferenceMessenger.Default.Register<ManagePluginVM, string>(this, (r, isRunning) =>
+            StrongReferenceMessenger.Default.Register<string, string>(this, "RunningStatus", (r, isRunning) =>
             {
                 this.IsFreezen = Convert.ToBoolean(isRunning);
             });
             this.PluginItems = new ObservableCollection<PluginConfigItem>(PluginConfig.Load());
+            this.PluginItems.CollectionChanged += (sender, e) => this.UpdateGlobalPluginsConfig();
         }
 
         #region [Commands]
+        /// <summary>
+        /// 插件移除加入取反
+        /// </summary>
+        /// <param name="item"></param>
         [RelayCommand]
         private void Operation(object item)
         {
             if (item is PluginConfigItem plugin)
             {
                 this.PluginItems.First(x => x.Name == plugin.Name).IsEnabled = !plugin.IsEnabled;
-                PluginConfig.Save(this.PluginItems);
-                PluginLoader.Reset();
-                StrongReferenceMessenger.Default.Send<object>();
+                this.UpdateGlobalPluginsConfig();
             }
         }
+
         #endregion
+
+        /// <summary>
+        /// 更新全局插件配置变化
+        /// </summary>
+        private void UpdateGlobalPluginsConfig()
+        {
+            PluginConfig.Save(this.PluginItems);
+            PluginLoader.Reset();
+            StrongReferenceMessenger.Default.Send<object, string>("UpdatePluginList");
+        }
     }
 }

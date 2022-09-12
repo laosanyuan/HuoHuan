@@ -1,5 +1,4 @@
 ﻿using HuoHuan.ViewModels.Pages;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace HuoHuan.Views.Pages
@@ -12,15 +11,14 @@ namespace HuoHuan.Views.Pages
         public ViewPage()
         {
             InitializeComponent();
-            this.IsVisibleChanged += ViewPage_IsVisibleChanged;
-        }
-
-        private void ViewPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
+            this.MouseMove += (_, e) => e.Handled = true;
+            this.IsVisibleChanged += (_, e) =>
             {
-                (this.DataContext as ViewPageVM)?.RefreshDataCommand?.Execute(default);
-            }
+                if ((bool)e.NewValue)
+                {
+                    (this.DataContext as ViewPageVM)?.RefreshDataCommand?.Execute(default);
+                }
+            };
         }
     }
 }

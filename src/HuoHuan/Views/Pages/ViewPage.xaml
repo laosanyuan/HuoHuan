@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       mc:Ignorable="d" 
+      Background="Transparent"
       DataContext="{Binding ViewPage, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800">
     <Page.Resources>

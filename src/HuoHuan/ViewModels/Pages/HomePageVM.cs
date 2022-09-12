@@ -53,7 +53,7 @@ namespace HuoHuan.ViewModels.Pages
             set
             {
                 SetProperty(ref this._isRunning, value);
-                StrongReferenceMessenger.Default.Send(value.ToString());
+                StrongReferenceMessenger.Default.Send(value.ToString(), "RunningStatus");
             }
         }
 
@@ -69,7 +69,7 @@ namespace HuoHuan.ViewModels.Pages
 
             this.LoadSpider();
 
-            StrongReferenceMessenger.Default.Register<object>(this, (r, m) =>
+            StrongReferenceMessenger.Default.Register<object, string>(this, "UpdatePluginList", (r, m) =>
             {
                 this.LoadSpider();
             });
@@ -83,10 +83,10 @@ namespace HuoHuan.ViewModels.Pages
         [RelayCommand]
         private void Start(IPlugin? plugin)
         {
+            this.Urls.Clear();
             if (plugin is null)
             {
                 Parallel.ForEach(this.SpiderInfos, t => t.Reset());
-                this.Urls.Clear();
                 this._spiderManager.StartAll();
                 this.SuccessCount = 0;
                 if (this.SpiderInfos?.Count > 0 == true)
