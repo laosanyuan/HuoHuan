@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace HuoHuan.Views
 {
@@ -10,6 +11,14 @@ namespace HuoHuan.Views
         public UpgradeView()
         {
             InitializeComponent();
+
+            this.MouseMove += (sender, e) =>
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    this.DragMove();
+                }
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) => this.Close();

@@ -44,10 +44,14 @@ namespace HuoHuan.Views
                     var newVersion = YamlUtil.Deserializer<VersionInfo>(str);
                     if (!newVersion.Version.Trim().Equals(SoftwareInfo.Version))
                     {
-                        WeakReferenceMessenger.Default.Send(newVersion, "UpgradeVersion");
                         await App.Current.Dispatcher.InvokeAsync(() =>
                         {
-                            new UpgradeView().ShowDialog();
+                            var view = new UpgradeView()
+                            {
+                                Owner = this
+                            };
+                            WeakReferenceMessenger.Default.Send(newVersion, "UpgradeVersion");
+                            view.ShowDialog();
                         });
                     }
                 }

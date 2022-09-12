@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
+using HuoHuan.Utils;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Diagnostics;
 using static HuoHuan.Views.MainWindow;
 
 namespace HuoHuan.ViewModels
@@ -53,12 +52,12 @@ namespace HuoHuan.ViewModels
         /// 点赞
         /// </summary>
         [RelayCommand]
-        private void Like() => Process.Start(ConfigurationManager.AppSettings["ProjectUrl"]!);
+        private void Like() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["ProjectUrl"]!);
         /// <summary>
         /// 手动下载
         /// </summary>
         [RelayCommand]
-        private void ManualDownload() => Process.Start(ConfigurationManager.AppSettings["DownloadUrl"]!);
+        private void ManualDownload() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["DownloadUrl"]!);
         #endregion
     }
 }
