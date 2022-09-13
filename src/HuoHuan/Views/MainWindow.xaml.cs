@@ -17,7 +17,7 @@ namespace HuoHuan.Views
         public MainWindow()
         {
             InitializeComponent();
-            this.MouseMove += (sender, e) =>
+            this.MouseMove += (_, e) =>
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
@@ -56,7 +56,7 @@ namespace HuoHuan.Views
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }

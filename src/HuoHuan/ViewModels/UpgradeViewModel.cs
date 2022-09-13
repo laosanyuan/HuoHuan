@@ -52,7 +52,7 @@ namespace HuoHuan.ViewModels
         /// 点赞
         /// </summary>
         [RelayCommand]
-        private void Like() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["ProjectUrl"]!);
+        private void Like() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["GithubProjectUrl"]!);
         /// <summary>
         /// 手动下载
         /// </summary>

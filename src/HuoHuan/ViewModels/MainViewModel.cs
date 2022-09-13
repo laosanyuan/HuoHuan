@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Enums;
+using HuoHuan.Views;
 using HuoHuan.Views.Pages;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace HuoHuan.ViewModels
@@ -42,6 +44,23 @@ namespace HuoHuan.ViewModels
                 PageType.ManagePlugin => _manage,
                 PageType.Home or _ => _home,
             };
+        }
+        /// <summary>
+        /// 设置
+        /// </summary>
+        /// <param name="settings"></param>
+        [RelayCommand]
+        private void Settings(Settings settings)
+        {
+            switch (settings)
+            {
+                case Enums.Settings.About:
+                    new AboutView().ShowDialog();
+                    break;
+                case Enums.Settings.Setting:
+                _:
+                    break;
+            }
         }
         #endregion
     }

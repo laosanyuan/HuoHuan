@@ -12,7 +12,7 @@ namespace HuoHuan.Views
         {
             InitializeComponent();
 
-            this.MouseMove += (sender, e) =>
+            this.MouseMove += (_, e) =>
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {

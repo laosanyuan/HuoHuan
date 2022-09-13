@@ -15,7 +15,10 @@
         Width="600"
         Title="有新版本"
         DataContext="{Binding Upgrade, Source={StaticResource Locator}}">
-    <Border CornerRadius="15" Background="{DynamicResource Background.1}" BorderThickness="1" BorderBrush="{DynamicResource StatusColor.1}">
+    <Border CornerRadius="15" Background="{DynamicResource Background.1}" Margin="30">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" Opacity="0.4" ShadowDepth="-10" Color="LightGray"/>
+        </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -24,10 +27,7 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <!--Logo-->
-                <Border Height="50" 
-                            Width="50" 
-                            BorderBrush="{DynamicResource Background.3}" 
-                            BorderThickness="0">
+                <Border Height="50" Width="50" >
                     <Image Source="/Resources/HuoHuan.png" Margin="10"/>
                 </Border>
                 <TextBlock Text="{Binding Title}"

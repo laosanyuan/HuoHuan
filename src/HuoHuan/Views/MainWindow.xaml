@@ -48,20 +48,34 @@
                                      CommandParameter="{x:Static enum:PageType.ManagePlugin}"
                                      ToolTip="插件管理"/>
                     </StackPanel>
-                    <StackPanel Visibility="Hidden" Orientation="Vertical" VerticalAlignment="Bottom">
+                    <!--设置菜单-->
+                    <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,5">
                         <Button Content="&#xe8b8;" 
                                 Name="settings_button" 
                                 ToolTip="设置"
-                                Cursor="Arrow"
                                 Style="{StaticResource SettingButton}"
                                 Click="Setting_Click"/>
                         <Popup x:Name="pop" 
                                StaysOpen="False" 
-                               Placement="Top"  
+                               Placement="Top"
                                HorizontalOffset="{Binding ElementName=settings_button,Path=ActualWidth}" 
                                VerticalOffset="{Binding ElementName=settings_button,Path=ActualHeight}"
                                PlacementTarget="{Binding ElementName=settings_button}">
-                            <!--设置菜单-->
+                            <ItemsControl BorderThickness="1" 
+                                          BorderBrush="{DynamicResource Background.3}"
+                                          Background="{DynamicResource Background.1}"
+                                          Cursor="Hand">
+                                <ItemsControl.Resources>
+                                    <Style TargetType="{x:Type MenuItem}">
+                                        <Setter Property="FontSize" Value="18"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource Foreground.2}"/>
+                                        <Setter Property="Margin" Value="5"/>
+                                        <Setter Property="Padding" Value="10,5"/>
+                                    </Style>
+                                </ItemsControl.Resources>
+                                <MenuItem Header="设置" Command="{Binding SettingsCommand}" CommandParameter="{x:Static enum:Settings.Setting}" />
+                                <MenuItem Header="关于" Command="{Binding SettingsCommand}" CommandParameter="{x:Static enum:Settings.About}" />
+                            </ItemsControl>
                         </Popup>
                     </StackPanel>
                 </DockPanel>

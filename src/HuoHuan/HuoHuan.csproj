@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\banner.png" />
     <None Remove="Resources\Fonts\iconfont.ttf" />
     <None Remove="Resources\Fonts\jiangxizhuokai.ttf" />
     <None Remove="Resources\Fonts\siyuansong.ttf" />
@@ -62,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\banner.png" />
     <Resource Include="Resources\HuoHuan.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
