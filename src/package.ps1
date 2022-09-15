@@ -1,22 +1,26 @@
+# æ›´æ–°ç‰ˆæœ¬å·
+dotnet tool install -g cake.tool
+dotnet cake update_version.cake
+
 $tmpScript = "./tmp_release_script.nsi"
-# ±àÒë·¢²¼
+# ç¼–è¯‘å‘å¸ƒ
 dotnet clean
 dotnet restore
 dotnet publish -p:PublishProfile=FolderProfile
 
-# ¶ÁÈ¡°æ±¾ºÅ
+# è¯»å–ç‰ˆæœ¬å·
 $xml_data = [xml](Get-Content ./HuoHuan/HuoHuan.csproj)
 $version =  $xml_data.Project.PropertyGroup.Version
-"°æ±¾ºÅ£º $version"
+"Versionï¼š $version"
 
-# ´´½¨ÁÙÊ±NSIS½Å±¾ÎÄ¼ş
+# åˆ›å»ºä¸´æ—¶NSISè„šæœ¬æ–‡ä»¶
 $original_txt = (Get-Content ./release_script.nsi)
 New-Item $tmpScript -type file
 Set-Content $tmpScript $original_txt
 (Get-Content $tmpScript) -Replace '#replace_version#', $version | Set-Content $tmpScript
 
-# ĞèÒª½«NSIS½Å±¾°²×°Â·¾¶ÉèÖÃµ½»·¾³±äÁ¿ÖĞ
+# éœ€è¦å°†NSISè„šæœ¬å®‰è£…è·¯å¾„è®¾ç½®åˆ°ç¯å¢ƒå˜é‡ä¸­
 makensis $tmpScript
 
-# É¾³ıNSISÁÙÊ±ÎÄ¼ş
+# åˆ é™¤ä¸´æ—¶NSISæ–‡ä»¶
 Remove-Item $tmpScript

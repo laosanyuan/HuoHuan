@@ -57,7 +57,7 @@ namespace HuoHuan.ViewModels
         /// 手动下载
         /// </summary>
         [RelayCommand]
-        private void ManualDownload() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["DownloadUrl"]!);
+        private void ManualDownload() => WebUtil.OpenUrl(ConfigurationManager.AppSettings["GiteeDownloadUrl"]!);
         #endregion
     }
 }
