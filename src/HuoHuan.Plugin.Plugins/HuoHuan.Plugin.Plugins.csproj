@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HuoHuan.Plugin.Contracs\HuoHuan.Plugin.Contracs.csproj" />
-    <ProjectReference Include="..\HuoHuan.Utils\HuoHuan.Utils.csproj" />
   </ItemGroup>
 
 </Project>

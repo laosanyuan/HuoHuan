@@ -1,14 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace HuoHuan.Plugin
+namespace HuoHuan.Core.Plugin
 {
-    internal static class PluginConfig
+    public static class PluginConfig
     {
         private static readonly string _path = Path.Combine(FolderUtil.ConfigPath, "plugins.yml");
 

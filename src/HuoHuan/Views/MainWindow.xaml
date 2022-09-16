@@ -3,7 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:info="clr-namespace:HuoHuan;assembly=HuoHuan"
         xmlns:enum="clr-namespace:HuoHuan.Enums"
         mc:Ignorable="d"
         WindowStyle="None"
@@ -73,8 +72,8 @@
                                         <Setter Property="Padding" Value="10,5"/>
                                     </Style>
                                 </ItemsControl.Resources>
-                                <MenuItem Header="设置" Command="{Binding SettingsCommand}" CommandParameter="{x:Static enum:Settings.Setting}" />
-                                <MenuItem Header="关于" Command="{Binding SettingsCommand}" CommandParameter="{x:Static enum:Settings.About}" />
+                                <MenuItem Header="设置" Command="{Binding SettingPageCommand}" CommandParameter="{x:Static enum:SettingType.Setting}" />
+                                <MenuItem Header="关于" Command="{Binding SettingPageCommand}" CommandParameter="{x:Static enum:SettingType.About}" />
                             </ItemsControl>
                         </Popup>
                     </StackPanel>
@@ -86,12 +85,12 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Source={x:Static info:SoftwareInfo.Name}}"
+                    <TextBlock Text="{Binding Path=Name, Source={StaticResource Info}}"
                                FontFamily="{StaticResource zhuokai}" 
                                VerticalAlignment="Center" 
                                Margin="10,0" FontSize="24" 
                                Foreground="{DynamicResource Foreground.1}"/>
-                    <TextBlock Text="{Binding Source={x:Static info:SoftwareInfo.Version},StringFormat={}v{0}}"
+                    <TextBlock Text="{Binding Path=Version, Source={StaticResource Info},StringFormat={}v{0}}"
                                FontFamily="{StaticResource logo}"
                                VerticalAlignment="Bottom" 
                                Margin="0,10" 

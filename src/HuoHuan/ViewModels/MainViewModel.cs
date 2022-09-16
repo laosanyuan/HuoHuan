@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using HuoHuan.Enums;
 using HuoHuan.Views;
 using HuoHuan.Views.Pages;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace HuoHuan.ViewModels
@@ -50,14 +49,14 @@ namespace HuoHuan.ViewModels
         /// </summary>
         /// <param name="settings"></param>
         [RelayCommand]
-        private void Settings(Settings settings)
+        private void SettingPage(SettingType settings)
         {
             switch (settings)
             {
-                case Enums.Settings.About:
+                case SettingType.About:
                     new AboutView().ShowDialog();
                     break;
-                case Enums.Settings.Setting:
+                case SettingType.Setting:
                 _:
                     break;
             }

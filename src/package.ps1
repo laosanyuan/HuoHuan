@@ -11,7 +11,7 @@ dotnet publish -p:PublishProfile=FolderProfile
 # 读取版本号
 $xml_data = [xml](Get-Content ./HuoHuan/HuoHuan.csproj)
 $version =  $xml_data.Project.PropertyGroup.Version
-"Version： $version"
+"Version: $version"
 
 # 创建临时NSIS脚本文件
 $original_txt = (Get-Content ./release_script.nsi)

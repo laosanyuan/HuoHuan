@@ -2,11 +2,11 @@
 
 namespace HuoHuan
 {
-    public static class SoftwareInfo
+    public class SoftwareInfo
     {
-        public static readonly string Identity = "HuoHuan";
-        public static readonly string Name = "火浣";
-        public static readonly string Description = "群聊耙子";
+        public static string Identity => "HuoHuan";
+        public static string Name => "火浣";
+        public static string Description => "群聊耙子";
         public static string Version
         {
             get
@@ -23,6 +23,6 @@ namespace HuoHuan
                 }
             }
         }
-        public static readonly string LogoPath = "/Resources/HuoHuan.png";
+        public static string LogoPath => "/Resources/HuoHuan.png";
     }
 }

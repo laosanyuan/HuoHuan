@@ -1,4 +1,5 @@
 ﻿using HuoHuan.Controls;
+using HuoHuan.Core.Enums;
 using HuoHuan.Enums;
 using System;
 using System.Globalization;

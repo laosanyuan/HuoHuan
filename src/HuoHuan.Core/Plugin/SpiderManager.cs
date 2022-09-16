@@ -3,17 +3,14 @@ using HuoHuan.DataBase.Services;
 using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 
-namespace HuoHuan.Plugin
+namespace HuoHuan.Core.Plugin
 {
-    internal delegate void SpiderProgressEventHandler(object sender, SpiderProgressEventArgs e);
-    internal delegate void SpiderCrawledEventHandler(object sender, SpiderCrawlEventArgs e);
+    public delegate void SpiderProgressEventHandler(object sender, SpiderProgressEventArgs e);
+    public delegate void SpiderCrawledEventHandler(object sender, SpiderCrawlEventArgs e);
 
-    internal class SpiderManager
+    public class SpiderManager
     {
         #region [Fileds]
         private readonly GroupFilter _filter = new();   // 群图片过滤器
@@ -38,6 +35,7 @@ namespace HuoHuan.Plugin
         public event SpiderCrawledEventHandler Crawled = null!;
         #endregion
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         public SpiderManager()
         {
             this.ImageChannels = Channel.CreateBounded<(Bitmap, bool)>(
@@ -107,6 +105,7 @@ namespace HuoHuan.Plugin
         #endregion
 
         #region [Private Methods]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         private async void Spider_Crawled(object sender, CrawlEventArgs e)
         {
             if (sender is not null)
@@ -177,7 +176,7 @@ namespace HuoHuan.Plugin
         #endregion
     }
 
-    internal class SpiderProgressEventArgs : ProgressEventArgs
+    public class SpiderProgressEventArgs : ProgressEventArgs
     {
         public SpiderProgressEventArgs(ProgressEventArgs args, ISpider spider)
         {
@@ -192,7 +191,7 @@ namespace HuoHuan.Plugin
         public ISpider Spider { get; init; } = null!;
     }
 
-    internal class SpiderCrawlEventArgs : CrawlEventArgs
+    public class SpiderCrawlEventArgs : CrawlEventArgs
     {
         public SpiderCrawlEventArgs(CrawlEventArgs args, ISpider spider, GroupImage group)
         {

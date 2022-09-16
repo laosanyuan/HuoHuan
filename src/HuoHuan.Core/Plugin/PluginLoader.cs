@@ -1,14 +1,10 @@
 ﻿using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 
-namespace HuoHuan.Plugin
+namespace HuoHuan.Core.Plugin
 {
-    internal static class PluginLoader
+    public static class PluginLoader
     {
         private static List<IPlugin> _plugins = null!;
         /// <summary>

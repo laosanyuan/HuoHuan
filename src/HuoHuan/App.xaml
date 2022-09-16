@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/SpiderCardStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:HuoHuan.ViewModels"/>
+            <info:SoftwareInfo x:Key="Info" d:IsDataSource="True" xmlns:info="clr-namespace:HuoHuan"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

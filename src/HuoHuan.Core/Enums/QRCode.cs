@@ -1,4 +1,4 @@
-﻿namespace HuoHuan.Enums
+﻿namespace HuoHuan.Core.Enums
 {
     public enum QRCodeType
     {

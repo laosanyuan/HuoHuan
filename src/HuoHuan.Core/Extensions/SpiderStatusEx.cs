@@ -1,8 +1,8 @@
 ﻿using HuoHuan.Plugin.Contracs;
 
-namespace HuoHuan.Extensions
+namespace HuoHuan.Core.Extensions
 {
-    internal static class SpiderStatusEx
+    public static class SpiderStatusEx
     {
         /// <summary>
         /// 是否已结束运行

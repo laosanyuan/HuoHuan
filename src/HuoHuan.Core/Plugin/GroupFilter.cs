@@ -2,12 +2,10 @@
 using HuoHuan.DataBase.Services;
 using HuoHuan.Utils;
 using PaddleOCRSharp;
-using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace HuoHuan.Plugin
+namespace HuoHuan.Core.Plugin
 {
     /// <summary>
     /// 群二维码图片过滤

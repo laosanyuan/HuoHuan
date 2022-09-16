@@ -1,9 +1,9 @@
-﻿namespace HuoHuan.Enums
+﻿namespace HuoHuan.Core.Enums
 {
     /// <summary>
     /// 运行状态
     /// </summary>
-    internal enum SpiderOperationStatus
+    public enum SpiderOperationStatus
     {
         Start,
         Stop,

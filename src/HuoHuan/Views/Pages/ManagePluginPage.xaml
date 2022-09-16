@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-      xmlns:plugin="clr-namespace:HuoHuan.Plugin"
+      xmlns:plugin="clr-namespace:HuoHuan.Core.Plugin;assembly=HuoHuan.Core"
       Background="Transparent"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"

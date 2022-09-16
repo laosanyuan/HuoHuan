@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using HuoHuan.Plugin;
+using HuoHuan.Core.Plugin;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

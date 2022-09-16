@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using HuoHuan.Enums;
-using HuoHuan.Extensions;
+using HuoHuan.Core.Enums;
+using HuoHuan.Core.Extensions;
+using HuoHuan.Core.Plugin;
 using HuoHuan.Models;
-using HuoHuan.Plugin;
 using HuoHuan.Plugin.Contracs;
 using System;
 using System.Collections.ObjectModel;

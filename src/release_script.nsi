@@ -72,6 +72,8 @@ Section "MainSection" SEC01
   File "HuoHuan\bin\publish\HuoHuan.deps.json"
   File "HuoHuan\bin\publish\System.Threading.Channels.dll"
   File "HuoHuan\bin\publish\HuoHuan.dll"
+  File "HuoHuan\bin\publish\HuoHuan.dll.config"
+  File "HuoHuan\bin\publish\HuoHuan.Core.dll"
   File "HuoHuan\bin\publish\HuoHuan.exe"
   File "HuoHuan\bin\publish\GongSolutions.WPF.DragDrop.dll"
   File "HuoHuan\bin\publish\JetBrains.Annotations.dll"
