@@ -1,7 +1,14 @@
-﻿namespace HuoHuan.Core.Install.UrlProviders
+﻿using Ninject;
+
+namespace HuoHuan.Core.Install.UrlProviders
 {
-    public interface IUrlPriovider
+    public interface IUrlProvider
     {
-        Task<string> GetDownloadUrl(string url,string version);
+        Task<string> GetDownloadUrl(string version);
+    }
+
+    public static class UrlProvider
+    {
+        public static IUrlProvider Instance => LocalConfigManager.NinjectKernel.Get<IUrlProvider>();
     }
 }

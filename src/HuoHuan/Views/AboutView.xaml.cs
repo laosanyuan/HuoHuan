@@ -1,5 +1,5 @@
-﻿using HuoHuan.Utils;
-using System.Configuration;
+﻿using HuoHuan.Core;
+using HuoHuan.Utils;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,8 +23,8 @@ namespace HuoHuan.Views
                 }
             };
 
-            this.github.Text = ConfigurationManager.AppSettings["GithubProjectUrl"];
-            this.gitee.Text = ConfigurationManager.AppSettings["GiteeProjectUrl"];
+            this.github.Text = LocalConfigManager.GithubUrl;
+            this.gitee.Text = LocalConfigManager.GiteeUrl;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

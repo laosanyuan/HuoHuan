@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"
         WindowStyle="None"
         Background="Transparent"
@@ -42,7 +43,7 @@
                     <Button Content="&#xe600;" Click="Button_Click" Style="{DynamicResource CloseButtonStyle}"/>
                 </StackPanel>
             </Border>
-            <StackPanel Grid.Row="1" Margin="40,20">
+            <StackPanel Grid.Row="1" Margin="40,20,40,10">
                 <TextBlock Text="{Binding NewVersion,StringFormat=当前最新版本为{0}，更新内容如下：}"
                            FontSize="16"
                            Foreground="{DynamicResource Foreground.2}"/>
@@ -58,28 +59,29 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <StackPanel Orientation="Horizontal" 
+                            Margin="20,30,20,0" 
+                            Visibility="{c:Binding IsUpgrading,FalseToVisibility=Collapsed}">
+                    <ProgressBar Value="{Binding ProgressValue}" Height="30" Width="420"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="10,0">
                 <Button Style="{DynamicResource NormalButton}" 
-                        Content="赏个Star" 
-                        Height="30" 
-                        Width="80" 
-                        Margin="15,0"
-                        Command="{Binding LikeCommand}"/>
-                <Button Style="{DynamicResource NormalButton}" 
+                        IsEnabled="{c:Binding (!IsUpgrading)}"
                         Content="忽略升级" 
                         Height="30"
                         Width="80"
                         Margin="15,0"
                         Click="Button_Click"/>
                 <Button Style="{DynamicResource NormalButton}" 
+                        IsEnabled="{c:Binding (!IsUpgrading)}"
                         Content="手动下载" 
                         Height="30"
                         Width="80"
                         Margin="15,0"
                         Command="{Binding ManualDownloadCommand}"/>
-                <Button Style="{DynamicResource NormalButton}" 
-                        Visibility="Collapsed"
+                <Button Style="{DynamicResource NormalButton}"
+                        IsEnabled="{c:Binding (!IsUpgrading)}" 
                         Content="开始升级" 
                         Height="30"
                         Width="80"

@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using HuoHuan.Core;
 using HuoHuan.Utils;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
@@ -30,7 +30,7 @@ namespace HuoHuan.Views
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // 检查版本更新
-            var url = ConfigurationManager.AppSettings["GiteeUpdateUrl"];
+            var url = LocalConfigManager.UpdateInfoUrl;
             var client = new HttpClient()
             {
                 Timeout = TimeSpan.FromMinutes(1),

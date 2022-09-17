@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/ImageCardStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/SpiderCardStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/ProgressBarStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:HuoHuan.ViewModels"/>
             <info:SoftwareInfo x:Key="Info" d:IsDataSource="True" xmlns:info="clr-namespace:HuoHuan"/>

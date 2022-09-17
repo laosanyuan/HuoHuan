@@ -39,6 +39,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value ="false">
+                <Setter Property="Background" Value="{DynamicResource Background.3}"/>
+                <Setter Property="Foreground" Value="{DynamicResource Foreground.3}"/>
+            </Trigger> 
+        </Style.Triggers>
     </Style>
     <!--左下角设置按钮样式-->
     <Style x:Key="SettingButton" TargetType="{x:Type Button}">

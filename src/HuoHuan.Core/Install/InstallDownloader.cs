@@ -6,7 +6,7 @@
     {
         #region [Fields]
         private HttpClient _client = new();
-        private readonly int _bufferSize = 4096;
+        private readonly int _bufferSize = 8192;
         #endregion
 
         #region [Events]
@@ -15,13 +15,13 @@
 
         public async Task DownloadAsync(string url, string fileName, CancellationToken cancellationToken)
         {
-            int readLength = 0;
+            long readLength = 0;
             long allLength = 0;
+
             try
             {
                 var response = await _client.GetAsync(url, cancellationToken);
-
-                using Stream stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+                using Stream stream = response.Content.ReadAsStream();
                 using FileStream fileStream = new(fileName, FileMode.Create);
                 byte[] buffer = new byte[this._bufferSize];
                 int length;
@@ -43,7 +43,7 @@
                     });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 goto _End;
             }

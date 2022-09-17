@@ -22,6 +22,10 @@ namespace HuoHuan.Utils
         /// 配置文件保存路径
         /// </summary>
         public static string ConfigPath => CreatePath(Path.Combine(AppData, "configs"));
+        /// <summary>
+        /// 临时文件存放路径
+        /// </summary>
+        public static string TmpPath => CreatePath(Path.Combine(AppData, "temp"));
 
         /// <summary>
         /// 图片保存路径

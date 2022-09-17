@@ -1,15 +1,16 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
+using System.Configuration;
 
 namespace HuoHuan.Core.Install.UrlProviders
 {
-    public class GithubUrlProvider : IUrlPriovider
+    public class GithubUrlProvider : IUrlProvider
     {
-        public async Task<string> GetDownloadUrl(string url, string version)
+        public async Task<string> GetDownloadUrl(string version)
         {
             string result = null!;
-            string tmpUrl = url + "/expanded_assets/" + version;
+            string tmpUrl = ConfigurationManager.AppSettings["GithubDownloadUrl"] + "/expanded_assets/" + version;
             try
             {
                 using HttpClient client = new();
