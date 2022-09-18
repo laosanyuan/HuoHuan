@@ -29,8 +29,8 @@
 
 |                    项目地址                     |                          最新安装包                          | 版本检测、自动升级 |
 | :---------------------------------------------: | :----------------------------------------------------------: | :----------------: |
-| [Github](https://github.com/laosanyuan/HuoHuan) | [release-1.1.0](https://gitee.com/ylaosan/huo-huan/releases/download/1.1.0/Setup.exe) |   :pushpin: 支持   |
-|   [Gitee](https://gitee.com/ylaosan/huo-huan)   | [release-1.1.0](https://github.com/laosanyuan/HuoHuan/releases/download/1.1.0/Setup.exe) |   :pushpin: 支持   |
+| [Github](https://github.com/laosanyuan/HuoHuan) | [release-1.1.0](https://github.com/laosanyuan/HuoHuan/releases/download/1.1.0/Setup.exe) |   :pushpin: 支持   |
+|   [Gitee](https://gitee.com/ylaosan/huo-huan)   | [release-1.1.0](https://gitee.com/ylaosan/huo-huan/releases/download/1.1.0/Setup.exe) |   :pushpin: 支持   |
 
 ## 使用效果
 
@@ -42,7 +42,7 @@
 
 ## 获取群聊步骤
 
-1. 根据设置爬取源获取图片链接
+1. 根据插件设置爬取源获取图片链接
 2. 识别图片是否为二维码
 3. 判断图片是否为微信群二维码
 4. OCR识别文字内容，判断群二维码是否尚在有效期内
@@ -71,7 +71,7 @@ TODO
 - [ ] 扩充插件库数量
 - [ ] 更新UI
 
-##  :heavy_exclamation_mark::heavy_exclamation_mark::heavy_exclamation_mark: 注意  :heavy_exclamation_mark::heavy_exclamation_mark::heavy_exclamation_mark: 
+##  注意
 
 **本项目开发初衷仅为学习及技术交流，切勿将本其用于任何非法用途，否则一切后果自负，与本项目无关。**
 
