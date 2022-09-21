@@ -14,14 +14,14 @@ namespace HuoHuan.Core.Test
             {
                 Directory.Delete(Folder, true);
             }
-            _generater = new QRCodeGenerater(Folder);
+            _generater = new QRCodeGenerater(Folder, "HuoHuan.png");
         }
 
         [Test]
         public void TestGenerateImage()
         {
             TestName("112233", null!, "112233.jpg");
-            TestName("1122zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz33", 
+            TestName("1122zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz33",
                 "test_qr1.jpg",
                 "test_qr1.jpg");
             TestName("112233", "test_qr2", "test_qr2.jpg");

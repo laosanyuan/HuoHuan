@@ -13,15 +13,21 @@ namespace HuoHuan.Core
     {
         #region [Fields]
         private string _folder;
-        private Image _image = null!;
+        private Bitmap _logo = null!;
         #endregion
 
-        public QRCodeGenerater(string folderPath)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        public QRCodeGenerater(string folderPath, string logo)
         {
             this._folder = folderPath;
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
+            }
+
+            if (!string.IsNullOrEmpty(logo) && File.Exists(logo))
+            {
+                this._logo = (Bitmap)Image.FromFile(logo);
             }
         }
 
@@ -62,7 +68,7 @@ namespace HuoHuan.Core
                         Margin = 3,
                     },
                 };
-                Bitmap bitmap = writer.Write(content);
+                Bitmap bitmap = OverlayLogoToQR(writer.Write(content));
                 bitmap.Save(file, ImageFormat.Jpeg);
                 bitmap.Dispose();
             }
@@ -72,6 +78,34 @@ namespace HuoHuan.Core
                 return false;
             }
             return true;
+        }
+        #endregion
+
+        #region [Private Methods]
+        /// <summary>
+        /// 向二维码Bitmap中间绘制logo
+        /// </summary>
+        /// <param name="qr"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        private Bitmap OverlayLogoToQR(Bitmap qr)
+        {
+            if (this._logo is null)
+            {
+                return qr;
+            }
+
+            Graphics g = Graphics.FromImage(qr);
+            Rectangle logoRec = new Rectangle
+            {
+                Width = qr.Width / 6,
+                Height = qr.Height / 6
+            };
+            logoRec.X = qr.Width / 2 - logoRec.Width / 2;
+            logoRec.Y = qr.Height / 2 - logoRec.Height / 2;
+            g.DrawImage(_logo, logoRec);
+
+            return qr;
         }
         #endregion
 
