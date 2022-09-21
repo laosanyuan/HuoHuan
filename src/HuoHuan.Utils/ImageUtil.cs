@@ -65,10 +65,10 @@ namespace HuoHuan.Utils
 
         /// <summary>
         /// 判断图片链接是否为二维码
+        /// TODO 应将截取图片和读取二维码拆分开
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
+        /// <param name="image"></param>
+        /// <returns>(是否为二维码，二维码内容，截取二维码下部分文字内容图片部分)</returns>
         [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         public static (bool IsQRCode, string Message, Bitmap Bitmap) IsQRCode(Bitmap image)
         {
