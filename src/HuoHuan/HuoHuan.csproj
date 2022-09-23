@@ -10,7 +10,7 @@
     <PackageIcon>HuoHuan.png</PackageIcon>
     <ApplicationIcon>Resources\HuoHuan.ico</ApplicationIcon>
     <PackageId>HuoHuan</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
@@ -28,6 +28,8 @@
     <None Remove="Resources\Fonts\jiangxizhuokai.ttf" />
     <None Remove="Resources\Fonts\siyuansong.ttf" />
     <None Remove="Resources\Fonts\xiaoweilogo.ttf" />
+    <None Remove="Resources\HuoHuan.ico" />
+    <None Remove="Resources\HuoHuan.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +48,11 @@
     <Content Include="Resources\HuoHuan.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\HuoHuan.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -58,17 +65,10 @@
     <None Update="Resources\complate.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resources\HuoHuan.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\banner.png" />
-    <Content Include="Resources\HuoHuan.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
