@@ -6,8 +6,10 @@ using HuoHuan.Core.Extensions;
 using HuoHuan.Core.Plugin;
 using HuoHuan.Models;
 using HuoHuan.Plugin.Contracs;
+using HuoHuan.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
@@ -19,7 +21,7 @@ namespace HuoHuan.ViewModels.Pages
     public partial class HomePageVM
     {
         #region [Fileds]
-        private readonly SpiderManager _spiderManager = new();
+        private readonly SpiderManager _spiderManager;
         private readonly Timer _timer = null!;
         private readonly Random _random = new();
         #endregion
@@ -61,6 +63,7 @@ namespace HuoHuan.ViewModels.Pages
 
         public HomePageVM()
         {
+            this._spiderManager = new SpiderManager(Path.Combine(FolderUtil.Current, @"Resources\HuoHuan.png"));
             this._spiderManager.Crawled += SpiderManager_Crawled;
             this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
 

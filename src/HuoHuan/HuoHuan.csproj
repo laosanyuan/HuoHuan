@@ -43,7 +43,9 @@
     <Content Include="Resources\Fonts\xiaoweilogo.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\HuoHuan.ico" />
+    <Content Include="Resources\HuoHuan.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,9 +66,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\banner.png" />
-    <Resource Include="Resources\HuoHuan.png">
+    <Content Include="Resources\HuoHuan.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

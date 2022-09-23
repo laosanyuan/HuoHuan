@@ -8,7 +8,7 @@ namespace HuoHuan.Utils
     public static class ImageUtil
     {
         private static BarcodeReader _barcodeReader = new() { Options = new ZXing.Common.DecodingOptions() { CharacterSet = "UTF-8" } };
-
+        private static object _sync = new object();
         /// <summary>
         /// 根据URL获取图像
         /// </summary>
@@ -43,25 +43,6 @@ namespace HuoHuan.Utils
             return result!;
         }
 
-        /// <summary>
-        /// 下载远程图片到本地
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="fileName"></param>
-        public static async Task SaveImageFile(string url, string fileName)
-        {
-            try
-            {
-                using HttpClient client = new();
-                HttpUtil.SetHeaders(client, false);
-                byte[] bytes = await client.GetByteArrayAsync(url);
-                using FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-                await stream.WriteAsync(bytes, 0, bytes.Length);
-            }
-            catch (Exception ex)
-            {
-            }
-        }
 
         /// <summary>
         /// 判断图片链接是否为二维码
@@ -70,20 +51,45 @@ namespace HuoHuan.Utils
         /// <param name="image"></param>
         /// <returns>(是否为二维码，二维码内容，截取二维码下部分文字内容图片部分)</returns>
         [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public static (bool IsQRCode, string Message, Bitmap Bitmap) IsQRCode(Bitmap image)
+        public static bool IsQRCode(Bitmap image, out string content, out Bitmap bitmap)
         {
-            if (image is not null)
+            lock (_sync)
             {
-                var reader = new BarcodeReader();
-                reader.Options.CharacterSet = "UTF-8";
-                var qr = reader.Decode(image);
-                if (qr is not null)
+                if (image is not null)
                 {
-                    var startY = (int)(qr.ResultPoints[0].Y * 2 - qr.ResultPoints[3].Y) + 10;
-                    return (true, qr.Text, CropBitmap(image, startY));
+                    var qr = _barcodeReader.Decode(image);
+                    if (qr is not null)
+                    {
+                        var startY = (int)(qr.ResultPoints[0].Y * 2 - qr.ResultPoints[3].Y) + 10;
+                        content = qr.Text;
+                        bitmap = CropBitmap(image, startY);
+                        return true;
+                    }
                 }
             }
-            return (false, default!, default!);
+            content = null!;
+            bitmap = null!;
+            return false;
+        }
+
+        [SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        public static bool IsQRCode(Bitmap image, out string content)
+        {
+            lock (_sync)
+            {
+                if (image is not null)
+                {
+                    var qr = _barcodeReader.Decode(image);
+                    if (qr is not null)
+                    {
+                        var startY = (int)(qr.ResultPoints[0].Y * 2 - qr.ResultPoints[3].Y) + 10;
+                        content = qr.Text;
+                        return true;
+                    }
+                }
+            }
+            content = null!;
+            return false;
         }
 
         /// <summary>

@@ -35,10 +35,14 @@ namespace HuoHuan.Core.Plugin
         public async Task<(bool IsValidate, string Message, Bitmap Bitmap)> IsValidImage(Bitmap bitmap, string url)
         {
             // 1. 判断url是否重复
-            if (!await this._db.IsExistsAndInsert(url))
+            if (!await IsRepeatImage(url))
             {
                 // 2. 判断是否为二维码
-                return ImageUtil.IsQRCode(bitmap);
+                var result = ImageUtil.IsQRCode(bitmap, out var content, out var cropBitmap);
+                if (result)
+                {
+                    return (true, content, cropBitmap);
+                }
             }
             return (false, default!, default!);
         }

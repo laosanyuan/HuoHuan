@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using HuoHuan.Core.Extensions;
+using HuoHuan.DataBase.Models;
+using System.Drawing;
 using System.Drawing.Imaging;
 using ZXing;
 using ZXing.QrCode;
@@ -28,6 +30,7 @@ namespace HuoHuan.Core
             if (!string.IsNullOrEmpty(logo) && File.Exists(logo))
             {
                 this._logo = (Bitmap)Image.FromFile(logo);
+                this._logo.ToTransparent(0.4);
             }
         }
 
@@ -39,13 +42,13 @@ namespace HuoHuan.Core
         /// <param name="fileName"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public bool GenerateImage(string content, string fileName = null!)
+        public bool GenerateImage(GroupImage group, string fileName = null!)
         {
-            if (string.IsNullOrEmpty(content))
+            if (group is null || string.IsNullOrEmpty(group.QRText))
             {
                 return false;
             }
-            fileName ??= content + ".jpg";
+            fileName ??= group.QRText + ".jpg";
 
             try
             {
@@ -60,15 +63,25 @@ namespace HuoHuan.Core
                     Format = BarcodeFormat.QR_CODE,
                     Options = new QrCodeEncodingOptions
                     {
-                        Height = 1000,
-                        Width = 1000,
+                        Height = 2000,
+                        Width = 2000,
                         DisableECI = true,
                         CharacterSet = "UTF-8",
                         ErrorCorrection = ErrorCorrectionLevel.H,
                         Margin = 3,
                     },
                 };
-                Bitmap bitmap = OverlayLogoToQR(writer.Write(content));
+                Bitmap bitmap = writer.Write(group.QRText);
+
+                Color color = ColorTranslator.FromHtml("#4FE6AF");
+                // 二维码染色
+                bitmap.ReplaceColor(color, Color.Black);
+                // 覆盖图标
+                OverlayLogoToQR(bitmap);
+                // 写信息
+                bitmap = WriteMessage(bitmap, color, group.GroupName!, group.InvalidateDate);
+
+                // 保存图片
                 bitmap.Save(file, ImageFormat.Jpeg);
                 bitmap.Dispose();
             }
@@ -86,28 +99,40 @@ namespace HuoHuan.Core
         /// 向二维码Bitmap中间绘制logo
         /// </summary>
         /// <param name="qr"></param>
-        /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        private Bitmap OverlayLogoToQR(Bitmap qr)
+        private void OverlayLogoToQR(Bitmap qr)
         {
             if (this._logo is null)
             {
-                return qr;
+                return;
             }
 
             Graphics g = Graphics.FromImage(qr);
             Rectangle logoRec = new Rectangle
             {
-                Width = qr.Width / 6,
-                Height = qr.Height / 6
+                Width = qr.Width / 5,
+                Height = qr.Height / 5
             };
             logoRec.X = qr.Width / 2 - logoRec.Width / 2;
             logoRec.Y = qr.Height / 2 - logoRec.Height / 2;
             g.DrawImage(_logo, logoRec);
+        }
 
-            return qr;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        private Bitmap WriteMessage(Bitmap qr, Color color, string name, DateTime invalidData)
+        {
+            Bitmap bitmap = new(qr.Width, qr.Height + 250);
+            Graphics graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(Color.White);
+            var qrRectangle = new Rectangle(0, 0, qr.Width, qr.Height);
+            graphics.DrawImage(qr, qrRectangle);
+
+            graphics.DrawString($"群名：{name}", new Font("Verdana", 30), new SolidBrush(color), new PointF(80.0f, qr.Height - 50));
+            graphics.DrawString($"有效截至：{invalidData:yyyy年MM月dd日}", new Font("Verdana", 30), new SolidBrush(color), new PointF(80.0f, qr.Height + 40));
+            graphics.DrawString("项目地址：https://github.com/laosanyuan/HuoHuan", new Font("Verdana", 20), new SolidBrush(color), new PointF(90.0f, qr.Height + 140));
+
+            return bitmap;
         }
         #endregion
-
     }
 }

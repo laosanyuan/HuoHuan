@@ -15,6 +15,7 @@ namespace HuoHuan.Core.Plugin
         #region [Fileds]
         private readonly GroupFilter _filter = new();   // 群图片过滤器
         private readonly GroupDB _db = new();           // 群数据库
+        private QRCodeGenerater _qrCodeGenerater;
         #endregion
 
         #region [Properties]
@@ -36,13 +37,14 @@ namespace HuoHuan.Core.Plugin
         #endregion
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public SpiderManager()
+        public SpiderManager(string logo = null!)
         {
             this.ImageChannels = Channel.CreateBounded<(Bitmap, bool)>(
                 new BoundedChannelOptions(50)
                 {
                     FullMode = BoundedChannelFullMode.DropOldest
                 });
+            this._qrCodeGenerater = new QRCodeGenerater(FolderUtil.ImagesFolder, logo);
         }
 
         #region [Public Methods]
@@ -130,14 +132,16 @@ namespace HuoHuan.Core.Plugin
                 }
                 else
                 {
-                    if (!await this._filter.IsRepeatImage(e.Url))
+                    if (!await this._filter.IsRepeatImage(e.Url)
+                        && ImageUtil.IsQRCode(image, out string content))
                     {
                         var group = new GroupImage()
                         {
                             GroupName = e.Name,
                             InvalidateDate = e.InvalidTime,
                             Url = e.Url,
-                            FileName = e.Url.Split("/").LastOrDefault()?.Replace(".jpg", "") + ".jpg"
+                            FileName = e.Url.Split("/").LastOrDefault()?.Replace(".jpg", "") + ".jpg",
+                            QRText = content,
                         };
                         await this.Save(group);
                         this.Crawled?.Invoke(this, new SpiderCrawlEventArgs(e, (sender as ISpider)!, group));
@@ -169,9 +173,11 @@ namespace HuoHuan.Core.Plugin
         private async Task Save(GroupImage group)
         {
             var fileName = Path.Combine(FolderUtil.ImagesFolder, group.FileName);
-            await ImageUtil.SaveImageFile(group.Url, fileName);
-            group.LocalPath = FolderUtil.ImagesFolder;
-            await this._db.InsertGroup(group);
+            if (this._qrCodeGenerater.GenerateImage(group, fileName))
+            {
+                group.LocalPath = FolderUtil.ImagesFolder;
+                await this._db.InsertGroup(group);
+            }
         }
         #endregion
     }

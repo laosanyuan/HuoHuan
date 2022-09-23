@@ -63,7 +63,7 @@ namespace HuoHuan.ViewModels.Pages
         [RelayCommand]
         private async Task RefreshData()
         {
-            this.urls = (await this.db.QueryValidateGroup()).Select(t => t.Url).ToList();
+            this.urls = (await this.db.QueryValidateGroup()).Select(t => t.FullName).ToList();
 
             this.Count = this.urls?.Count ?? 0;
             if (!string.IsNullOrEmpty(this._displayUrl) && urls?.Contains(this._displayUrl) == true)

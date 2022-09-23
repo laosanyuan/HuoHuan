@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using HuoHuan.DataBase.Models;
+using NUnit.Framework;
 
 namespace HuoHuan.Core.Test
 {
@@ -20,21 +21,21 @@ namespace HuoHuan.Core.Test
         [Test]
         public void TestGenerateImage()
         {
-            TestName("112233", null!, "112233.jpg");
-            TestName("1122zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz33",
+            TestName(new GroupImage() { QRText = "112233" }, null!, "112233.jpg");
+            TestName(new GroupImage() { QRText = "1122zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz33" },
                 "test_qr1.jpg",
                 "test_qr1.jpg");
-            TestName("112233", "test_qr2", "test_qr2.jpg");
+            TestName(new GroupImage() { QRText = "112233", GroupName = "test" }, "test_qr2", "test_qr2.jpg");
 
             var result = _generater.GenerateImage(null!, "test_qr3.jpg");
             Assert.That(result, Is.False);
-            result = _generater.GenerateImage(string.Empty, "test_qr3.jpg");
+            result = _generater.GenerateImage(new GroupImage(), "test_qr3.jpg");
             Assert.That(result, Is.False);
         }
 
-        private void TestName(string content, string name, string realName)
+        private void TestName(GroupImage group, string name, string realName)
         {
-            var result = _generater.GenerateImage(content, name);
+            var result = _generater.GenerateImage(group, name);
             Assert.That(result, Is.True);
 
             bool isExsit = File.Exists(Path.Combine(Folder, realName));
