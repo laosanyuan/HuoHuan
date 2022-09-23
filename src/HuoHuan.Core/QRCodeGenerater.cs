@@ -18,6 +18,12 @@ namespace HuoHuan.Core
         private Bitmap _logo = null!;
         #endregion
 
+        #region [Properties]
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
+        public FontFamily FontFamily { get; set; } = new FontFamily("黑体");
+        #endregion
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         public QRCodeGenerater(string folderPath, string logo)
         {
@@ -108,7 +114,7 @@ namespace HuoHuan.Core
             }
 
             Graphics g = Graphics.FromImage(qr);
-            Rectangle logoRec = new Rectangle
+            Rectangle logoRec = new()
             {
                 Width = qr.Width / 5,
                 Height = qr.Height / 5
@@ -121,15 +127,24 @@ namespace HuoHuan.Core
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
         private Bitmap WriteMessage(Bitmap qr, Color color, string name, DateTime invalidData)
         {
-            Bitmap bitmap = new(qr.Width, qr.Height + 250);
+            Bitmap bitmap = new(qr.Width, qr.Height + 300);
             Graphics graphics = Graphics.FromImage(bitmap);
             graphics.Clear(Color.White);
             var qrRectangle = new Rectangle(0, 0, qr.Width, qr.Height);
             graphics.DrawImage(qr, qrRectangle);
 
-            graphics.DrawString($"群名：{name}", new Font("Verdana", 30), new SolidBrush(color), new PointF(80.0f, qr.Height - 50));
-            graphics.DrawString($"有效截至：{invalidData:yyyy年MM月dd日}", new Font("Verdana", 30), new SolidBrush(color), new PointF(80.0f, qr.Height + 40));
-            graphics.DrawString("项目地址：https://github.com/laosanyuan/HuoHuan", new Font("Verdana", 20), new SolidBrush(color), new PointF(90.0f, qr.Height + 140));
+            graphics.DrawString($"群名：{name}",
+                new Font(this.FontFamily, 30, FontStyle.Bold),
+                new SolidBrush(color),
+                new PointF(85.0f, qr.Height - 50));
+            graphics.DrawString($"有效截至：{invalidData:yyyy年MM月dd日}",
+                new Font(this.FontFamily, 30, FontStyle.Bold),
+                new SolidBrush(color),
+                new PointF(85.0f, qr.Height + 50));
+            graphics.DrawString("项目地址：https://github.com/laosanyuan/HuoHuan",
+                new Font(this.FontFamily, 20, FontStyle.Bold),
+                new SolidBrush(color),
+                new PointF(95.0f, qr.Height + 160));
 
             return bitmap;
         }

@@ -23,6 +23,10 @@ namespace HuoHuan.Core.Plugin
         /// 展示用图片队列
         /// </summary>
         public Channel<(Bitmap Bitmap, bool IsValidate)> ImageChannels { get; private set; }
+        /// <summary>
+        /// 生成图片字体
+        /// </summary>
+        public FontFamily FontFamily { set => this._qrCodeGenerater.FontFamily = value; }
         #endregion
 
         #region [Events]

@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Core", "HuoHuan.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Core.Test", "HuoHuan.Core.Test\HuoHuan.Core.Test.csproj", "{57D675EA-9559-418A-9E5B-EB9ADE06C5EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuoHuan.Utils", "HuoHuan.Utils\HuoHuan.Utils.csproj", "{840C959D-13EC-4FF2-A3A9-A199030DDCAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuoHuan.Utils", "HuoHuan.Utils\HuoHuan.Utils.csproj", "{840C959D-13EC-4FF2-A3A9-A199030DDCAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{77000B32-5456-43F2-A61A-AE7BB3EADAED}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

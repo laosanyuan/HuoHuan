@@ -9,6 +9,7 @@ using HuoHuan.Plugin.Contracs;
 using HuoHuan.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -66,6 +67,10 @@ namespace HuoHuan.ViewModels.Pages
             this._spiderManager = new SpiderManager(Path.Combine(FolderUtil.Current, @"Resources\HuoHuan.png"));
             this._spiderManager.Crawled += SpiderManager_Crawled;
             this._spiderManager.ProgressStatusChanged += SpiderManager_ProgressStatusChanged;
+
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile("Resources/Fonts/siyuansong.ttf");
+            this._spiderManager.FontFamily = pfc.Families[0];
 
             this._timer = new Timer(_ => this.UpdateShowImages());
             this._timer.Change(Timeout.Infinite, 100);
