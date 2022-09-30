@@ -21,7 +21,7 @@ namespace HuoHuan.Core
         #region [Properties]
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
-        public FontFamily FontFamily { get; set; } = new FontFamily("黑体");
+        public FontFamily FontFamily { get; set; } = new FontFamily("Arial");
         #endregion
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>")]
