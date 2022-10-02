@@ -46,5 +46,15 @@ namespace HuoHuan.DataBase.Test
                 Assert.That(result[0]?.Url, Is.EqualTo("test1"));
             }
         }
+
+        [Test]
+        public void TestDelete()
+        {
+            var url = "test3";
+            this._db.InsertGroup(new Models.GroupImage() { Url = url, InvalidateDate = DateTime.Today.AddDays(-100) }).Wait();
+            Assert.That(this._db.IsExistsUrl(url).Result);
+            this._db.DeleteUrl(url).Wait();
+            Assert.That(!this._db.IsExistsUrl(url).Result);
+        }
     }
 }

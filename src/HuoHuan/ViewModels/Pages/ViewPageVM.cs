@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HuoHuan.DataBase.Models;
 using HuoHuan.DataBase.Services;
-using HuoHuan.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,8 +12,9 @@ namespace HuoHuan.ViewModels.Pages
     public partial class ViewPageVM
     {
         #region [Fields]
-        private readonly GroupDB db = new();    // 微信群链接数据库
-        private List<string> urls = null!;
+        private readonly GroupDB _db = new();           // 微信群链接数据库
+        private List<string> _urls = null!;             // 
+        private List<GroupImage> _cacheImages = null!;  // 数据库查询结果缓存
         #endregion
 
         #region [Dependency Properties]
@@ -23,16 +24,16 @@ namespace HuoHuan.ViewModels.Pages
         [ObservableProperty]
         private string _displayUrl = SoftwareInfo.LogoPath;
 
-        private int displayIndex;
+        private int _displayIndex;
         /// <summary>
         /// 显示图片索引
         /// </summary>
         public int DisplayIndex
         {
-            get => displayIndex;
+            get => _displayIndex;
             set
             {
-                if (value == this.displayIndex && !_displayUrl.Equals(SoftwareInfo.LogoPath))
+                if (value == this._displayIndex && !_displayUrl.Equals(SoftwareInfo.LogoPath))
                 {
                     return;
                 }
@@ -40,13 +41,13 @@ namespace HuoHuan.ViewModels.Pages
                 {
                     value = 0;
                 }
-                else if (value > urls.Count - 1)
+                else if (value > _urls.Count - 1)
                 {
-                    value = urls.Count - 1;
+                    value = _urls.Count - 1;
                 }
-                this.DisplayUrl = this._count == 0 ? SoftwareInfo.LogoPath : this.urls[value];
 
-                SetProperty(ref displayIndex, value);
+                SetProperty(ref _displayIndex, value);
+                this.RefreshViewUrl();
             }
         }
         /// <summary>
@@ -63,12 +64,13 @@ namespace HuoHuan.ViewModels.Pages
         [RelayCommand]
         private async Task RefreshData()
         {
-            this.urls = (await this.db.QueryValidateGroup()).Select(t => t.FullName).ToList();
+            this._cacheImages = await this._db.QueryValidateGroup();
+            this._urls = this._cacheImages.Select(t => t.FullName).ToList();
 
-            this.Count = this.urls?.Count ?? 0;
-            if (!string.IsNullOrEmpty(this._displayUrl) && urls?.Contains(this._displayUrl) == true)
+            this.Count = this._urls?.Count ?? 0;
+            if (!string.IsNullOrEmpty(this._displayUrl) && this._urls?.Contains(this._displayUrl) == true)
             {
-                this.DisplayIndex = this.urls.IndexOf(this._displayUrl);
+                this.DisplayIndex = this._urls.IndexOf(this._displayUrl);
             }
             else
             {
@@ -87,6 +89,36 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         [RelayCommand]
         private void Next() => this.DisplayIndex++;
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [RelayCommand]
+        private async void Delete()
+        {
+            if (this.Count <= 0)
+            {
+                return;
+            }
+
+            var tmpUrl = this.DisplayUrl;
+
+            if (this.DisplayIndex >= Count - 1)
+            {
+                this.DisplayIndex--;
+            }
+            await this._db.DeleteUrl(this._cacheImages?.First(t => t.FullName.Equals(tmpUrl))?.Url!);
+            this._urls?.Remove(tmpUrl);
+            this.Count--;
+            this.RefreshViewUrl();
+        }
         #endregion
+
+        // 刷新正在显示图片
+        private void RefreshViewUrl()
+        {
+            this.DisplayUrl =
+                this._count == 0 ? SoftwareInfo.LogoPath : this._urls[this._displayIndex];
+        }
     }
 }

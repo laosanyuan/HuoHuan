@@ -61,6 +61,21 @@ namespace HuoHuan.DataBase.Services
             var sql = $"SELECT COUNT(*) FROM {base.TableName} WHERE Url = '{url}'";
             return (await connection.QueryFirstAsync<int>(sql)) > 0;
         }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task DeleteUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return;
+            }
+            using var connection = base.DataBaseConnection();
+            await connection.DeleteAsync<GroupImage>(new GroupImage() { Url = url });
+        }
         #endregion
     }
 }

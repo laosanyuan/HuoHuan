@@ -45,8 +45,50 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Image Grid.Column="1" Source="{Binding DisplayUrl}"/>
-        <Button Style="{StaticResource ChangeButtonStyle}" Command="{Binding PreviousCommand}" Content="&#xe64c;" Grid.RowSpan="2"/>
-        <Button Style="{StaticResource ChangeButtonStyle}" Command="{Binding NextCommand}" Content="&#xe64e;" Grid.RowSpan="2" Grid.Column="2"/>
+
+        <Button Grid.ColumnSpan="3"
+                Height="60"
+                Content="删    除"
+                FontSize="28"
+                Style="{StaticResource NoHoverButtonStyle}"
+                Background="{StaticResource FailColor}"
+                Foreground="{StaticResource Foreground.2}"
+                Command="{Binding DeleteCommand}" 
+                Opacity="0"
+                VerticalAlignment="Top">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0" Storyboard.TargetProperty="Opacity" To="1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:1" Storyboard.TargetProperty="Opacity" To="0"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <!--切换按钮-->
+        <Button Style="{StaticResource ChangeButtonStyle}" 
+                Command="{Binding PreviousCommand}" 
+                Content="&#xe64c;" 
+                Grid.RowSpan="2"/>
+        <Button Style="{StaticResource ChangeButtonStyle}" 
+                Command="{Binding NextCommand}" 
+                Content="&#xe64e;" 
+                Grid.RowSpan="2" 
+                Grid.Column="2"/>
+
         <TextBlock Grid.Column="1" Grid.Row="1" Foreground="{StaticResource Foreground.3}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Run Text="{c:Binding DisplayIndex+1}"/>
             <Run Text="/"/>
