@@ -55,6 +55,12 @@ namespace HuoHuan.ViewModels.Pages
         /// </summary>
         [ObservableProperty]
         private int _count;
+
+        /// <summary>
+        /// 开始切换动画
+        /// </summary>
+        [ObservableProperty]
+        private bool _startAnimation;
         #endregion
 
         #region [Commands]
@@ -112,6 +118,12 @@ namespace HuoHuan.ViewModels.Pages
             this.Count--;
             this.RefreshViewUrl();
         }
+
+        /// <summary>
+        /// 重置切换动画标记
+        /// </summary>
+        [RelayCommand]
+        private void ResetAnimationFlag() => this.StartAnimation = false;
         #endregion
 
         // 刷新正在显示图片
@@ -119,6 +131,8 @@ namespace HuoHuan.ViewModels.Pages
         {
             this.DisplayUrl =
                 this._count == 0 ? SoftwareInfo.LogoPath : this._urls[this._displayIndex];
+
+            this.StartAnimation = true;
         }
     }
 }

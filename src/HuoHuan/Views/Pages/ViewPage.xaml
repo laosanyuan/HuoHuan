@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
+      xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
       mc:Ignorable="d" 
       Background="Transparent"
       DataContext="{Binding ViewPage, Source={StaticResource Locator}}"
@@ -46,6 +47,37 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
+
+
+        <Image HorizontalAlignment="Left"
+               Grid.ColumnSpan="2"
+               Margin="50,-25,0,-30"
+               xf:Animations.PrimaryBinding="{Binding StartAnimation}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=300}"
+               xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
+               Source="{Binding DisplayUrl}">
+            <Image.Effect>
+                <BlurEffect Radius="10"/>
+            </Image.Effect>
+            <Image.LayoutTransform>
+                <RotateTransform Angle="-10"/>
+            </Image.LayoutTransform>
+        </Image>
+        <Image Grid.Column="1" 
+               HorizontalAlignment="Right"
+               Grid.ColumnSpan="2"
+               Margin="0,-25,50,-30"
+               xf:Animations.PrimaryBinding="{Binding StartAnimation}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=300}"
+               xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
+               Source="{Binding DisplayUrl}">
+            <Image.Effect>
+                <BlurEffect Radius="10"/>
+            </Image.Effect>
+            <Image.LayoutTransform>
+                <RotateTransform Angle="10"/>
+            </Image.LayoutTransform>
+        </Image>
         <Image Grid.Column="1" Source="{Binding DisplayUrl}"/>
 
         <Button Grid.ColumnSpan="3"
@@ -83,7 +115,7 @@
         <!--切换按钮-->
         <Button Style="{StaticResource ChangeButtonStyle}" 
                 Command="{Binding PreviousCommand}" 
-                Content="&#xe64c;" 
+                Content="&#xe64c;"
                 Grid.RowSpan="2"/>
         <Button Style="{StaticResource ChangeButtonStyle}" 
                 Command="{Binding NextCommand}" 

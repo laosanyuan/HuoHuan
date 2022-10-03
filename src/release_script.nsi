@@ -141,6 +141,9 @@ Section "MainSection" SEC01
   File "HuoHuan\bin\publish\System.Drawing.Common.dll"
   File "HuoHuan\bin\publish\YamlDotNet.dll"
   File "HuoHuan\bin\publish\zxing.dll"
+  File "HuoHuan\bin\publish\XamlFlair.WPF.dll"
+  File "HuoHuan\bin\publish\System.Reactive.dll"
+  File "HuoHuan\bin\publish\Microsoft.Extensions.Logging.Abstractions.dll"
 SectionEnd
 
 Section -AdditionalIcons
