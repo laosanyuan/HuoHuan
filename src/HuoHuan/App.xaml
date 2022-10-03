@@ -3,11 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
              StartupUri="Views/MainWindow.xaml"
              d1p1:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <xf:XamlFlairResources />
+                <ResourceDictionary Source="pack://application:,,,/HuoHuan;component/Styles/Resources/AnimationResources.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/Resources/FontResources.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/Resources/ColorResources.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Huohuan;component/Styles/RadioButtonStyle.xaml"/>

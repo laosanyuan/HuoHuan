@@ -8,7 +8,7 @@ namespace HuoHuan.Utils
     public static class ImageUtil
     {
         private static BarcodeReader _barcodeReader = new() { Options = new ZXing.Common.DecodingOptions() { CharacterSet = "UTF-8" } };
-        private static object _sync = new object();
+        private static object _sync = new();
         /// <summary>
         /// 根据URL获取图像
         /// </summary>

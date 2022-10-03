@@ -12,27 +12,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{Binding HomePage, Source={StaticResource Locator}}">
     <Page.Resources>
-        <Style x:Key="CenterButton" TargetType="{x:Type Button}">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="{DynamicResource icon}"/>
-            <Setter Property="FontSize" Value="40"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <local:StartStopConverter x:Key="startStop"/>
         <local:PauseContinueConverter x:Key="pauseContinue"/>
     </Page.Resources>
+    
     <Grid>
         <Grid x:Name="run_area">
             <Grid.RowDefinitions>

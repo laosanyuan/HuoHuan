@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:control="clr-namespace:HuoHuan.Controls">
-    <control:BitmapConverter x:Key="bitmapConverter"/>
+                    xmlns:control="clr-namespace:HuoHuan.Controls"
+                    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF">
     
+    <control:BitmapConverter x:Key="bitmapConverter"/>
+
     <Style TargetType="{x:Type control:ImageCard}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
@@ -10,7 +12,10 @@
                 <ControlTemplate TargetType="{x:Type control:ImageCard}">
                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource Foreground.3}">
                         <Grid>
-                            <Image Name="image" Source="{TemplateBinding Bitmap,Converter={StaticResource bitmapConverter}}"/>
+                            <Image Name="image"
+                                   Source="{TemplateBinding Bitmap,Converter={StaticResource bitmapConverter}}"
+                                   xf:Animations.PrimaryBinding="{TemplateBinding IsValid}"
+                                   xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=500}"/>
                             <StackPanel Name="result_stack" 
                                         HorizontalAlignment="Left" 
                                         Opacity="0.8" 
