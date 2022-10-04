@@ -10,7 +10,7 @@
     <PackageIcon>HuoHuan.png</PackageIcon>
     <ApplicationIcon>Resources\HuoHuan.ico</ApplicationIcon>
     <PackageId>HuoHuan</PackageId>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
