@@ -134,15 +134,15 @@ namespace HuoHuan.Core
             graphics.DrawImage(qr, qrRectangle);
 
             graphics.DrawString($"群名：{name}",
-                new Font(this.FontFamily, 30, FontStyle.Bold),
+                new Font(this.FontFamily, 75, FontStyle.Bold, GraphicsUnit.Pixel),
                 new SolidBrush(color),
                 new PointF(85.0f, qr.Height - 50));
             graphics.DrawString($"有效截至：{invalidData:yyyy年MM月dd日}",
-                new Font(this.FontFamily, 30, FontStyle.Bold),
+                new Font(this.FontFamily, 75, FontStyle.Bold, GraphicsUnit.Pixel),
                 new SolidBrush(color),
                 new PointF(85.0f, qr.Height + 50));
             graphics.DrawString("项目地址：https://github.com/laosanyuan/HuoHuan",
-                new Font(this.FontFamily, 20, FontStyle.Bold),
+                new Font(this.FontFamily, 60, FontStyle.Bold, GraphicsUnit.Pixel),
                 new SolidBrush(color),
                 new PointF(95.0f, qr.Height + 160));
 

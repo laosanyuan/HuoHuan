@@ -97,11 +97,13 @@ namespace HuoHuan.ViewModels
             if (this.ProgressValue == 100)
             {
 
-                ProcessStartInfo info = new ProcessStartInfo();
-                info.WorkingDirectory = FolderUtil.TmpPath;
-                info.FileName = fileName;
-                info.Arguments = "";
-                info.Verb = "runas";
+                var info = new ProcessStartInfo
+                {
+                    WorkingDirectory = FolderUtil.TmpPath,
+                    FileName = fileName,
+                    Arguments = "",
+                    Verb = "runas"
+                };
                 Process.Start(info);
                 return true;
             }

@@ -17,29 +17,29 @@ namespace HuoHuan.Controls
     internal class ImageCard : Control
     {
         public static readonly DependencyProperty IsValidProperty 
-            = DependencyProperty.Register("IsValid", typeof(bool), typeof(ImageCard));
+            = DependencyProperty.Register(nameof(IsValid), typeof(bool), typeof(ImageCard));
         /// <summary>
         /// 是否为有效图
         /// </summary>
         public bool IsValid
         {
-            get { return (bool)GetValue(IsValidProperty); }
-            set { SetValue(IsValidProperty, value); }
+            get => (bool)GetValue(IsValidProperty);
+            set => SetValue(IsValidProperty, value);
         }
 
         public static readonly DependencyProperty IsDownloadedProperty 
-            = DependencyProperty.Register("IsDownloaded", typeof(bool), typeof(ImageCard));
+            = DependencyProperty.Register(nameof(IsDownloaded), typeof(bool), typeof(ImageCard));
         /// <summary>
         /// 是否已下载
         /// </summary>
         public bool IsDownloaded
         {
-            get { return (bool)GetValue(IsDownloadedProperty); }
-            set { SetValue(IsDownloadedProperty, value); }
+            get => (bool)GetValue(IsDownloadedProperty);
+            set => SetValue(IsDownloadedProperty, value);
         }
 
         public static DependencyProperty BitmapProperty
-            = DependencyProperty.Register("Bitmap", typeof(Bitmap), typeof(ImageCard));
+            = DependencyProperty.Register(nameof(Bitmap), typeof(Bitmap), typeof(ImageCard));
         /// <summary>
         /// 展示图片
         /// </summary>
@@ -59,18 +59,18 @@ namespace HuoHuan.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Bitmap bitmap)
+            if (value is not Bitmap bitmap)
             {
-                BitmapImage image = new();
-                using MemoryStream ms = new();
-                bitmap.Save(ms, ImageFormat.Bmp);
-                byte[] bytes = ms.GetBuffer();
-                image.BeginInit();
-                image.StreamSource = new MemoryStream(bytes);
-                image.EndInit();
-                return image;
+                return default!;
             }
-            return default!;
+            BitmapImage image = new();
+            using MemoryStream ms = new();
+            bitmap.Save(ms, ImageFormat.Bmp);
+            var bytes = ms.GetBuffer();
+            image.BeginInit();
+            image.StreamSource = new MemoryStream(bytes);
+            image.EndInit();
+            return image;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
