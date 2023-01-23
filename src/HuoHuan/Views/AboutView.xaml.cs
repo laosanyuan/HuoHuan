@@ -9,7 +9,7 @@ namespace HuoHuan.Views
     /// <summary>
     /// AboutView.xaml 的交互逻辑
     /// </summary>
-    public partial class AboutView : Window
+    public partial class AboutView
     {
         public AboutView()
         {
@@ -24,7 +24,6 @@ namespace HuoHuan.Views
             };
 
             this.github.Text = LocalConfigManager.GithubUrl;
-            this.gitee.Text = LocalConfigManager.GiteeUrl;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -27,11 +27,6 @@
 
 火浣通过加载插件的方式，将添加到其中的各个爬取源统一管理调度。插件相对独立，又可以很方便快速的加入新的插件。如发现比较好的数据来源，可在**HuoHuan.Plugins**中分别继承IPlugin、ISpider(BaseSpider)两个接口，仅需要实现获取图片链接的相关的方法后，即可在编译后直接使用。
 
-|                    项目地址                     |                          最新安装包                          | 版本检测、自动升级 |
-| :---------------------------------------------: | :----------------------------------------------------------: | :----------------: |
-| [Github](https://github.com/laosanyuan/HuoHuan) | [release-1.1.2](https://github.com/laosanyuan/HuoHuan/releases/download/1.1.2/Setup.exe) |   :pushpin: 支持   |
-|   [Gitee](https://gitee.com/ylaosan/huo-huan)   | [release-1.1.2](https://gitee.com/ylaosan/huo-huan/releases/download/1.1.2/Setup.exe) |   :pushpin: 支持   |
-
 ## 使用效果
 
 ![Home Page](/images/home_page.gif)

@@ -32,7 +32,7 @@
                 </StackPanel>
             </Border>
 
-            <StackPanel Grid.Row="1" Margin="40,-10" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="1" Margin="40,0" HorizontalAlignment="Center">
                 <Image Source="/Resources/banner.png" Height="150"/>
                 <TextBlock Text="火浣" 
                            FontSize="36" 
@@ -55,15 +55,6 @@
                     <TextBlock Text="GitHub" FontSize="18" Foreground="{DynamicResource Foreground.1}" HorizontalAlignment="Right"/>
                     <TextBlock x:Name="github"
                                FontSize="18"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Foreground="{DynamicResource StatusColor.1}"
-                               Cursor="Hand"
-                               MouseDown="TextBlock_MouseDown"/>
-                    <TextBlock Grid.Row="1" Text="Gitee" FontSize="18" Foreground="{DynamicResource Foreground.1}" HorizontalAlignment="Right"/>
-                    <TextBlock x:Name="gitee"
-                               FontSize="18"
-                               Grid.Row="1"
                                Grid.Column="1"
                                Margin="10,0,0,0"
                                Foreground="{DynamicResource StatusColor.1}"
