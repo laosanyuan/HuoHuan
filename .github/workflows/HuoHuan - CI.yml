@@ -16,10 +16,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: 安装.Net Core
+    - name: 安装.Net
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: 安装Nuget
       uses: nuget/setup-nuget@v1
     - run: nuget restore src\HuoHuan.sln
