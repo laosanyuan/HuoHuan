@@ -361,5 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/src/Setup.exe
-/src/tools/Addins
+
+# Ö÷¶¯Ìí¼Ó
+/build/tools
+/build/Setup.exe

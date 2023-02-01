@@ -1,8 +1,6 @@
-#addin nuget:?package=Cake.FileHelpers
-#addin nuget:?package=Cake.Yaml
-#addin nuget:?package=YamlDotNet&version=6.1.2
-
-using Cake.FileHelpers;
+#addin "nuget:?package=Cake.FileHelpers&Version=5.0.0"
+#addin "nuget:?package=Cake.Yaml&Version=5.0.0"
+#addin "nuget:?package=YamlDotNet&Version=12.0.0"
 
 var target = Argument("target", "Default");
 
@@ -20,7 +18,7 @@ Task("UpdateVersion")
     var config = Context.DeserializeYamlFromFile<VersionInfo>("../VersionInfo.yml");
     var version = config.Version;
     // 更新项目版本号
-    ReplaceRegexInFiles("./**/*.csproj","(?<=<Version>).*?(?=</Version>)",version);
+    ReplaceRegexInFiles("../src/**/*.csproj","(?<=<Version>).*?(?=</Version>)",version);
 });
 
 Task("Default")

@@ -3,13 +3,15 @@ dotnet tool install -g cake.tool
 dotnet cake update_version.cake
 
 $tmpScript = "./tmp_release_script.nsi"
+$csproj = "../src/HuoHuan/HuoHuan.csproj"
+
 # 编译发布
-dotnet clean
-dotnet restore
-dotnet publish -p:PublishProfile=FolderProfile
+dotnet clean $csproj
+dotnet restore $csproj
+dotnet publish $csproj -p:PublishProfile=FolderProfile
 
 # 读取版本号
-$xml_data = [xml](Get-Content ./HuoHuan/HuoHuan.csproj)
+$xml_data = [xml](Get-Content $csproj)
 $version =  $xml_data.Project.PropertyGroup.Version
 "Version: $version"
 
