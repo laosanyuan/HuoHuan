@@ -19,6 +19,9 @@
     <a>
         <img alt="Actions" src="https://github.com/laosanyuan/HuoHuan/actions/workflows/HuoHuan - CI.yml/badge.svg?event=push">
     </a>
+    <a>
+        <img alt="Actions" src="https://img.shields.io/github/downloads/laosanyuan/HuoHuan/total">
+    </a>
 </p>
 
 ## 简介
