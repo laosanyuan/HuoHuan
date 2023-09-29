@@ -7,19 +7,19 @@ using HuoHuan.Utils;
 namespace HuoHuan.Plugin.Plugins
 {
     /// <summary>
-    /// 每天有群 https://www.inss.cn/
+    /// 免费微信群 http://mfwxq.com/
     /// </summary>
-    public class InssPlugin : IPlugin
+    public class MfwxqPlugin : IPlugin
     {
-        public string Name => "每天有群";
+        public string Name => "免费微信群";
+
         public string Description => String.Empty;
 
-        public ISpider Spider { get; init; } = new InssSpider();
+        public ISpider Spider { get; init; } = new MfwxqSpider();
 
         public bool IsNeedConfig => false;
 
         public IConfig Config { get; init; } = default!;
-
 
         public Task Init()
         {
@@ -32,30 +32,41 @@ namespace HuoHuan.Plugin.Plugins
         }
     }
 
-    public class InssSpider : BaseSpider
+    public class MfwxqSpider : BaseSpider
     {
         protected override async Task CrawlImage()
         {
             using HttpClient client = new();
             HttpUtil.SetHeaders(client);
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 15; i++)
             {
-                string pageData = await client.GetStringAsync($"https://www.inss.cn/qzyfx/list_12_{i + 1}/");
+                string pageData = await client.GetStringAsync($"http://mfwxq.com/Product.asp?PicClassID=&page={i + 1}/");
                 if (String.IsNullOrEmpty(pageData))
                 {
                     continue;
                 }
                 IHtmlDocument doc = await this._parser.ParseDocumentAsync(pageData!);
-                IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".cover.tyweb-display-block.tyweb-overflow-hidden");
+                IHtmlCollection<IElement> tags = doc.QuerySelectorAll(".pro_list");
                 foreach (var tag in tags)
                 {
-                    // zd_标记水印
-                    var tmpUrl = tag.LastElementChild?.GetAttribute("src")?.Replace("zd_", "");
-                    var name = tag.LastElementChild?.GetAttribute("alt");
-                    if (!string.IsNullOrEmpty(tmpUrl))
+                    var imageTag = tag.QuerySelector("div a img");
+                    var title = imageTag?.GetAttribute("alt");
+
+                    if (string.IsNullOrEmpty(title))
                     {
-                        base.NotifyCrawledChange(new CrawlEventArgs() { Url = "https://www.inss.cn" + tmpUrl, Name = name! });
+                        continue;
                     }
+
+                    var url = $"http://mfwxq.com{imageTag?.GetAttribute("data-original")}";
+                    var datetime = Convert.ToDateTime(tag.QuerySelector(".pro_title.gray")?.TextContent?.Replace("发布日期", "")).AddDays(6);
+
+                    if (datetime < DateTime.Now)
+                    {
+                        continue;
+                    }
+
+                    base.NotifyCrawledChange(new CrawlEventArgs() { Url = url, Name = title, InvalidTime = datetime.AddDays(6) });
+
                     if (this.Status == SpiderStatus.Paused)
                     {
                         await Task.Delay(100);
@@ -66,7 +77,7 @@ namespace HuoHuan.Plugin.Plugins
                         return;
                     }
                 }
-                base._progress = i / 20.0;
+                base._progress = i / 15.0;
                 base.NotifyStatusProgressChange();
             }
             base.Status = SpiderStatus.Finished;

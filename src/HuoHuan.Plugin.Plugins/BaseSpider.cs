@@ -1,4 +1,5 @@
-﻿using AngleSharp.Html.Parser;
+﻿using AngleSharp.Dom;
+using AngleSharp.Html.Parser;
 using HuoHuan.Plugin.Contracs;
 
 namespace HuoHuan.Plugin.Plugins
@@ -23,7 +24,10 @@ namespace HuoHuan.Plugin.Plugins
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public abstract Task Init(IConfig config);
+        public virtual Task Init(IConfig config)
+        {
+            return Task.CompletedTask;
+        }
 
         /// <summary>
         /// 开始
