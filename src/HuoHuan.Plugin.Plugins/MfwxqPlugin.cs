@@ -65,7 +65,13 @@ namespace HuoHuan.Plugin.Plugins
                         continue;
                     }
 
-                    base.NotifyCrawledChange(new CrawlEventArgs() { Url = url, Name = title, InvalidTime = datetime.AddDays(6) });
+                    base.NotifyCrawledChange(new CrawlEventArgs()
+                    {
+                        Url = url,
+                        Name = title,
+                        InvalidTime = datetime.AddDays(6),
+                        NeedFilter = false
+                    });
 
                     if (this.Status == SpiderStatus.Paused)
                     {
