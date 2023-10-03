@@ -69,7 +69,7 @@ namespace HuoHuan.Plugin.Plugins
                     {
                         Url = url,
                         Name = title,
-                        InvalidTime = datetime.AddDays(6),
+                        InvalidTime = datetime,
                         NeedFilter = false
                     });
 

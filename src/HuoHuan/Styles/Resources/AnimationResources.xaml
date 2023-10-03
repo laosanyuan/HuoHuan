@@ -1,18 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF">
-    <!--左移入旋转放大-->
-    <xf:AnimationSettings x:Key="ScaleRotationAnimation" 
-                          Kind="RotateFrom,ScaleYFrom,ScaleXFrom,TranslateXFrom" 
-                          Rotation="-315"
-                          OffsetX="-200" 
-                          ScaleX="0.5"
-                          ScaleY="0.5"/>
+    <!--旋转放大-->
+    <xf:AnimationSettings x:Key="ScaleRotationAnimation"
+                          Kind="RotateFrom,ScaleYFrom,ScaleXFrom,TranslateXFrom,BlurTo"
+                          Rotation="-720"
+                          ScaleX="0.05"
+                          ScaleY="0.05" />
     <!--左翻页效果-->
     <xf:AnimationSettings x:Key="LeftTurnPageAnimation"
                           Kind="RotateFrom,TranslateXFrom,ScaleYFrom,ScaleXFrom"
-                          Rotation="-60"
                           OffsetX="-300"
                           ScaleX="0.5"
-                          ScaleY="0.5"/>
+                          ScaleY="0.5" />
 </ResourceDictionary>

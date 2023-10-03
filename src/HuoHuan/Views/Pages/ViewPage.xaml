@@ -5,30 +5,46 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
       xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
-      mc:Ignorable="d" 
+      xmlns:converter="clr-namespace:HuoHuan.Converters"
+      mc:Ignorable="d"
       Background="Transparent"
       DataContext="{Binding ViewPage, Source={StaticResource Locator}}"
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="450"
+      d:DesignWidth="800">
 
     <Page.Resources>
+        <converter:NumberToVisibleConverter x:Key="NumberToVisibility" />
         <!--切换按钮样式-->
-        <Style x:Key="ChangeButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="FontFamily" Value="{StaticResource icon}"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource Foreground.1}"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style x:Key="ChangeButtonStyle"
+               TargetType="{x:Type Button}">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource icon}" />
+            <Setter Property="FontSize"
+                    Value="30" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Foreground"
+                    Value="{StaticResource Foreground.1}" />
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="{StaticResource StatusColor.1}"/>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Foreground"
+                                        Value="{StaticResource StatusColor.1}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -39,13 +55,13 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
 
 
@@ -57,13 +73,19 @@
                xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
                Source="{Binding DisplayUrl}">
             <Image.Effect>
-                <BlurEffect Radius="10"/>
+                <BlurEffect Radius="15" />
             </Image.Effect>
             <Image.LayoutTransform>
-                <RotateTransform Angle="-10"/>
+                <RotateTransform Angle="-15" />
             </Image.LayoutTransform>
+            <Image.Visibility>
+                <MultiBinding Converter="{StaticResource NumberToVisibility}">
+                    <Binding Path="DisplayIndex" />
+                    <Binding Path="Count" />
+                </MultiBinding>
+            </Image.Visibility>
         </Image>
-        <Image Grid.Column="1" 
+        <Image Grid.Column="1"
                HorizontalAlignment="Right"
                Grid.ColumnSpan="2"
                Margin="0,-25,50,-30"
@@ -72,13 +94,22 @@
                xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
                Source="{Binding DisplayUrl}">
             <Image.Effect>
-                <BlurEffect Radius="10"/>
+                <BlurEffect Radius="15" />
             </Image.Effect>
             <Image.LayoutTransform>
-                <RotateTransform Angle="10"/>
+                <RotateTransform Angle="15" />
             </Image.LayoutTransform>
+            <Image.Visibility>
+                <MultiBinding Converter="{StaticResource NumberToVisibility}">
+                    <Binding Path="DisplayIndex" />
+                </MultiBinding>
+            </Image.Visibility>
         </Image>
-        <Image Grid.Column="1" Source="{Binding DisplayUrl}"/>
+        <Image Grid.Column="1"
+               Source="{Binding DisplayUrl}" 
+               xf:Animations.PrimaryBinding="{Binding StartAnimation}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=300}"
+               xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"/>
 
         <Button Grid.ColumnSpan="3"
                 Height="60"
@@ -87,7 +118,7 @@
                 Style="{StaticResource NoHoverButtonStyle}"
                 Background="{StaticResource FailColor}"
                 Foreground="{StaticResource Foreground.2}"
-                Command="{Binding DeleteCommand}" 
+                Command="{Binding DeleteCommand}"
                 Opacity="0"
                 VerticalAlignment="Top">
             <Button.Triggers>
@@ -95,7 +126,9 @@
                     <EventTrigger.Actions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Duration="0:0:0" Storyboard.TargetProperty="Opacity" To="1"/>
+                                <DoubleAnimation Duration="0:0:0"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="1" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger.Actions>
@@ -104,7 +137,9 @@
                     <EventTrigger.Actions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Duration="0:0:1" Storyboard.TargetProperty="Opacity" To="0"/>
+                                <DoubleAnimation Duration="0:0:1"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger.Actions>
@@ -113,20 +148,24 @@
         </Button>
 
         <!--切换按钮-->
-        <Button Style="{StaticResource ChangeButtonStyle}" 
-                Command="{Binding PreviousCommand}" 
+        <Button Style="{StaticResource ChangeButtonStyle}"
+                Command="{Binding PreviousCommand}"
                 Content="&#xe64c;"
-                Grid.RowSpan="2"/>
-        <Button Style="{StaticResource ChangeButtonStyle}" 
-                Command="{Binding NextCommand}" 
-                Content="&#xe64e;" 
-                Grid.RowSpan="2" 
-                Grid.Column="2"/>
+                Grid.RowSpan="2" />
+        <Button Style="{StaticResource ChangeButtonStyle}"
+                Command="{Binding NextCommand}"
+                Content="&#xe64e;"
+                Grid.RowSpan="2"
+                Grid.Column="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="1" Foreground="{StaticResource Foreground.3}" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Run Text="{c:Binding DisplayIndex+1}"/>
-            <Run Text="/"/>
-            <Run Text="{Binding Count}"/>
+        <TextBlock Grid.Column="1"
+                   Grid.Row="1"
+                   Foreground="{StaticResource Foreground.3}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            <Run Text="{c:Binding DisplayIndex+1}" />
+            <Run Text="/" />
+            <Run Text="{Binding Count}" />
         </TextBlock>
     </Grid>
 </Page>
