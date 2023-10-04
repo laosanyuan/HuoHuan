@@ -15,43 +15,53 @@
 
         public async Task DownloadAsync(string url, string fileName, CancellationToken cancellationToken)
         {
-            long readLength = 0;
-            long allLength = 0;
-
+            long contentLength = 0;
+            long totalBytesRead = 0;
             try
             {
-                var response = await _client.GetAsync(url, cancellationToken);
-                using Stream stream = response.Content.ReadAsStream();
-                using FileStream fileStream = new(fileName, FileMode.Create);
+                using HttpClient client = new HttpClient();
+                using HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+                using HttpContent content = response.Content;
+                contentLength = content.Headers.ContentLength ?? -1;
+
+                using var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                using var stream = await content.ReadAsStreamAsync(cancellationToken);
                 byte[] buffer = new byte[this._bufferSize];
-                int length;
-                allLength = stream.Length;
-                while ((length = await stream.ReadAsync(buffer, cancellationToken)) != 0)
+                totalBytesRead = 0;
+
+                int bytesRead;
+                do
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
                         goto _End;
                     }
-                    readLength += length;
-                    // 写入到文件
-                    fileStream.Write(buffer, 0, length);
-                    this.DownloadProgressChanged?.Invoke(this, new DownloadProgressArgs()
+                    bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    await fileStream.WriteAsync(buffer, 0, bytesRead, cancellationToken);
+
+                    totalBytesRead += bytesRead;
+
+                    if (contentLength != -1)
                     {
-                        AllSize = allLength,
-                        DownloadedSize = readLength,
-                        IsEnded = stream.Length == readLength,
-                    });
+                        this.DownloadProgressChanged?.Invoke(this, new DownloadProgressArgs()
+                        {
+                            AllSize = contentLength,
+                            DownloadedSize = totalBytesRead,
+                            IsEnded = contentLength == totalBytesRead,
+                        });
+                    }
                 }
+                while (bytesRead > 0);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 goto _End;
             }
         _End:
             this.DownloadProgressChanged?.Invoke(this, new DownloadProgressArgs()
             {
-                AllSize = allLength,
-                DownloadedSize = readLength,
+                AllSize = contentLength,
+                DownloadedSize = totalBytesRead,
                 IsEnded = true,
             });
         }

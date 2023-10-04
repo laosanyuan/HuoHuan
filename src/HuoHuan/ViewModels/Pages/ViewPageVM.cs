@@ -129,9 +129,14 @@ namespace HuoHuan.ViewModels.Pages
         // 刷新正在显示图片
         private void RefreshViewUrl()
         {
+            var tmpUrl = this.DisplayUrl;
             this.DisplayUrl =
                 this._count == 0 ? SoftwareInfo.LogoPath : this._urls[this._displayIndex];
 
+            if (tmpUrl?.Equals(this.DisplayUrl) == true)
+            {
+                return;
+            }
             this.StartAnimation = true;
         }
     }

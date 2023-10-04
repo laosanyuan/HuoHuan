@@ -10,26 +10,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:ImageCard}">
-                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource Foreground.3}">
+                    <Border CornerRadius="5" BorderThickness="0.2" BorderBrush="{DynamicResource Foreground.3}">
                         <Grid>
                             <Image Name="image"
                                    Source="{TemplateBinding Bitmap,Converter={StaticResource bitmapConverter}}"
                                    xf:Animations.PrimaryBinding="{TemplateBinding IsValid}"
-                                   xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=500}"/>
-                            <StackPanel Name="result_stack" 
-                                        HorizontalAlignment="Left" 
-                                        Opacity="0.8" 
-                                        VerticalAlignment="Bottom" 
+                                   xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=500}" />
+                            <StackPanel Name="result_stack"
+                                        HorizontalAlignment="Left"
+                                        Opacity="0.8"
+                                        VerticalAlignment="Bottom"
                                         Orientation="Horizontal">
-                                <TextBlock Name="icon" 
+                                <TextBlock Name="icon"
                                            Margin="5,0,0,5"
                                            FontSize="20"
-                                           FontFamily="{StaticResource icon}" 
-                                           HorizontalAlignment="Center" 
-                                           VerticalAlignment="Center"/>
+                                           FontFamily="{StaticResource icon}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
                                 <TextBlock x:Name="result_text"
                                            Margin="5,0,0,5"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center" />
                             </StackPanel>
                         </Grid>
                     </Border>

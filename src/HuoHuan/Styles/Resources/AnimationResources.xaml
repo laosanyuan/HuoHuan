@@ -10,7 +10,7 @@
     <!--左翻页效果-->
     <xf:AnimationSettings x:Key="LeftTurnPageAnimation"
                           Kind="RotateFrom,TranslateXFrom,ScaleYFrom,ScaleXFrom"
-                          OffsetX="-300"
+                          Rotation="-180"
                           ScaleX="0.5"
                           ScaleY="0.5" />
 </ResourceDictionary>

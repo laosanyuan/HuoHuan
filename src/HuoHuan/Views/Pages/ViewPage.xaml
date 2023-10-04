@@ -69,7 +69,7 @@
                Grid.ColumnSpan="2"
                Margin="50,-25,0,-30"
                xf:Animations.PrimaryBinding="{Binding StartAnimation}"
-               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=300}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=800}"
                xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
                Source="{Binding DisplayUrl}">
             <Image.Effect>
@@ -90,7 +90,7 @@
                Grid.ColumnSpan="2"
                Margin="0,-25,50,-30"
                xf:Animations.PrimaryBinding="{Binding StartAnimation}"
-               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=300}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource LeftTurnPageAnimation},Event=None,Duration=800}"
                xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"
                Source="{Binding DisplayUrl}">
             <Image.Effect>
@@ -108,7 +108,7 @@
         <Image Grid.Column="1"
                Source="{Binding DisplayUrl}" 
                xf:Animations.PrimaryBinding="{Binding StartAnimation}"
-               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=300}"
+               xf:Animations.Primary="{xf:Animate BasedOn={StaticResource ScaleRotationAnimation},Event=None,Duration=200}"
                xf:Animations.PrimaryCompletionCommand="{Binding ResetAnimationFlagCommand}"/>
 
         <Button Grid.ColumnSpan="3"

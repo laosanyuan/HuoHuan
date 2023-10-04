@@ -96,7 +96,6 @@ namespace HuoHuan.ViewModels
 
             if (this.ProgressValue == 100)
             {
-
                 var info = new ProcessStartInfo
                 {
                     WorkingDirectory = FolderUtil.TmpPath,
